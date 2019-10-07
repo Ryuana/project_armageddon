@@ -1,3 +1,3 @@
 from django.contrib import admin
 
-# Register your models here.
+# Register your dynamo_models here.
