@@ -1,3 +1,5 @@
 # Default ignored files
 /workspace.xml
 ../venv
+../armageddon_system/.env.py
+../armageddon_system/models/linepay.py

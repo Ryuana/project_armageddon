@@ -4,4 +4,5 @@ import armageddon_system.views as views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('test', views.test, name='linepay')
 ]
