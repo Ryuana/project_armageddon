@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ログイン画面</title>
 </head>
 <body>
-login
+<div id="form">
+    <p class="form-title">ログイン</p>
+    <form action="post">
+        <p>ID</p>
+        <p class="user_id"><input type="text" name="username" maxlength="32" autocomplete="OFF" /></p>
+        <p>パスワード</p>
+        <p class="password"><input type="password" name="password" maxlength="32" autocomplete="OFF" /></p>
+        <p class="submit"><input type="submit" value="ログイン" /></p>
+    </form>
+</div>
 </body>
 </html>
