@@ -1,5 +1,5 @@
 from pynamodb.models import Model
-from pynamodb.attributes import UnicodeAttribute
+from pynamodb.attributes import UnicodeAttribute,NumberAttribute,ListAttribute,MapAttribute
 import armageddon_system.env as env
 
 class dynamo(Model):
@@ -10,10 +10,11 @@ class dynamo(Model):
         region = env.AWS_REGION
 
     AppName = UnicodeAttribute(hash_key=True)
-    AppNo = UnicodeAttribute(range_key=True)
-    Forms = UnicodeAttribute(null=True)
-    Linebot = UnicodeAttribute(null=True)
-    PayOffLogs = UnicodeAttribute(null=True)
+    AppNo = NumberAttribute(range_key=True)
+    Forms = ListAttribute(null=True)
+    Linebot = MapAttribute(null=True)
+    PayOffLogs = ListAttribute(null=True)
+    testStr = UnicodeAttribute(null=True)
 
 
 
