@@ -31,16 +31,18 @@
         <th scope="row">日付</th>
         <th>メッセージ</th>
         <th>画像</th>
+
     </tr>
     </thead>
     <tbody id="params">
 
     <tr class="add_row"
-        onclick="add_message">
-        <td colspan="3" style="text-align: center"><i class="fas fa-plus"></i></td>
+        onclick="let node=this.nextElementSibling.cloneNode(true);node.removeAttribute('id');node.classList.remove('hide');this.parentNode.insertBefore(node,this)">
+        <td colspan="4" style="text-align: center"><i class="fas fa-plus"></i></td>
     </tr>
 
     <tr class="hide">
+        <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
         <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
         <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
         <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
