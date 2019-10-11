@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>メッセージ・画像設定画面</title>
 </head>
 <body>
-
+<h1>メッセージ・画像</h1>
+<p>メッセージ</p>
+<textarea name="message_area" rows="4" cols="40"></textarea><br>
+<input type="submit" value="保存">
+</form>
+<p>画像</p>
+<form method="post" enctype="multipart/form-data">
+<input type="file" name="pic">
+<br>
+<canvas id="canvas"></canvas>
+<input type="submit" value="送信">
+</form>
 </body>
 </html>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# def index(request):
-    # return render(request, 'armageddon_system/index.html',{'msg':'test'})
+def linebot_msg_list(request):
+    return render(request, 'armageddon_system/linebot/msg/list.html')
