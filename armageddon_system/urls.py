@@ -4,5 +4,6 @@ import armageddon_system.views as views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('test', views.test, name='linepay')
+    path('register/form', views.form, name='form'),
+    path('register/confirm',views.confirm,name='confirm')
 ]
