@@ -13,6 +13,7 @@ urlpatterns = [
     path('linebot/qa/list', views.linebot.qa_list, name='linebot/qa/list'),
     path('linebot/msg/edit', views.linebot.msg_edit, name='linebot/msg/edit'),
     path('linebot/msg/list', views.linebot.msg_list, name='linebot/msg/list'),
+    path('debug/dynamo', views.debug.dynamo, name='debug/dynamo'),
 
 
 ]
