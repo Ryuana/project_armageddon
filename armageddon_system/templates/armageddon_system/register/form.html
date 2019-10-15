@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>申請者情報入力画面</title>
 </head>
 <body>
+<p>学籍番号</p>
+学籍番号がない場合<input type="checkbox" name="check" value="check">
+<p>申請者名</p>
+<p>申請書名</p>
+    <input class="count" type="text" name="quantity" value="1" tabindex="1">
+    <div class="button">
+        <input type="button" name="spinner_up" class="spinner_up" value="" onclick="javascript:spinner('up');">
+        <input type="button" name="spinner_up" class="spinner_down" value="" onclick="javascript:spinner('down');">
+    </div>
+
+<div id="input_pluralBox">
+    <div id="input_plural">
+        <input type="text" class="form-control" placeholder="">
+        <input type="button" value="＋" class="add pluralBtn">
+        <input type="button" value="－" class="del pluralBtn">
+    </div>
+</div>
+<button>QR読取</button>
+<form>
+    <input type="submit" value="決定">
+</form>
 
 </body>
 </html>

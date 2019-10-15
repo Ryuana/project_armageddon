@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>メッセージ・画像一覧画面</title>
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
+          integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+      <style>
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+<h1>メッセージ画像管理</h1>
+<table class="table table-striped" id="target">
+    <thead>
+    <tr>
+        <th scope="row">日付</th>
+        <th>メッセージ</th>
+        <th>画像</th>
 
+    </tr>
+    </thead>
+    <tbody id="params">
+
+    <tr class="add_row"
+        onclick="let node=this.nextElementSibling.cloneNode(true);node.removeAttribute('id');node.classList.remove('hide');this.parentNode.insertBefore(node,this)">
+        <td colspan="4" style="text-align: center"><i class="fas fa-plus"></i></td>
+    </tr>
+
+    <tr class="hide">
+        <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
+        <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
+        <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
+        <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

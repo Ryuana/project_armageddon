@@ -2,9 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>精算記録画面</title>
 </head>
 <body>
+<h1>精算記録</h1>
+
+<p>学校名</p>
+<select name="school">
+{#<option value="num1">麻生情報ビジネス</option>#}
+{#<option value="num2">麻生公務員</option>#}
+{#<option value="num3">麻生製菓</option>#}
+{#<option value="num4">麻生外国語</option>#}
+</select>
+
+<p>日付</p>
+<select name="date">
+<!--セレクトメニューはPython側で-->
+</select>
+
+<table>
+  <thead>
+  <tr id="object">
+    <th>日時</th>
+    <th>学校名</th>
+    <th>学科</th>
+    <th>学籍番号</th>
+    <th>申請書名</th>
+    <th>枚数</th>
+    <th>金額</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr id="date">
+    <td></td>
+  </tr>
+  <tr id="school_name">
+    <td></td>
+  </tr>
+  <tr id="subject">
+    <td></td>
+  </tr>
+  <tr id="school_number">
+    <td></td>
+  </tr>
+  <tr id="app_form">
+    <td></td>
+  </tr>
+  <tr id="count">
+    <td></td>
+  </tr>
+  <tr id="price">
+    <td></td>
+  </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th id="total" colspan="2">合計</th>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+
 
 </body>
 </html>
