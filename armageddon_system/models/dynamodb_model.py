@@ -1,7 +1,6 @@
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute,NumberAttribute,ListAttribute,MapAttribute
 import armageddon_system.env as env
-
 class dynamo(Model):
     class Meta:
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
