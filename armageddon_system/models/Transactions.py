@@ -11,7 +11,7 @@ class Transactions(Model):
     class Meta:
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
-        table_name = env.AWS_TABLE_NAME
+        table_name = "linepay_test"
         region = env.AWS_REGION
 
     #PynamoDBに変更する必要あり

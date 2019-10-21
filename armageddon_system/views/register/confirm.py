@@ -22,8 +22,15 @@ def register_confirm(request):
 
     transaction_id = response["info"]["transactionId"]
     print(order_id, transaction_id, product_name, amount, currency)
-    obj = Transactions(transaction_id=transaction_id, order_id=order_id,
-                       product_name=product_name, amount=amount, currency=currency)
+    # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
+    #                    product_name=product_name, amount=amount, currency=currency)
+    obj = Transactions(str(transaction_id))
+    obj.order_id = order_id
+    obj.product_name = product_name
+    obj.amount = amount
+    obj.currency = currency
+    obj.save()
+
     # db.session.add(obj)
     # db.session.commit()
     # db.session.close()
@@ -32,8 +39,8 @@ def register_confirm(request):
     # return render(request, 'armageddon_system/register/confirm.html')
 
 def linepay_confirm(request):
-    transaction_id = request.args.get('transactionId')
-    obj = Transactions.query.filter_by(transaction_id=transaction_id).one_or_none()
+    transaction_id = request.POST.get('transactionId')
+    obj = Transactions.query(hash_key=transaction_id)
     if obj is None:
         raise Exception("Error: transaction_id not found.")
 
