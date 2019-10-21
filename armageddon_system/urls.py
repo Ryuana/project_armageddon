@@ -14,5 +14,5 @@ urlpatterns = [
     path('linebot/msg/edit', views.linebot.msg_edit, name='linebot/msg/edit'),
     path('linebot/msg/list', views.linebot.msg_list, name='linebot/msg/list'),
 
-
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

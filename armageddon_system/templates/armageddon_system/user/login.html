@@ -4,16 +4,57 @@
     <meta charset="UTF-8">
     <title>ログイン画面</title>
 </head>
+
+<style>
+    body,p,form,input{margin: 0}
+    #form{
+        width: 700px;
+        height: 450px;
+        margin: 30px auto;
+        padding: 20px;
+        border: 1px solid #555;
+        }
+
+    form p{
+        font-size: 20px;
+        position: relative;
+        left: 200px;
+        top: 100px;
+        }
+
+    .form-title{
+        text-align: center;
+        position: relative;
+        top: 20px;
+        }
+
+    .id,.pass{
+        margin-bottom: 20px;
+        }
+
+    input[type="ID"],
+    input[type="password"] {
+        width: 300px;
+        padding: 4px;
+        font-size: 14px;
+        }
+    .submit{
+        position: relative;
+        top: 180px;
+        left: 320px;
+        }
+</style>
 <body>
-<div id="form">
-    <p class="form-title">ログイン</p>
-    <form action="post">
-        <p>ID</p>
-        <p class="user_id"><input type="text" name="username" maxlength="32" autocomplete="OFF" /></p>
-        <p>パスワード</p>
-        <p class="password"><input type="password" name="password" maxlength="32" autocomplete="OFF" /></p>
-        <p class="submit"><input type="submit" value="ログイン" /></p>
-    </form>
-</div>
+
+    <div id="form">
+        <p class="form-title">ログイン</p>
+        <form action="post">
+            <p>ID</p>
+            <p class="id"><input type="text" name="ID"/></p>
+            <p>パスワード</p>
+            <p class="pass"><input type="password" name="pass" /></p>
+            <p class="submit"><input type="submit" value="ログイン" /></p>
+        </form>
+    </div>
 </body>
 </html>
