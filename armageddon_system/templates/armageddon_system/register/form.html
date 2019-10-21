@@ -6,7 +6,8 @@
 </head>
 <body>
   <p>決済方法を選択してください</p>
-  <form action="/confirm" method="post">
+  <form action="./confirm" method="post">
+      {% csrf_token %}
     <button type="submit">決済</button>
   </form>
 </body>

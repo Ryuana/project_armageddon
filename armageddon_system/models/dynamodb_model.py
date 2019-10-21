@@ -15,6 +15,3 @@ class dynamo(Model):
     Linebot = MapAttribute(null=True)
     PayOffLogs = ListAttribute(null=True)
     testStr = UnicodeAttribute(null=True)
-
-
-
