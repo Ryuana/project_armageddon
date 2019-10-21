@@ -4,13 +4,13 @@ from armageddon_system.models.form_model import FormsModel
 import json
 import random
 
+
 def dynamo(request):
-    rt = "aaa"
     if not FormsModel.exists():
         FormsModel.create_table(wait=True)
-        rt = "テーブルを作成しました"
+        rt = "テーブルを作成しました\n"
     else:
-        rt = "テーブルを作成しませんでした"
+        rt = "テーブルを作成しませんでした<br>"
     # id = str(FormsModel.count() + 1)
     # form = FormsModel(random.randint(1,300))
     # count = FormsModel.count()
@@ -19,7 +19,37 @@ def dynamo(request):
     #              "IssuanceDays": 3,
     #              "QR": "qrcode"
     #              }
-    # form.save()
-    form = FormsModel()
-    rt = form.scan()
-    return HttpResponse([rt])
+    # rt = form.save()
+    try:
+        # fm = FormsModel.get(hash_key="9999")
+        # form = json.dumps(dict(fm))
+        # rt = fm.mapAttribute
+        # rt= rt['testB']
+        # d = {"aaa":123}
+        form_list = []
+
+        for fm in FormsModel.scan():
+            formId = fm.FormId
+            test = fm.testClumn
+            testL = fm.listAttribute
+            m = {
+                "FormID": formId,
+                "test": test,
+                "testL": testL,
+                "testM": {
+                    "testA": fm.mapAttribute['testA'],
+                    "testB": fm.mapAttribute['testB'],
+                }
+            }
+
+            form_list.append(m)
+            # rt += json.dumps(dict(fm))
+            # try:
+            #     rt += fm.listAttribute
+            # except:
+            #     rt += "None"
+            # rt += "<br>"
+        rt = form_list
+    except Exception as e:
+        rt = e
+    return HttpResponse(rt)

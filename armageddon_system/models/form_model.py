@@ -1,14 +1,15 @@
 from datetime import datetime
-from pynamodb.attributes import UnicodeAttribute, BooleanAttribute, UTCDateTimeAttribute, NumberAttribute, MapAttribute
+from pynamodb.attributes import UnicodeAttribute, BooleanAttribute, UTCDateTimeAttribute, NumberAttribute, MapAttribute, \
+    ListAttribute
 from pynamodb.models import Model
 import armageddon_system.env as env
 
 
-class Form(MapAttribute):
-    FormName = UnicodeAttribute(null=False)
-    Fee = NumberAttribute(null=False)
-    IssuanceDays = NumberAttribute(null=False)
-    QR = UnicodeAttribute(null=False)
+class FormAttribute(MapAttribute):
+    FormName = UnicodeAttribute(null=True)
+    Fee = NumberAttribute(null=True)
+    IssuanceDays = NumberAttribute(null=True)
+    QR = UnicodeAttribute(null=True)
 
 
 class FormsModel(Model):
@@ -20,8 +21,16 @@ class FormsModel(Model):
         write_capacity_units = 1
         read_capacity_units = 1
 
-    FormId = NumberAttribute(hash_key=True)
-    Form = Form(null=False)
+    FormId = UnicodeAttribute(hash_key=True)
+    testClumn = UnicodeAttribute(null=True)
+    Form = FormAttribute(null=True)
+    listAttribute = ListAttribute(null=True)
+    mapAttribute = MapAttribute(null=True)
+
+    def __iter__(self):
+        for name, attr in self._get_attributes().items():
+            yield name, attr.serialize(getattr(self, name))
+
 
 
 if not FormsModel.exists():
