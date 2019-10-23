@@ -4,18 +4,22 @@ import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
 from armageddon_system.models.Transactions import Transactions
 
+
 LINE_PAY_URL = env.LINE_PAY_URL
 LINE_PAY_CHANNEL_ID = env.LINE_PAY_CHANNEL_ID
 LINE_PAY_CHANNEL_SECRET = env.LINE_PAY_CHANNEL_SECRET
 LINE_PAY_CONFIRM_URL = env.LINE_PAY_CONFIRM_URL
 
-pay = LinePay(channel_id=LINE_PAY_CHANNEL_ID, channel_secret=LINE_PAY_CHANNEL_SECRET,line_pay_url=LINE_PAY_URL, confirm_url=LINE_PAY_CONFIRM_URL)
+pay = LinePay(channel_id=LINE_PAY_CHANNEL_ID, channel_secret=LINE_PAY_CHANNEL_SECRET, line_pay_url=LINE_PAY_URL,
+              confirm_url=LINE_PAY_CONFIRM_URL)
+
 
 def register_confirm(request):
     product_name = "チョコレート"
     amount = 1
     currency = "JPY"
 
+    # (order_id, response) = pay.request_payments(product_name=product_name, amount=amount, currency=currency)
     (order_id, response) = pay.request_payments(product_name=product_name, amount=amount, currency=currency)
     print(response["returnCode"])
     print(response["returnMessage"])
@@ -39,8 +43,9 @@ def register_confirm(request):
     # return render(request, 'armageddon_system/register/confirm.html')
 
 def linepay_confirm(request):
-    transaction_id = request.POST.get('transactionId')
-    obj = Transactions.query(hash_key=transaction_id)
+    transaction_id = request.GET.get('transactionId')
+    obj = Transactions.get(hash_key=transaction_id)
+
     if obj is None:
         raise Exception("Error: transaction_id not found.")
 
@@ -48,7 +53,4 @@ def linepay_confirm(request):
     print(response["returnCode"])
     print(response["returnMessage"])
 
-    # db.session.query(Transactions).filter(Transactions.transaction_id == transaction_id).delete()
-    # db.session.commit()
-    # db.session.close()
-    return "Payment successfully finished."
+    return HttpResponse("Payment successfully finished.")
