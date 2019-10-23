@@ -143,6 +143,7 @@ class LinePay:
         order_id = uuid.uuid4().hex
         body = {
             'productName': product_name,
+            "productImageUrl": "https://icooon-mono.com/i/icon_11095/icon_110951_48.png",
             'amount': amount,
             'currency': currency,
             'orderId': order_id,

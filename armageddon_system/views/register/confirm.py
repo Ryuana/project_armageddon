@@ -15,8 +15,8 @@ pay = LinePay(channel_id=LINE_PAY_CHANNEL_ID, channel_secret=LINE_PAY_CHANNEL_SE
 
 
 def register_confirm(request):
-    product_name = "チョコレート"
-    amount = 1
+    product_name = "卒業証明書(テスト)"
+    amount = 3000
     currency = "JPY"
 
     # (order_id, response) = pay.request_payments(product_name=product_name, amount=amount, currency=currency)
