@@ -4,12 +4,7 @@ from pynamodb.attributes import UnicodeAttribute, BooleanAttribute, UTCDateTimeA
 from pynamodb.models import Model
 import armageddon_system.env as env
 
-
-class FormAttribute(MapAttribute):
-    FormName = UnicodeAttribute(null=True)
-    Fee = NumberAttribute(null=True)
-    IssuanceDays = NumberAttribute(null=True)
-    QR = UnicodeAttribute(null=True)
+from armageddon_system.models import attributes
 
 
 class FormsModel(Model):
@@ -18,19 +13,27 @@ class FormsModel(Model):
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
         region = env.AWS_REGION
-        write_capacity_units = 1
-        read_capacity_units = 1
 
-    FormId = UnicodeAttribute(hash_key=True)
-    testClumn = UnicodeAttribute(null=True)
-    Form = FormAttribute(null=True)
-    listAttribute = ListAttribute(null=True)
-    mapAttribute = MapAttribute(null=True)
+    FormId = NumberAttribute(hash_key=True)
+    Form = attributes.FormAttribute(null=True)
 
     def __iter__(self):
         for name, attr in self._get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
+
+class PayOffLogsModel(Model):
+    class Meta:
+        table_name = "PayOffLogs"
+        aws_access_key_id = env.AWS_ACCESS_KEY_ID
+        aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
+        region = env.AWS_REGION
+
+    LogId = NumberAttribute(hash_key=True)
+    PayOffLog = attributes.PayOffLogAttribute(null=False)
+    def __iter__(self):
+        for name, attr in self._get_attributes().items():
+            yield name, attr.serialize(getattr(self, name))
 
 
 if not FormsModel.exists():
