@@ -9,6 +9,12 @@ class FormAttribute(MapAttribute):
     QR = UnicodeAttribute(null=True)
 
 
+class PayItemsAttribute(MapAttribute):
+    PayItemNo = NumberAttribute(null=False)
+    Form = FormAttribute(null=False)
+    Quantity = NumberAttribute(null=False)
+
+
 class BuyerAttribute(MapAttribute):
     BuyerNo = NumberAttribute(null=True)
     BuyerName = UnicodeAttribute(null=True)
@@ -17,12 +23,6 @@ class BuyerAttribute(MapAttribute):
     SchoolName = UnicodeAttribute(null=True)
     CourseId = NumberAttribute(null=True)
     CourseName = UnicodeAttribute(null=True)
-
-
-class PayItemsAttribute(MapAttribute):
-    PayItemNo = NumberAttribute(null=False)
-    Form = FormAttribute(null=False)
-    Quantity = NumberAttribute(null=False)
 
 
 class PayOffLogAttribute(MapAttribute):
@@ -34,25 +34,21 @@ class PayOffLogAttribute(MapAttribute):
 
 
 class QuestionAndAnswerAttribute(MapAttribute):
-    QuestionId = NumberAttribute(null=False)
     Questions = ListAttribute(null=True)
-    Answer = UnicodeAttribute
+    Answer = UnicodeAttribute(null=False)
 
 
 class MessageAttribute(MapAttribute):
-    MessageId = NumberAttribute(null=False)
-    Message = UnicodeAttribute(null=False)
-    Image = UnicodeAttribute(null=False)
+    MessageContent = UnicodeAttribute(null=False)
+    ImagePath = UnicodeAttribute(null=False)
     Timestamp = UTCDateTimeAttribute(null=True)
 
 
-class AlermAttribute(MapAttribute):
-    AlermId = NumberAttribute(null=False)
-    UserId = UnicodeAttribute(null=False)
-    AlermDatetime = UTCDateTimeAttribute(null=False)
+class CourseAttribute(MapAttribute):
+    CourseId = NumberAttribute(null=False)
+    CourseName = UnicodeAttribute(null=False)
 
-class SchoolAttribute(MapAttribute):
-    SchoolId = NumberAttribute(null=False)
-    SchoolName = UnicodeAttribute(null=False)
-    Courses = ListAttribute()
-    #TODO:ここから
+
+class UserLogAttribute(MapAttribute):
+    LoginTime = UTCDateTimeAttribute(null=False)
+    LogoutTime = UTCDateTimeAttribute(null=True)

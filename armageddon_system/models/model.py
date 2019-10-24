@@ -1,9 +1,7 @@
-from datetime import datetime
 from pynamodb.attributes import UnicodeAttribute, BooleanAttribute, UTCDateTimeAttribute, NumberAttribute, MapAttribute, \
     ListAttribute
 from pynamodb.models import Model
 import armageddon_system.env as env
-
 from armageddon_system.models import attributes
 
 
@@ -31,22 +29,46 @@ class PayOffLogsModel(Model):
 
     LogId = NumberAttribute(hash_key=True)
     PayOffLog = attributes.PayOffLogAttribute(null=False)
+    IsPaid = BooleanAttribute(null=False)
 
     def __iter__(self):
         for name, attr in self._get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 
-class LineBotModel(Model):
+class QuestionAndAnswersModel(Model):
     class Meta:
-        table_name = "LineBot"
+        table_name = "QuestionAndAnswers"
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
         region = env.AWS_REGION
 
-    QuestionAndAnswers = ListAttribute(of=attributes.QuestionAndAnswerAttribute)
-    Messages = ListAttribute(of=attributes.MessageAttribute)
-    Alerms = ListAttribute(of=attributes.AlermAttribute)
+    QuestionAndAnswerId = NumberAttribute(hash_key=True)
+    QuestionAndAnswer = attributes.QuestionAndAnswerAttribute(null=False)
+
+
+class MessagesModel(Model):
+    class Meta:
+        table_name = "Messages"
+        aws_access_key_id = env.AWS_ACCESS_KEY_ID
+        aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
+        region = env.AWS_REGION
+
+    MessageId = NumberAttribute(hash_key=True)
+    attributes.MessageAttribute(null=False)
+
+
+class AlermsModel(Model):
+    class Meta:
+        table_name = "Alerms"
+        aws_access_key_id = env.AWS_ACCESS_KEY_ID
+        aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
+        region = env.AWS_REGION
+
+    AlarmId = NumberAttribute(hash_key=True)
+    LineUserId = NumberAttribute(null=False)
+    AlermDateTime = UTCDateTimeAttribute(null=False)
+
 
 class SchoolsModel(Model):
     class Meta:
@@ -55,9 +77,34 @@ class SchoolsModel(Model):
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
         region = env.AWS_REGION
 
-    # Schools =
+    SchoolId = NumberAttribute(hash_key=True)
+    SchoolName = UnicodeAttribute(null=False)
+    Courses = ListAttribute(of=attributes.CourseAttribute)
+
+
+class UsersModel(Model):
+    class Meta:
+        table_name = "Schools"
+        aws_access_key_id = env.AWS_ACCESS_KEY_ID
+        aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
+        region = env.AWS_REGION
+
+    UserId = NumberAttribute(hash_key=True)
+    Password = UnicodeAttribute(null=False)
+    UserLogs = attributes.UserLogAttribute(null=True)
+
 
 if not FormsModel.exists():
     FormsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
 if not PayOffLogsModel.exists():
     PayOffLogsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not QuestionAndAnswersModel.exists():
+    QuestionAndAnswersModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not MessagesModel.exists():
+    MessagesModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not AlermsModel.exists():
+    AlermsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not SchoolsModel.exists():
+    SchoolsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not UsersModel.exists():
+    UsersModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
