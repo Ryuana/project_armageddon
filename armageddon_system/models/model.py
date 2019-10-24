@@ -46,6 +46,10 @@ class QuestionAndAnswersModel(Model):
     QuestionAndAnswerId = NumberAttribute(hash_key=True)
     QuestionAndAnswer = attributes.QuestionAndAnswerAttribute(null=False)
 
+    def __iter__(self):
+        for name, attr in self._get_attributes().items():
+            yield name, attr.serialize(getattr(self, name))
+
 
 class MessagesModel(Model):
     class Meta:
@@ -56,6 +60,10 @@ class MessagesModel(Model):
 
     MessageId = NumberAttribute(hash_key=True)
     attributes.MessageAttribute(null=False)
+
+    def __iter__(self):
+        for name, attr in self._get_attributes().items():
+            yield name, attr.serialize(getattr(self, name))
 
 
 class AlermsModel(Model):
@@ -68,6 +76,10 @@ class AlermsModel(Model):
     AlarmId = NumberAttribute(hash_key=True)
     LineUserId = NumberAttribute(null=False)
     AlermDateTime = UTCDateTimeAttribute(null=False)
+
+    def __iter__(self):
+        for name, attr in self._get_attributes().items():
+            yield name, attr.serialize(getattr(self, name))
 
 
 class SchoolsModel(Model):
@@ -92,6 +104,10 @@ class UsersModel(Model):
     UserId = NumberAttribute(hash_key=True)
     Password = UnicodeAttribute(null=False)
     UserLogs = attributes.UserLogAttribute(null=True)
+
+    def __iter__(self):
+        for name, attr in self._get_attributes().items():
+            yield name, attr.serialize(getattr(self, name))
 
 
 if not FormsModel.exists():

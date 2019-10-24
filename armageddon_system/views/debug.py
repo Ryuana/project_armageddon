@@ -1,54 +1,28 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from armageddon_system.models.model import FormsModel
+from armageddon_system.models import DynamoManager as db
+from armageddon_system.models import model
 import json
-import random
+
+def debug(request):
+    return render(request, 'armageddon_system/debug/debug.html')
 
 
 def dynamo(request):
-    if not FormsModel.exists():
-        FormsModel.create_table(wait=True)
-        rt = "テーブルを作成しました\n"
-    else:
-        rt = "テーブルを作成しませんでした<br>"
-    id = str(FormsModel.count() + 1)
-    form = FormsModel(random.randint(1,300))
-    count = FormsModel.count()
-    form.Form = {"FormName": "2ndTest",
-                 "Fee":random.randint(1,300),
-                 "IssuanceDays": 3,
-                 "QR": "qrcode"
-                 }
-    rt = form.save()
-    try:
-        # fm = FormsModel.get(hash_key="9999")
-        # form = json.dumps(dict(fm))
-        # rt = fm.mapAttribute
-        # rt= rt['testB']
-        # d = {"aaa":123}
-        form_list = []
-        # for fm in FormsModel.scan():
-        #     formId = fm.FormId
-        #     test = fm.testClumn
-        #     testL = fm.listAttribute
-        #     m = {
-        #         "FormID": formId,
-        #         "test": test,
-        #         "testL": testL,
-        #         "testM": {
-        #             "testA": fm.mapAttribute['testA'],
-        #             "testB": fm.mapAttribute['testB'],
-        #         }
-        #     }
-        #
-        #     form_list.append(m)
-            # rt += json.dumps(dict(fm))
-            # try:
-            #     rt += fm.listAttribute
-            # except:
-            #     rt += "None"
-            # rt += "<br>"
-        rt = form_list
-    except Exception as e:
-        rt = e
-    return HttpResponse(rt)
+    cmd = request.GET.get('cmd')
+    context = {'cmd': cmd}
+    if cmd == "add_pay_log":
+        add_pay_log()
+    # dbm = db.DynamoManager()
+    # pay_log = dbm.get_pay_log_all()
+    # context = {'pay_log': pay_log}
+    pom = model.PayOffLogsModel
+    pom_count = pom.count()
+    context = {'pom_count': pom_count}
+    pom_get = pom.get(1)
+    context = {'pom_data': json.dumps(dict(pom_get))}
+    return render(request, 'armageddon_system/debug/testDynamo.html', context)
+
+
+def add_pay_log():
+    dbm = db.DynamoManager()
+    dbm.save_pay_log("aaa")

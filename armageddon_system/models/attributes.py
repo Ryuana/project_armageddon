@@ -30,7 +30,7 @@ class PayOffLogAttribute(MapAttribute):
     Total = NumberAttribute(null=False)
     Buyer = BuyerAttribute(null=False)
     PayItems = ListAttribute(of=PayItemsAttribute)
-    Quantity = NumberAttribute(null=False)
+
 
 
 class QuestionAndAnswerAttribute(MapAttribute):

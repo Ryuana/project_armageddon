@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST OF DYNAMO</title>
+</head>
+<body>
+Dynamodb用Debugページ。<br>
+command:{{ cmd }}
+<br>
+{{ pay_log }}
+
+ADD PAY LOG ->
+<input type="button"
+       onclick="location.href='./dynamo?cmd=add_pay_log'"
+       value="追加">
+<br>
+Pay log count:{{ pom_count }}
+↓↓pom_data(1)↓↓<br>
+{{ pom_data }}
+</body>
+</html>
