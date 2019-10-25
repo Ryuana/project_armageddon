@@ -21,9 +21,59 @@
         .hide {
             display: none;
         }
+
+           h1{
+              text-align: center;
+              font-size: 30px;
+              color: #a9a9a9;
+              position: relative;
+              top: 70px;
+          }
+
+           table{
+              position: relative;
+              top: 70px;
+          }
+
+           table th{
+              position: relative;
+              left: 80px;
+          }
+
+          nav ul{
+            display: table;
+            margin: 0 auto;
+            padding: 0 ;
+            width: 80%;
+            text-align: center;
+            text-decoration: none;
+            }
+            nav li{
+            display: table-cell;
+            min-width: 50px;
+            text-decoration: none;
+            }
+            nav a {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                color: #555;
+                padding-bottom: 5px;
+            }
     </style>
 </head>
 <body>
+
+<nav>
+<ul>
+<li class=”current”><a href=”#”>戻る</a></li>
+<li><a href=”#”>精算項目</a></li>
+<li><a href=”#”>LINEBOT/QA管理</a></li>
+<li><a href=”#”>メッセージ管理</a></li>
+<li><a href=”#”>ログアウト</a></li>
+</ul>
+</nav>
+
 <h1>メッセージ画像管理</h1>
 <table class="table table-striped" id="target">
     <thead>

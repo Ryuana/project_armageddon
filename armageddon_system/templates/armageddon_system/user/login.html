@@ -41,8 +41,23 @@
     .submit{
         position: relative;
         top: 180px;
-        left: 320px;
-        }
+        left: 280px;
+        width: 150px;
+        height:50px;
+        line-height: 70px;
+        color: #FFF;
+        text-decoration: none;
+        text-align: center;
+        background-color: #32cd32;
+        border-radius: 5px;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+    .submit:hover{
+         background-color: #7fff00;
+    }
+
+
 </style>
 <body>
 
@@ -53,7 +68,7 @@
             <p class="id"><input type="text" name="ID"/></p>
             <p>パスワード</p>
             <p class="pass"><input type="password" name="pass" /></p>
-            <p class="submit"><input type="submit" value="ログイン" /></p>
+            <input type="submit" class="submit" value="ログイン" />
         </form>
     </div>
 </body>

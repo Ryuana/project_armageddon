@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>精算管理項目画面</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
           integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -21,9 +21,61 @@
         .hide {
             display: none;
         }
+
+          h1{
+              text-align: center;
+              font-size: 30px;
+              color: #a9a9a9;
+              position: relative;
+              top: 70px;
+          }
+
+          table{
+              position: relative;
+              top: 70px;
+          }
+          table th{
+              position: relative;
+              left: 80px;
+          }
+
+          nav ul{
+            display: table;
+            margin: 0 auto;
+            padding: 0 ;
+            width: 80%;
+            text-align: center;
+            text-decoration: none;
+            }
+            nav li{
+            display: table-cell;
+            min-width: 50px;
+            text-decoration: none;
+            }
+            nav a {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                color: #555;
+                padding-bottom: 5px;
+            }
+
+
+
     </style>
 </head>
 <body>
+
+<nav>
+<ul>
+<li class=”current”><a href=”#”>戻る</a></li>
+<li><a href=”#”>精算項目</a></li>
+<li><a href=”#”>LINEBOT/QA管理</a></li>
+<li><a href=”#”>メッセージ管理</a></li>
+<li><a href=”#”>ログアウト</a></li>
+</ul>
+</nav>
+
 <h1>精算管理項目</h1>
 <table class="table table-striped" id="target">
     <thead>
