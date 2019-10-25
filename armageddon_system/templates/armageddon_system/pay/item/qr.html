@@ -5,11 +5,49 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 　　　<script src="jquery.qrcode.min.js"></script>
     <title>QRコード表示画面</title>
+    <style>
+        body{
+            font-size: 20px;
+        }
+
+        #app_form{
+            text-align: center;
+            position: relative;
+            bottom: 100px;
+            left: 100px;
+
+        }
+        #price{
+            text-align: center;
+            position: relative;
+            bottom: 50px;
+            left: 100px;
+        }
+        #printing{
+            position: relative;
+            top: 30px;
+            left: 870px;
+        }
+        #qrcode{
+            width: 250px;
+            height: 250px;
+            background: #555555;
+            opacity: 0.3;
+            position: relative;
+            top: 150px;
+            left: 210px;
+        }
+    </style>
 </head>
 <body>
 <div id="qrcode"></div>
-<p>申請書名</p>
-<p>金額</p>
-<button id="printing">印刷</button>
+<div id="app_form">
+<p>申請書名</p><p></p>
+</div>
+
+<div id="price">
+<p>金額</p><p></p>
+</div>
+<button id="printing" style="width:60px;height:30px">印刷</button>
 </body>
 </html>
