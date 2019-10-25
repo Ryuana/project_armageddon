@@ -1,8 +1,17 @@
 from . import model as db
 import datetime
+import json
 
 
 class DynamoManager():
+    def get_pay_log_count(self):
+        count = 0
+        PayOffLog = db.PayOffLogsModel().scan()
+
+        for item in PayOffLog:
+            count += 1
+        return count
+
     def get_pay_log_all(self):
         """
         精算記録を全件取得します。
@@ -18,10 +27,11 @@ class DynamoManager():
         :param pay_log: map
         :rtype: void
         """
+        DM = DynamoManager()
         pom = db.PayOffLogsModel
-        pay_off_log = pom(pom.count() + 1)
-        pay_off_log.IsPaid = False
-        pay_off_log.PayOffLog = {
+        log = db.PayOffLogsModel(DM.get_pay_log_count() + 1)
+        log.IsPaid = False
+        log.PayOffLog = {
             'Timestamp': datetime.datetime.now(),
             'Total': 999999,
             'Buyer': {
@@ -44,7 +54,7 @@ class DynamoManager():
                 'Quantity': 999
             }],
         }
-        pay_off_log.save()
+        log.save()
 
     def del_pay_log(self, pay_log_id):
         """
