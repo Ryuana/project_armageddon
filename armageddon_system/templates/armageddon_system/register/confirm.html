@@ -3,16 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>最終確認画面</title>
+    <style>
+        body{
+            font-size: 20px;
+        }
+        #comment{
+              text-align: center;
+              font-size: 30px;
+              color: #808080;
+              position: relative;
+              top: 70px;
+          }
+        #items{
+            text-align: center;
+            position: relative;
+            top: 100px;
+            right: 100px;
+        }
+        #items p{
+            margin-bottom: 30px;
+        }
+        .count{
+            text-align: center;
+            position: relative;
+            left: 220px;
+            bottom: 60px;
+        }
+        .value{
+            position: relative;
+            left: 180px;
+        }
+        #complate_btn{
+            text-align: center;
+            position: relative;
+            top: 80px;
+        }
+        button{
+            position: relative;
+            left: 633px;
+            top: 140px;
+
+        }
+    </style>
 </head>
 <body>
-<p>以下の情報でLINEPay決済します</p>
+<p id="comment">以下の情報でLINEPay決済します</p>
+<div id="items">
 申請者名:<p class="name"></p>
 学籍番号:<p class="school_num"></p>
 申請書名:<p class="app_form"></p>
-<p class="count">1</p>枚
-<form>
+    <p class="value">1</p><p class="count">枚</p>
+</div>
+
+<form id="complate_btn">
     <input type="submit" value="LINEPay決済">
 </form>
-<button>キャンセル</button>
+<button id="cancel_btn">キャンセル</button>
 </body>
 </html>
