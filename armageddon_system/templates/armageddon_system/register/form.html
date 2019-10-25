@@ -4,17 +4,86 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>申請者情報入力画面</title>
+
+    <style>
+         h1{
+              text-align: center;
+              font-size: 30px;
+              color: #a9a9a9;
+              position: relative;
+              top: 70px;
+          }
+
+         #school_num{
+             position: relative;
+             left: 550px;
+         }
+         #school_num p{
+            position: relative;
+            top: 40px;
+            right: 100px;
+        }
+
+         #app_name{
+             position: relative;
+             top: 15px;
+             left: 550px;
+         }
+
+         #app_name p{
+            position: relative;
+            top: 40px;
+            right: 100px;
+        }
+
+        #input_plural{
+            position: relative;
+            left: 550px;
+        }
+        .count{
+            position: relative;
+            left: 810px;
+            top: 25px;
+            width: 20px;
+        }
+
+        #qr_btn{
+            position: relative;
+            top: 90px;
+            left: 610px;
+        }
+        #send_btn{
+            position: relative;
+            top: 120px;
+            left: 620px;
+        }
+        #app_form p{
+            position: relative;
+            top: 67px;
+            left: 450px;
+        }
+    </style>
 </head>
 <body>
+
+<div id="school_num">
 <p>学籍番号</p>
-学籍番号がない場合<input type="checkbox" name="check" value="check">
-<p>申請者名</p>
+     <input type="text" class="school-control" placeholder="">
+     学籍番号がない場合<input type="checkbox" name="check" value="check">
+</div>
+
+<div id="app_name">
+    <p>申請者名</p>
+    <input type="text" class="name-control" placeholder="">
+</div>
+
+<div id="app_form">
 <p>申請書名</p>
     <input class="count" type="text" name="quantity" value="1" tabindex="1">
-    <div class="button">
+    <!--<div class="button">
         <input type="button" name="spinner_up" class="spinner_up" value="" onclick="javascript:spinner('up');">
         <input type="button" name="spinner_up" class="spinner_down" value="" onclick="javascript:spinner('down');">
-    </div>
+    </div>-->
 
 <div id="input_pluralBox">
     <div id="input_plural">
@@ -23,9 +92,12 @@
         <input type="button" value="－" class="del pluralBtn">
     </div>
 </div>
-<button>QR読取</button>
+</div>
+
+<button id="qr_btn">QR読取</button>
+
 <form>
-    <input type="submit" value="決定">
+    <input id="send_btn" type="submit" value="決定">
 </form>
 
 </body>
