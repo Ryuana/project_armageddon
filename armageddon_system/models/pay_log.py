@@ -22,6 +22,6 @@ class PayLog:
             self.form_list.append(
                 dict({'form': Form(l.form_id, l.form_name, l.fee, l.issuance_days, l.qr), 'quantity': l.quantity})
             )
-            self.total += l.Form.fee * l.quantity
+            self.total += l.fee * l.quantity
 
 
