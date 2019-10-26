@@ -10,12 +10,19 @@ command:{{ cmd }}
 <br>
 {{ pay_log }}
 
-ADD PAY LOG ->
-<input type="button"
-       onclick="location.href='./dynamo?cmd=add_pay_log'"
-       value="追加">
 <br>
 Pay log count:{{ pom_count }}
+<br>
+DELETE PAY LOG ->
+<input type="button"
+onclick="location.href='./dynamo?cmd=delete_pay_log&id={{ pom_count }}'"
+value="削除">
+<br>
+ADD PAY LOG ->
+<input type="button"
+onclick="location.href='./dynamo?cmd=add_pay_log&id={{ pom_count| add:1 }}'"
+value="追加">
+<br>
 <br>
 ↓↓pom_data(ALL)↓↓<br>
 {{ pom_data }}

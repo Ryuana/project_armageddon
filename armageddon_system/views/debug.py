@@ -11,9 +11,14 @@ def debug(request):
 def dynamo(request):
     cmd = request.GET.get('cmd')
     context = {}
+    id = request.GET.get('id')
+    if id:
+        id = int(id)
     context['cmd'] = cmd
     if cmd == "add_pay_log":
-        add_pay_log()
+        add_pay_log(id)
+    if cmd == "delete_pay_log":
+        delete_pay_log(id)
     # dbm = db.DynamoManager()
     # pay_log = dbm.get_pay_log_all()
     # context = {'pay_log': pay_log}
@@ -27,10 +32,14 @@ def dynamo(request):
     dbm = db.DynamoManager()
     pom_count = dbm.get_pay_log_count()
 
-    context['pom_count'] = pom_count+1
+    context['pom_count'] = pom_count
     return render(request, 'armageddon_system/debug/testDynamo.html', context)
 
 
-def add_pay_log():
+def add_pay_log(id):
     dbm = db.DynamoManager()
-    dbm.save_pay_log("a")
+    dbm.save_pay_log(id,"a")
+
+def delete_pay_log(id):
+    dbm = db.DynamoManager()
+    dbm.del_pay_log(id)
