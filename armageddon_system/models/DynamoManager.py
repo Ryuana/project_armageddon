@@ -79,7 +79,7 @@ class DynamoManager():
         :param pay_item: map
         :rtype: void
         """
-        new_form = db.FormsModel(form.form_id)
+        new_form = db.FormsModel(int(form.form_id))
         # Formsの項目に埋め込む処理
         new_form.FormName = form.form_name
         new_form.Fee = int(form.fee)
