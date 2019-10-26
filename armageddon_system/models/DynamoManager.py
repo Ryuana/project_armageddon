@@ -72,7 +72,7 @@ class DynamoManager():
         # pay_itemsの
         return all_form
 
-    def save_form(self, pay_item):
+    def save_form(self, form):
         """
         精算項目を保存します。
         :param pay_item: map

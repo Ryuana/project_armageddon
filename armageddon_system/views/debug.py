@@ -55,12 +55,16 @@ def form(request):
     from armageddon_system import forms
     context = {}
     if request.method == 'POST':
-        form = forms.createformForm(request.POST)
-        form_id = form['FORM_ID']
-        form_name = form['FORM_NAME']
-        fee = form['FEE']
-        qr = form['QR']
+        form_item = forms.createformForm(request.POST)
+        form_id = form_item['FORM_ID']
+        form_name = form_item['FORM_NAME']
+        fee = form_item['FEE']
+        qr = form_item['QR']
+        from armageddon_system.models import form
+        form.Form(form_id=form_id, form_name=form_name, fee=fee, qr=qr)
+
+
     else:
-        form = forms.createformForm()
-    context['form'] = form
+        form_item = forms.createformForm()
+    context['form'] = form_item
     return render(request, 'armageddon_system/debug/dynamo_form.html', context)
