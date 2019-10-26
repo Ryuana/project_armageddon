@@ -104,5 +104,12 @@
     <input id="send_btn" type="submit" value="決定">
 </form>
 
+  <p>決済方法を選択してください</p>
+  <form action="./confirm" method="post">
+      {% csrf_token %}
+    <button type="submit">決済</button>
+  </form>
+
+
 </body>
 </html>
