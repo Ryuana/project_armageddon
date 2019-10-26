@@ -153,3 +153,5 @@ if not SchoolsModel.exists():
     SchoolsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
 if not UsersModel.exists():
     UsersModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not Transactions.exists():
+    Transactions.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
