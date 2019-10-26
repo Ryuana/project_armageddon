@@ -1,6 +1,7 @@
 from . import model as db
 import datetime
 import json
+from armageddon_system.models.form import Form
 
 
 class DynamoManager():
@@ -72,15 +73,20 @@ class DynamoManager():
         # pay_itemsの
         return all_form
 
-    def save_form(self, form):
+    def save_form(self, form:Form):
         """
         精算項目を保存します。
         :param pay_item: map
         :rtype: void
         """
-        form = db.FormsModel()
+        new_form = db.FormsModel(form.form_id)
         # Formsの項目に埋め込む処理
-        form.save()
+        new_form.FormName = form.form_name
+        new_form.Fee = int(form.fee)
+        new_form.IssuanceDays = int(form.issuance_days)
+        new_form.QR = form.qr
+
+        new_form.save()
 
     def del_form(self, form_id):
         """
