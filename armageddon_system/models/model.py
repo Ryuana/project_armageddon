@@ -13,7 +13,10 @@ class FormsModel(Model):
         region = env.AWS_REGION
 
     FormId = NumberAttribute(hash_key=True)
-    Form = attributes.FormAttribute(null=True)
+    FormName = UnicodeAttribute(null=False)
+    Fee = NumberAttribute(null=False)
+    IssuanceDays = NumberAttribute(null=False)
+    QR = UnicodeAttribute(null=True)
 
     def __iter__(self):
         for name, attr in self._get_attributes().items():
