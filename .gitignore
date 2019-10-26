@@ -1,0 +1,5 @@
+.gitignore
+armageddon_system/__pycache__/
+armageddon_system/migrations/__pycache__/
+project_armageddon/__pycache__/
+armageddon_system/env.py
