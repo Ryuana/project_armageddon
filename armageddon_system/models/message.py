@@ -2,7 +2,7 @@ class Message:
 
     message_id = 0
     message = ""
-    image:bytearray = ""
+    image: bytearray = ""
     create_date = ""
 
     def __init__(self, message_id, message, image, create_date):
