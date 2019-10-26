@@ -13,6 +13,8 @@ LINE_PAY_CONFIRM_URL = env.LINE_PAY_CONFIRM_URL
 pay = LinePay(channel_id=LINE_PAY_CHANNEL_ID, channel_secret=LINE_PAY_CHANNEL_SECRET, line_pay_url=LINE_PAY_URL,
               confirm_url=LINE_PAY_CONFIRM_URL)
 
+def register_form(request):
+    return render(request, 'armageddon_system/register/form.html')
 
 def register_confirm(request):
     product_name = "卒業証明書(テスト)"
@@ -35,9 +37,6 @@ def register_confirm(request):
     obj.currency = currency
     obj.save()
 
-    # db.session.add(obj)
-    # db.session.commit()
-    # db.session.close()
     redirect_url = response["info"]["paymentUrl"]["web"]
     return redirect(redirect_url)
     # return render(request, 'armageddon_system/register/confirm.html')

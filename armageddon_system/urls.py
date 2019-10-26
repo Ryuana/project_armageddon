@@ -15,9 +15,9 @@ urlpatterns = [
     # path('accounts/', include('django.contrib.auth.urls'))
 
     # LINE PAY #
-    path('register/confirm', views.register.confirm, name='confirm'),
-    path('register/form', views.register.form, name='form'),
-    path('register/linepay',views.confirm.linepay_confirm, name='linepay.confirm')
+    path('register/confirm', views.register.register_confirm, name='confirm'),
+    path('register/form', views.register.register_form, name='form'),
+    path('register/linepay',views.register.linepay_confirm, name='linepay.confirm'),
 
     # デバッグ用 #
     path('debug', views.debug.debug, name='debug'),
