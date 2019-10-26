@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from armageddon_system.models import DynamoManager as db
 from armageddon_system.models import model
 import json
@@ -38,8 +38,29 @@ def dynamo(request):
 
 def add_pay_log(id):
     dbm = db.DynamoManager()
-    dbm.save_pay_log(id,"a")
+    dbm.save_pay_log(id, "a")
+
 
 def delete_pay_log(id):
     dbm = db.DynamoManager()
     dbm.del_pay_log(id)
+
+
+def paylog(request):
+    context = {}
+    return render(request, 'armageddon_system/debug/dynamo_paylog.html', context)
+
+
+def form(request):
+    from armageddon_system import forms
+    context = {}
+    if request.method == 'POST':
+        form = forms.createformForm(request.POST)
+        form_id = form['FORM_ID']
+        form_name = form['FORM_NAME']
+        fee = form['FEE']
+        qr = form['QR']
+    else:
+        form = forms.createformForm()
+    context['form'] = form
+    return render(request, 'armageddon_system/debug/dynamo_form.html', context)

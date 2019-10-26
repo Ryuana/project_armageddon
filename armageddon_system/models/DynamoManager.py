@@ -63,7 +63,7 @@ class DynamoManager():
         pay_log = db.PayOffLogsModel.get(hash_key=pay_log_id)
         pay_log.delete()
 
-    def get_pay_item_all(self):
+    def get_form_all(self):
         """
         精算項目を全件取得します。
         :rtype: pay_items: list of map
@@ -72,7 +72,7 @@ class DynamoManager():
         # pay_itemsの
         return all_form
 
-    def save_pay_item(self, pay_item):
+    def save_form(self, pay_item):
         """
         精算項目を保存します。
         :param pay_item: map
@@ -82,7 +82,7 @@ class DynamoManager():
         # Formsの項目に埋め込む処理
         form.save()
 
-    def del_pay_item(self, form_id):
+    def del_form(self, form_id):
         """
         指定したIDの精算項目を削除します。
         :param form_id:　int
