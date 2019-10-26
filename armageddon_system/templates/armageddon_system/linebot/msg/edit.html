@@ -2,9 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>メッセージ・画像設定画面</title>
+
+    <style>
+          h1{
+              text-align: center;
+              font-size: 30px;
+              color: #a9a9a9;
+              position: relative;
+              top: 70px;
+          }
+
+          table th{
+              position: relative;
+              left: 80px;
+          }
+
+          nav ul{
+            display: table;
+            margin: 0 auto;
+            padding: 0 ;
+            width: 80%;
+            text-align: center;
+            text-decoration: none;
+            }
+            nav li{
+            display: table-cell;
+            min-width: 50px;
+            text-decoration: none;
+            }
+            nav a {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                color: #555;
+                padding-bottom: 5px;
+            }
+            #message{
+                position: relative;
+                top: 150px;
+                left: 150px;
+            }
+            #img{
+                position: relative;
+                top: 25px;
+                left: 800px;
+
+            }
+        #save_btn{
+            position: relative;
+            top: 60px;
+            left: 300px;
+        }
+        #send_btn{
+            position: relative;
+            top: 60px;
+            left: 900px;
+        }
+    </style>
 </head>
+
 <body>
 
+<nav>
+<ul>
+<li class=”current”><a href=”#”>戻る</a></li>
+<li><a href=”#”>精算項目</a></li>
+<li><a href=”#”>LINEBOT/QA管理</a></li>
+<li><a href=”#”>メッセージ管理</a></li>
+<li><a href=”#”>ログアウト</a></li>
+</ul>
+</nav>
+
+<h1>メッセージ・画像</h1>
+<div id="message">
+<p>メッセージ</p>
+<textarea name="message_area" rows="4" cols="40"></textarea><br>
+</div>
+
+
+<div id="img">
+<p>画像</p>
+<form method="post" enctype="multipart/form-data">
+<input type="file" name="pic">
+</form>
+<canvas id="canvas"></canvas>
+</div>
+
+<input type="submit" value="保存" id="save_btn">
+<input type="submit" value="送信" id="send_btn">
 </body>
 </html>

@@ -2,9 +2,160 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>精算記録画面</title>
+
+    <style>
+    h1{
+      text-align: center;
+      color:#696969;
+      font-weight:100;
+      text-align: center;
+      position: relative;
+      bottom: 40px;
+    }
+    body{
+            font-size: 20px;
+        }
+
+    #downloadCsvBtn{
+      position: relative;
+        left: 960px;
+        top: 40px;
+    }
+
+    #menubar{
+        position: relative;
+        left: 160px;
+        bottom: 60px;
+    }
+    table{
+        position: relative;
+        left: 50px;
+        top: 70px;
+    }
+
+        * {
+            -webkit-transition-property: all;
+            -webkit-transition-duration: .2s;
+          -moz-transition-timing-function: cubic-bezier(100,50,21,6);
+            -moz-transition-property: all;
+        }
+
+    body{
+      padding:75px;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .btn{
+      color:#000;
+      background:#fff;
+      padding:10px 20px;
+      font-size:12px;
+      text-decoration:none;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      position: relative;
+      right: 75px;
+      margin-left: 50px;
+    }
+
+    .btn:hover{
+      border:none;
+      background:#32cd32;
+      padding:20px 20px;
+      color:#fff;
+    }
+    #school_name{
+        position: relative;
+        left: 220px;
+    }
+    #dates{
+        position: relative;
+        left: 220px;
+    }
+    </style>
 </head>
+
 <body>
+    <div id="menubar">
+    <a href="#" class="btn">戻る</a>
+    <a href="#" class="btn">精算項目</a>
+    <a href="#" class="btn">LINEBot/QA管理</a>
+    <a href="#" class="btn">メッセージ管理</a>
+　　　<a href="#" class="btn">ログアウト</a>
+    </div>
+
+<h1>精算記録</h1>
+
+<div id="school_name">
+<p>学校名</p>
+<select name="school">
+<option value="num1">麻生情報ビジネス</option>
+<option value="num2">麻生公務員</option>
+<option value="num3">麻生製菓</option>
+<option value="num4">麻生外国語</option>
+</select>
+</div>
+
+<div id="dates">
+<p>日付</p>
+<select name="date" id="date01">
+<!--セレクトメニューはPython側で-->
+</select>
+~
+<select name="date" id="date02">
+<!--セレクトメニューはPython側で-->
+</select>
+</div>
+
+
+<button type="button" id="downloadCsvBtn">
+    CSV出力
+</button>
+
+<table border="1">
+
+  <thead>
+  <tr id="object">
+    <th width="140" height="40">日時</th>
+    <th width="140" height="40">学校名</th>
+    <th width="140" height="40">学科</th>
+    <th width="140" height="40">学籍番号</th>
+    <th width="140" height="40">申請書名</th>
+    <th width="140" height="40">枚数</th>
+    <th width="140" height="40">金額</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr id="date">
+    <td></td>
+  </tr>
+  <tr id="school_name">
+    <td></td>
+  </tr>
+  <tr id="subject">
+    <td></td>
+  </tr>
+  <tr id="school_number">
+    <td></td>
+  </tr>
+  <tr id="app_form">
+    <td></td>
+  </tr>
+  <tr id="count">
+    <td></td>
+  </tr>
+  <tr id="price">
+    <td></td>
+  </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th id="total" colspan="2">合計</th>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
 
 </body>
 </html>
