@@ -1,4 +1,4 @@
-from  armageddon_system.models.form import Form
+from armageddon_system.models.form import Form
 
 class PayLog:
 
