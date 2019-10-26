@@ -56,12 +56,16 @@ def form(request):
     context = {}
     if request.method == 'POST':
         form_item = forms.createformForm(request.POST)
-        form_id = form_item['FORM_ID']
-        form_name = form_item['FORM_NAME']
-        fee = form_item['FEE']
-        qr = form_item['QR']
+        post_item = request.POST
+        form_id = int(post_item['FORM_ID'])
+        form_name = post_item['FORM_NAME']
+        fee = post_item['FEE']
+        qr = post_item['QR']
+        issuance_days = post_item['ISSUANCE_DAYS']
         from armageddon_system.models import form
-        form.Form(form_id=form_id, form_name=form_name, fee=fee, qr=qr)
+        new_form = form.Form(form_id=form_id, form_name=form_name, fee=fee, qr=qr, issuance_days=issuance_days)
+        dbm = db.DynamoManager()
+        dbm.save_form(new_form)
 
 
     else:
