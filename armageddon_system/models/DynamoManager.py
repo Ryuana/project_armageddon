@@ -64,9 +64,10 @@ class DynamoManager():
         pay_log = db.PayOffLogsModel.get(hash_key=pay_log_id)
         pay_log.delete()
 
-    def get_form_all(self):
+    def get_form_all(self, is_ascending=False):
         """
-        精算項目を全件取得します。
+        精算項目を全件取得します。(通常はidで降順)
+        is_ascending=Trueの場合昇順
         :rtype: all_form: list of map
         """
         all_form = db.FormsModel.scan()
@@ -81,7 +82,8 @@ class DynamoManager():
                 qr=item.QR
             )
             return_items.append(form)
-
+        if is_ascending:
+            return_items = reversed(return_items)
         return return_items
 
     def save_form(self, form: Form):
