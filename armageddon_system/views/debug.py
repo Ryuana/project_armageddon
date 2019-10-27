@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from armageddon_system.models import DynamoManager as db
+from armageddon_system.models import dynamo_manager as db
 from armageddon_system.models import model
 import json
 
@@ -71,5 +71,5 @@ def form(request):
     else:
         form_item = forms.createformForm()
     context['form'] = form_item
-    context['all_form'] = dbm.get_form_all()
+    context['all_form'] = dbm.get_form_all(is_ascending=True)
     return render(request, 'armageddon_system/debug/dynamo_form.html', context)
