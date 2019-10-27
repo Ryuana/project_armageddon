@@ -7,7 +7,7 @@ def display_form_item(request):
 
     forms: list[Form] = db.get_pay_item_all()
 
-    return render(request, 'armageddon_system/linebot/msg/list.html', {'forms': forms})
+    return render(request, 'armageddon_system/pay/item/list.html', {'forms': forms})
 
 def save_form_item(request,forms):
 
