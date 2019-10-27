@@ -67,13 +67,24 @@ class DynamoManager():
     def get_form_all(self):
         """
         精算項目を全件取得します。
-        :rtype: pay_items: list of map
+        :rtype: all_form: list of map
         """
         all_form = db.FormsModel.scan()
         # pay_itemsの
-        return all_form
+        return_items = []
+        for item in all_form:
+            form = Form(
+                form_id=item.FormId,
+                form_name=item.FormName,
+                fee=item.Fee,
+                issuance_days=item.IssuanceDays,
+                qr=item.QR
+            )
+            return_items.append(form)
 
-    def save_form(self, form:Form):
+        return return_items
+
+    def save_form(self, form: Form):
         """
         精算項目を保存します。
         :param pay_item: map
