@@ -54,6 +54,8 @@ def paylog(request):
 def form(request):
     from armageddon_system import forms
     context = {}
+    dbm = db.DynamoManager()
+
     if request.method == 'POST':
         form_item = forms.createformForm(request.POST)
         post_item = request.POST
@@ -64,11 +66,10 @@ def form(request):
         issuance_days = post_item['ISSUANCE_DAYS']
         from armageddon_system.models import form
         new_form = form.Form(form_id=form_id, form_name=form_name, fee=fee, qr=qr, issuance_days=issuance_days)
-        dbm = db.DynamoManager()
         dbm.save_form(new_form)
-
 
     else:
         form_item = forms.createformForm()
     context['form'] = form_item
+    context['all_form'] = dbm.get_form_all()
     return render(request, 'armageddon_system/debug/dynamo_form.html', context)
