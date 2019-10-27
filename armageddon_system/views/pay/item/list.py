@@ -18,6 +18,7 @@ def save_form_item(request,forms):
     return HttpResponse()
 
 def delete_form_item(request, form_id):
+
     """
     form_idをもとに該当するデータを削除する処理
     """
