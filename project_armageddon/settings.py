@@ -51,7 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project_armageddon.urls'
-AUTH_USER_MODEL = 'project_armageddon.User'
+# AUTH_USER_MODEL = 'project_armageddon.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -118,5 +118,5 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-LOGIN_REDIRECT_URL = '/'
+STATIC_URL = '/static/'
+# LOGIN_REDIRECT_URL = '/'
