@@ -1,7 +1,8 @@
-from . import model as db
+from . import DynamoClass as db
+from . import arrmagedon_models as model
+
 import datetime
 import json
-from armageddon_system.models.form import Form
 
 
 class DynamoManager():
@@ -20,7 +21,43 @@ class DynamoManager():
         """
 
         all_pay_off_log = db.PayOffLogsModel.scan()
-        return all_pay_off_log
+        return_items = []
+        for item in all_pay_off_log:
+            pay_log_form_list = []
+            for form_item in item.PayOffLog.PayItems:
+                pay_log_form_item = {
+                    "pay_item_no": form_item.PayItemNo,
+                    "form": model.Form(
+                        form_name=form_item.FormName,
+                        form_id=form_item.FormId,
+                        fee=form_item.Fee,
+                        issuance_days=None,
+                        qr=None
+                    ),
+                    "quantity": form_item.Quantity
+                }
+                pay_log_form_list.append(pay_log_form_item)
+
+            buyer_item = item.PayOffLog.Buyer
+            buyer = {
+                'student_id': buyer_item.BuyerNo,
+                'school_id': buyer_item.SchoolId,
+                'school_name': buyer_item.SchoolName,
+                'course_id': buyer_item.CourseId,
+                'course_name': buyer_item.CourseName,
+            }
+            pay_log_item = model.PayLog(
+                time_stamp=item.PayOffLog.Timestamp,
+                # student_id=item.PayOffLog['Buyer']['BuyerNo'],
+                student_id=buyer['student_id'],
+                school_id=buyer['school_id'],
+                school_name=buyer['school_name'],
+                course_id=buyer['course_id'],
+                course_name=buyer['course_name'],
+                form_list=pay_log_form_list
+            )
+            return_items.append(pay_log_item)
+        return return_items
 
     def save_pay_log(self, id, pay_log):
         """
@@ -42,16 +79,22 @@ class DynamoManager():
                 'CourseId': 999999,
                 'CourseName': 'test'
             },
-            'PayItems': [{
-                'PayItemNo': 99999,
-                'Form': {
-                    'FormName': 'test',
+            'PayItems': [
+                {
+                    'PayItemNo': 1,
+                    'FormId': 1,
+                    'FormName': '証明書',
                     'Fee': 99999,
-                    'IssuanceDays': 65535,
-                    'QR': 'this is QR code.'
+                    'Quantity': 999
                 },
-                'Quantity': 999
-            }],
+                {
+                    'PayItemNo': 2,
+                    'FormId': 2,
+                    'FormName': '証明書2',
+                    'Fee': 99999,
+                    'Quantity': 999
+                }
+            ],
         }
         log.save()
 
@@ -74,7 +117,7 @@ class DynamoManager():
         # pay_itemsの
         return_items = []
         for item in all_form:
-            form = Form(
+            form = model.Form(
                 form_id=item.FormId,
                 form_name=item.FormName,
                 fee=item.Fee,
@@ -86,7 +129,7 @@ class DynamoManager():
             return_items = reversed(return_items)
         return return_items
 
-    def save_form(self, form: Form):
+    def save_form(self, form: model.Form):
         """
         精算項目を保存します。
         :param pay_item: map
