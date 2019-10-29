@@ -20,7 +20,9 @@ class PayLog:
         self.course_name = course_name
         self.form_list = []
         for l in form_list:
+            form = l['form']
             self.form_list.append(
-                {'form': l['form'], 'quantity': l['quantity']}
+                {'form': form, 'quantity': l['quantity']}
             )
-            # self.total += l['form']['fee'] * l['quantity']
+
+            self.total += form.fee * l['quantity']

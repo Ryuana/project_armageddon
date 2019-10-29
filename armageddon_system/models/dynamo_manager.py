@@ -59,25 +59,25 @@ class DynamoManager():
             return_items.append(pay_log_item)
         return return_items
 
-    def save_pay_log(self, id, pay_log):
+    def save_pay_log(self, id, pay_log: model.PayLog, IsPaid=False):
         """
         精算記録を保存します。
         :param pay_log: map
         :rtype: void
         """
         log = db.PayOffLogsModel(id)
-        log.IsPaid = False
+        log.IsPaid = IsPaid
         log.PayOffLog = {
-            'Timestamp': datetime.datetime.now(),
-            'Total': 999999,
+            'Timestamp': pay_log.time_stamp,
+            'Total': pay_log.total,
             'Buyer': {
-                'BuyerNo': 999999,
-                'BuyerName': 'test',
-                'BirthDay': datetime.datetime.now(),
-                'SchoolId': 999999,
-                'SchoolName': 'test',
-                'CourseId': 999999,
-                'CourseName': 'test'
+                'BuyerNo': pay_log.student_id,
+                # 'BuyerName': pay_log.,
+                # 'BirthDay': datetime.datetime.now(),
+                'SchoolId': pay_log.school_id,
+                'SchoolName': pay_log.school_name,
+                'CourseId': pay_log.course_id,
+                'CourseName': pay_log.course_name
             },
             'PayItems': [
                 {
