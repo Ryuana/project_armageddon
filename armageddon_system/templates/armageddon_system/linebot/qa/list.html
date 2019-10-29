@@ -21,59 +21,88 @@
         .hide {
             display: none;
         }
-        body{
+       h1{
+      text-align: center;
+      color:#696969;
+      font-weight:100;
+      text-align: center;
+      position: relative;
+      bottom: 90px;
+    }
+    body{
             font-size: 20px;
         }
-          h1{
-              text-align: center;
-              font-size: 30px;
-              color: #a9a9a9;
-              position: relative;
-              top: 70px;
-          }
 
-          table{
-              position: relative;
-              top: 70px;
-          }
+        * {
+            -webkit-transition-property: all;
+            -webkit-transition-duration: .2s;
+          -moz-transition-timing-function: cubic-bezier(100,50,21,6);
+            -moz-transition-property: all;
+        }
 
-          table th{
-              position: relative;
-              left: 80px;
-          }
+    body{
+      padding:75px;
+      font-family: 'Oswald', sans-serif;
+    }
 
-          nav ul{
-            display: table;
-            margin: 0 auto;
-            padding: 0 ;
-            width: 80%;
-            text-align: center;
-            text-decoration: none;
-            }
-            nav li{
-            display: table-cell;
-            min-width: 50px;
-            text-decoration: none;
-            }
-            nav a {
-                display: block;
-                width: 100%;
-                text-decoration: none;
-                color: #555;
-                padding-bottom: 5px;
-            }
+         .panel ul{
+		text-align: left;
+		color: #000;
+	}
+	.panel li{
+		display: inline-block;
+        vertical-align: middle;
+		color: #000;
+        position: relative;
+        right: 52px;
+        bottom: 122px;
+        margin: 50px;
+	}
+	.panel a{
+		font-weight: bold;
+		position: relative;
+		top: 20px;
+		left: 110px;
+        color:#000;
+		text-decoration: none;
+	}
+	.panel a::after{
+      position: absolute;
+	  bottom: -4px;
+	  left: 0;
+	  content: '';
+	  width: 100%;
+	  height: 2px;
+	  background: #008000;
+	  transform: scale(0, 1);
+	  transform-origin: left top;
+	  transition: transform .3s;
+	}
+	.panel a:hover::after{
+		transform: scale(1, 1);
+	}
+    table{
+        position: relative;
+        top: 70px;
+          }
+    table th{
+        position: relative;
+        left: 80px;
+          }
     </style>
 </head>
 <body>
 
 <nav>
-<ul>
-<li class=”current”><a href=”#”>戻る</a></li>
-<li><a href=”#”>精算項目</a></li>
-<li><a href=”#”>LINEBOT/QA管理</a></li>
-<li><a href=”#”>メッセージ管理</a></li>
-<li><a href=”#”>ログアウト</a></li>
-</ul>
+    <div class="panel">
+        <ul>
+            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
+            <li><a href="/pay/item/list">精算項目</a></li>
+            <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
+            <li><a href="/linebot/msg/list">メッセージ管理</a></li>
+            <li><a href="#">ログアウト</a></li>
+        </ul>
+    </div>
 </nav>
 
 <h1>QA管理</h1>
