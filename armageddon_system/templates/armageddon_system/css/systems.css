@@ -171,7 +171,7 @@
          background-color: #7fff00;
     }
 /*QA管理画面*/
-         .panel ul{
+    .panel ul{
 		text-align: left;
 		color: #000;
 	}
@@ -222,11 +222,10 @@
                 top: 150px;
                 left: 150px;
             }
-            #img{
+           #img{
                 position: relative;
-                top: 25px;
+                bottom: 110px;
                 left: 800px;
-
             }
         #save_btn{
             position: relative;
@@ -276,3 +275,14 @@
             position: relative;
             bottom: 230px;
         }
+          textarea{
+        width: 400px;
+        height: 170px;
+    }
+     #canvas{
+        position: relative;
+        top: 40px;
+        right: 10px;
+        width: 300px;
+        height: 300px;
+    }
