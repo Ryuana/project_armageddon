@@ -11,6 +11,7 @@ class PayItemsAttribute(MapAttribute):
 
 
 class BuyerAttribute(MapAttribute):
+    BuyerType = NumberAttribute(null=True)
     BuyerNo = NumberAttribute(null=True)
     BuyerName = UnicodeAttribute(null=True)
     BirthDay = UTCDateTimeAttribute(null=True)

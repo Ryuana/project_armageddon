@@ -67,18 +67,35 @@ class DynamoManager():
         """
         log = db.PayOffLogsModel(id)
         log.IsPaid = IsPaid
-        log.PayOffLog = {
-            'Timestamp': pay_log.time_stamp,
-            'Total': pay_log.total,
-            'Buyer': {
+        buyer_info = {}
+        pay_items = []
+        for form_item in pay_log.form_list:
+            form_map = {
+                'PayItemNo': form_item,
+                'FormId': 1,
+                'FormName': '証明書',
+                'Fee': 99999,
+                'Quantity': 999
+
+            }
+            pay_items.append()
+        if pay_log.isStudent:
+            buyer_info = {
                 'BuyerNo': pay_log.student_id,
-                # 'BuyerName': pay_log.,
-                # 'BirthDay': datetime.datetime.now(),
                 'SchoolId': pay_log.school_id,
                 'SchoolName': pay_log.school_name,
                 'CourseId': pay_log.course_id,
                 'CourseName': pay_log.course_name
-            },
+            }
+        else:
+            buyer_info = {
+                'BuyerName': pay_log.buyer_name,
+                'BirthDay': pay_log.buyer_birth,
+            }
+        log.PayOffLog = {
+            'Timestamp': pay_log.time_stamp,
+            'Total': pay_log.total,
+            'Buyer': buyer_info,
             'PayItems': [
                 {
                     'PayItemNo': 1,
