@@ -1,16 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#from armageddon_system.models.session import Session as ss
 
-def login(request, user_id = 0, user_pass = ""):
-    """
-        if request.method == 'POST':
-        セッション管理クラスにID,Passを渡し、Trueが返ってきたら画面遷移
-    """
-    return render(request, 'armageddon_system/user/login.html')
+def login(request):
 
-def logout(request,user_id):
-    """
-    userIdを元にsession破棄
-    """
+    if request.method == 'GET':
+        return render(request, 'armageddon_system/user/login.html')
+    elif request.method == 'POST':
+        logch = False
+
+        if 'ID' in request.POST and 'pass' in request.POST:
+            request.session['user_id'] = request.POST['ID']
+            request.session['user_pass'] = request.POST['pass']
+            logch = True
+
+        if logch:
+            print(request.session['user_id'])
+            print(request.session['user_pass'])
+            return render(request, 'armageddon_system/pay/log.html')
+        else:
+            return render(request, 'armageddon_system/user/login.html')
+
+def logout(request):
     return render(request, 'armageddon_system/user/login.html')
