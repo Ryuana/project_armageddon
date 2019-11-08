@@ -1,4 +1,10 @@
 /*精算記録画面*/
+
+    h1{
+          text-align: center;
+          position: relative;
+          bottom: 150px;
+        }
     #downloadCsvBtn{
       position: relative;
         left: 960px;
