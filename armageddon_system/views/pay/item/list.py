@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from armageddon_system.models.form import Form
-from armageddon_system.models.DynamoManager import DynamoManager as db
+from armageddon_system.models.dynamo_manager import DynamoManager as db
 from django.http import HttpResponse
 
 def display_form_item(request):

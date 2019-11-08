@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from armageddon_system.models.qa import QA
-from armageddon_system.models.DynamoManager import DynamoManager as db
+from armageddon_system.models.dynamo_manager import DynamoManager as db
 from django.http import HttpResponse
 
 def display_qa_list(request):
