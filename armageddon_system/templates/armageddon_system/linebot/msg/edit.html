@@ -2,20 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>メッセージ・画像設定画面</title>
-    <link rel="stylesheet" type="text/css" href="systems.css">
-
+    <title>メッセージ・画像管理画面</title>
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
+          integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="armageddon_system/systems.css">
 </head>
 <style>
-  h1{
+    h1{
       text-align: center;
       position: relative;
-      bottom: 150px;
+      bottom: 80px;
+      right: 131px;
     }
+
     table{
         position: relative;
         left: 50px;
-        top: 70px;
+        top: 20px;
     }
 
         * {
@@ -31,28 +45,22 @@
       font-family: 'Oswald', sans-serif;
     }
 
-        #send_btn{
-            position: relative;
-            top: 120px;
-            left: 620px;
+        #items p{
+            margin-bottom: 30px;
         }
-        #app_form p{
+
+        button{
             position: relative;
-            top: 67px;
-            left: 450px;
+            left: 633px;
+            top: 140px;
         }
+
+
     form p{
         font-size: 20px;
         position: relative;
         left: 200px;
         top: 100px;
-        }
-
-    input[type="ID"],
-    input[type="password"] {
-        width: 300px;
-        padding: 4px;
-        font-size: 14px;
         }
 
     .panel ul{
@@ -91,51 +99,56 @@
 	.panel a:hover::after{
 		transform: scale(1, 1);
 	}
-    table{
+    table {
         position: relative;
-        top: 70px;
-          }
-    table th{
-        position: relative;
-        left: 80px;
-          }
-            #message{
-                position: relative;
-                top: 150px;
-                left: 150px;
-            }
-            #img{
-                position: relative;
-                bottom: 100px;
-                left: 800px;
-            }
-        #save_btn{
-            position: relative;
-            top: 60px;
-            left: 300px;
-        }
-        #send_btn{
-            position: relative;
-            top: 60px;
-            left: 900px;
-        }
-
+        top: 30px;
+        left: -35px;
+    }
         #systems{
             position: relative;
-            bottom: 230px;
+            bottom: 50px;
+            left: 100px;
         }
 
-    textarea{
-        width: 400px;
-        height: 170px;
-    }
-    #canvas{
+        #message{
+            position: relative;
+            right: 190px;
+            top: 70px;
+        }
+        #message p{
+            position: relative;
+            left: 180px;
+            bottom: 40px;
+        }
+
+        #img{
+            position: relative;
+            text-align: right;
+            right: 230px;
+            bottom: 150px;
+        }
+        #img p{
+            position: relative;
+            right: 210px;
+            bottom: 10px;
+        }
+
+        #canvas{
+            position: relative;
+            top: 40px;
+            right: 30px;
+        }
+
+    #save_btn{
         position: relative;
-        top: 40px;
-        right: 10px;
-        width: 300px;
-        height: 300px;
+        bottom: 100px;
     }
+    #send_btn{
+        position: relative;
+        bottom: 100px;
+        left: 600px;
+    }
+
 </style>
 <body>
 <nav>
@@ -150,7 +163,8 @@
     </div>
 </nav>
 
-<h1>メッセージ・画像</h1>
+<div id="systems">
+    <h1>メッセージ・画像</h1>
 <div id="systems">
 
 <div id="message">
@@ -169,8 +183,7 @@
 
 <input type="submit" value="保存" id="save_btn">
 <input type="submit" value="送信" id="send_btn">
-
-</div>
+    </div>
 
 <script>
 var file = document.getElementById('file');
@@ -213,3 +226,4 @@ function canvasDraw() {
 </script>
 </body>
 </html>
+
