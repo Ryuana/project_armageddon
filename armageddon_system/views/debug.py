@@ -48,6 +48,9 @@ def delete_pay_log(id):
 
 def paylog(request):
     context = {}
+    dbm = db.DynamoManager()
+    all_pay_log =  dbm.get_pay_log_all()
+    context['paylog'] = all_pay_log
     return render(request, 'armageddon_system/debug/dynamo_paylog.html', context)
 
 

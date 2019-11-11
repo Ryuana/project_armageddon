@@ -5,14 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-TIME_STAMP  = <input type="text" value="{{ now }}"><br>
-STUDENT_ID  = <input type="text" value="{{ now }}"><br>
-SCHOOL_ID   = <input type="text" value="{{ now }}"><br>
+TIME_STAMP = <input type="text" value="{{ now }}"><br>
+STUDENT_ID = <input type="text" value="{{ now }}"><br>
+SCHOOL_ID = <input type="text" value="{{ now }}"><br>
 SCHOOL_NAME = <input type="text" value="{{ now }}"><br>
-COURSE_ID   = <input type="text" value="{{ now }}"><br>
+COURSE_ID = <input type="text" value="{{ now }}"><br>
 COURSE_NAME = <input type="text" value="{{ now }}"><br>
-FORM_LIST   = <input type="text" value="{{ now }}"><br>
-TOTAL_FEE   = <input type="text" value="{{ now }}"><br>
+FORM_LIST = <input type="text" value="{{ now }}"><br>
+TOTAL_FEE = <input type="text" value="{{ now }}"><br>
+<br>
+{% for paylog_item in paylog %}
+    学籍番号:{{ paylog_item.student_id }}<br>
+    {#    {{ form_item.form_list }}#}
+    {% for list_item in paylog_item.form_list %}
+        ITEM_NO:{{ list_item.pay_item_no }}
+        ID:{{ list_item.form.form_id }}
+        NAME:{{ list_item.form.form_name }}
+        FEE:{{ list_item.form.fee }}
+        <br>
+    {% endfor %}
+    <br>
+{% endfor %}
+
 
 </body>
 </html>

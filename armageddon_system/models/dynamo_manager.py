@@ -1,8 +1,8 @@
-from . import model as db
+from . import DynamoClass as db
+from . import arrmagedon_models as model
+
 import datetime
 import json
-from armageddon_system.models.form import Form
-from armageddon_system.models.pay_log import PayLog
 
 
 class DynamoManager():
@@ -19,65 +19,82 @@ class DynamoManager():
         精算記録を全件取得します。
         :rtype: list of map
         """
-        form_list = [
-            {
-                'form':
-                {
-                    'form_id': '1',
-                    'form_name': "AA",
-                    'fee': 100,
-                    'issuance_days': 3,
-                    'qr': 'dog'
-                },
-                'quantity': 3
-            },
-            {
-                'form':
-                    {
-                        'form_id': '2',
-                        'form_name': "BB",
-                        'fee': 200,
-                        'issuance_days': 2,
-                        'qr': 'cat'
-                    },
-                'quantity': 2
+
+        all_pay_off_log = db.PayOffLogsModel.scan()
+        return_items = []
+        for item in all_pay_off_log:
+            pay_log_form_list = []
+            for form_item in item.PayOffLog.PayItems:
+                pay_log_form_item = {
+                    "pay_item_no": form_item.PayItemNo,
+                    "form": model.Form(
+                        form_name=form_item.FormName,
+                        form_id=form_item.FormId,
+                        fee=form_item.Fee,
+                        issuance_days=None,
+                        qr=None
+                    ),
+                    "quantity": form_item.Quantity
+                }
+                pay_log_form_list.append(pay_log_form_item)
+
+            buyer_item = item.PayOffLog.Buyer
+            buyer = {
+                'student_id': buyer_item.BuyerNo,
+                'school_id': buyer_item.SchoolId,
+                'school_name': buyer_item.SchoolName,
+                'course_id': buyer_item.CourseId,
+                'course_name': buyer_item.CourseName,
             }
-        ]
+            pay_log_item = model.PayLog(
+                time_stamp=item.PayOffLog.Timestamp,
+                # student_id=item.PayOffLog['Buyer']['BuyerNo'],
+                student_id=buyer['student_id'],
+                school_id=buyer['school_id'],
+                school_name=buyer['school_name'],
+                course_id=buyer['course_id'],
+                course_name=buyer['course_name'],
+                form_list=pay_log_form_list
+            )
+            return_items.append(pay_log_item)
+        return return_items
 
-        pay_logs = PayLog("20191029", 1801179, 1233, "AB", 2, "Jo", form_list)
-        #all_pay_off_log = db.PayOffLogsModel.scan()
-        return pay_logs
-
-    def save_pay_log(self, id, pay_log):
+    def save_pay_log(self, id, pay_log: model.PayLog, IsPaid=False):
         """
         精算記録を保存します。
         :param pay_log: map
         :rtype: void
         """
         log = db.PayOffLogsModel(id)
-        log.IsPaid = False
+        log.IsPaid = IsPaid
         log.PayOffLog = {
-            'Timestamp': datetime.datetime.now(),
-            'Total': 999999,
+            'Timestamp': pay_log.time_stamp,
+            'Total': pay_log.total,
             'Buyer': {
-                'BuyerNo': 999999,
-                'BuyerName': 'test',
-                'BirthDay': datetime.datetime.now(),
-                'SchoolId': 999999,
-                'SchoolName': 'test',
-                'CourseId': 999999,
-                'CourseName': 'test'
+                'BuyerNo': pay_log.student_id,
+                # 'BuyerName': pay_log.,
+                # 'BirthDay': datetime.datetime.now(),
+                'SchoolId': pay_log.school_id,
+                'SchoolName': pay_log.school_name,
+                'CourseId': pay_log.course_id,
+                'CourseName': pay_log.course_name
             },
-            'PayItems': [{
-                'PayItemNo': 99999,
-                'Form': {
-                    'FormName': 'test',
+            'PayItems': [
+                {
+                    'PayItemNo': 1,
+                    'FormId': 1,
+                    'FormName': '証明書',
                     'Fee': 99999,
-                    'IssuanceDays': 65535,
-                    'QR': 'this is QR code.'
+                    'Quantity': 999
                 },
-                'Quantity': 999
-            }],
+                {
+                    'PayItemNo': 2,
+                    'FormId': 2,
+                    'FormName': '証明書2',
+                    'Fee': 99999,
+                    'Quantity': 999
+                }
+            ],
         }
         log.save()
 
@@ -90,7 +107,7 @@ class DynamoManager():
         pay_log = db.PayOffLogsModel.get(hash_key=pay_log_id)
         pay_log.delete()
 
-    def get_form_all(is_ascending=False):
+    def get_form_all(self, is_ascending=False):
         """
         精算項目を全件取得します。(通常はidで降順)
         is_ascending=Trueの場合昇順
@@ -100,7 +117,7 @@ class DynamoManager():
         # pay_itemsの
         return_items = []
         for item in all_form:
-            form = Form(
+            form = model.Form(
                 form_id=item.FormId,
                 form_name=item.FormName,
                 fee=item.Fee,
@@ -112,7 +129,7 @@ class DynamoManager():
             return_items = reversed(return_items)
         return return_items
 
-    def save_form(self, form: Form):
+    def save_form(self, form: model.Form):
         """
         精算項目を保存します。
         :param pay_item: map
