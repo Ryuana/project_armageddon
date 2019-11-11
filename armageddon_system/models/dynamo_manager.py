@@ -2,6 +2,7 @@ from . import model as db
 import datetime
 import json
 from armageddon_system.models.form import Form
+from armageddon_system.models.pay_log import PayLog
 
 
 class DynamoManager():
@@ -18,9 +19,34 @@ class DynamoManager():
         精算記録を全件取得します。
         :rtype: list of map
         """
+        form_list = [
+            {
+                'form':
+                {
+                    'form_id': '1',
+                    'form_name': "AA",
+                    'fee': 100,
+                    'issuance_days': 3,
+                    'qr': 'dog'
+                },
+                'quantity': 3
+            },
+            {
+                'form':
+                    {
+                        'form_id': '2',
+                        'form_name': "BB",
+                        'fee': 200,
+                        'issuance_days': 2,
+                        'qr': 'cat'
+                    },
+                'quantity': 2
+            }
+        ]
 
-        all_pay_off_log = db.PayOffLogsModel.scan()
-        return all_pay_off_log
+        pay_logs = PayLog("20191029", 1801179, 1233, "AB", 2, "Jo", form_list)
+        #all_pay_off_log = db.PayOffLogsModel.scan()
+        return pay_logs
 
     def save_pay_log(self, id, pay_log):
         """
@@ -64,7 +90,7 @@ class DynamoManager():
         pay_log = db.PayOffLogsModel.get(hash_key=pay_log_id)
         pay_log.delete()
 
-    def get_form_all(self, is_ascending=False):
+    def get_form_all(is_ascending=False):
         """
         精算項目を全件取得します。(通常はidで降順)
         is_ascending=Trueの場合昇順

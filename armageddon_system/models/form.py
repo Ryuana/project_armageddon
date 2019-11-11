@@ -3,7 +3,7 @@ class Form:
     form_id = 0
     form_name = ""
     fee = 0
-    issuance_days = ""
+    issuance_days = 0
     qr = ""
 
     def __init__(self, form_id, form_name, fee, issuance_days, qr):

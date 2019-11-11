@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from armageddon_system.views import pay
 from django.http import HttpResponse
 
 def login(request):
@@ -6,19 +7,16 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'armageddon_system/user/login.html')
     elif request.method == 'POST':
-        logch = False
+        is_login_success = False
 
         if 'ID' in request.POST and 'pass' in request.POST:
             request.session['user_id'] = request.POST['ID']
             request.session['user_pass'] = request.POST['pass']
-            logch = True
+            is_login_success = True
+            #session_saveメソッドを作る
 
-        if logch:
-            print(request.session['user_id'])
-            print(request.session['user_pass'])
-            return render(request, 'armageddon_system/pay/log.html')
+        if is_login_success:
+            return pay.log(request)
+            # return render(request, 'armageddon_system/pay/log.html')
         else:
             return render(request, 'armageddon_system/user/login.html')
-
-def logout(request):
-    return render(request, 'armageddon_system/user/login.html')
