@@ -5,3 +5,4 @@ from armageddon_system.models.model import SchoolsModel
 from armageddon_system.models.model import MessagesModel
 from armageddon_system.models.model import AlermsModel
 from armageddon_system.models.model import QuestionAndAnswersModel
+from armageddon_system.models.model import Transactions

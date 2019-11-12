@@ -66,7 +66,8 @@
 
     <div id="form">
         <p class="form-title">ログイン</p>
-        <form action="post">
+        <form action="./login" method="post">
+             {% csrf_token %}
             <p>ID</p>
             <p class="id"><input type="text" name="ID"/></p>
             <p>パスワード</p>

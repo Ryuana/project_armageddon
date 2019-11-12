@@ -2,16 +2,11 @@ from pynamodb.attributes import UnicodeAttribute, BooleanAttribute, UTCDateTimeA
     ListAttribute
 
 
-class FormAttribute(MapAttribute):
-    FormName = UnicodeAttribute(null=False)
-    Fee = NumberAttribute(null=False)
-    IssuanceDays = NumberAttribute(null=False)
-    QR = UnicodeAttribute(null=True)
-
-
 class PayItemsAttribute(MapAttribute):
     PayItemNo = NumberAttribute(null=False)
-    Form = FormAttribute(null=False)
+    FormId = NumberAttribute(null=False)
+    FormName = UnicodeAttribute(null=False)
+    Fee = NumberAttribute(null=False)
     Quantity = NumberAttribute(null=False)
 
 
@@ -30,7 +25,6 @@ class PayOffLogAttribute(MapAttribute):
     Total = NumberAttribute(null=False)
     Buyer = BuyerAttribute(null=False)
     PayItems = ListAttribute(of=PayItemsAttribute)
-
 
 
 class QuestionAndAnswerAttribute(MapAttribute):

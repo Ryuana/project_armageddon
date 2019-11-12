@@ -1,6 +1,7 @@
 from . import model as db
 import datetime
 import json
+from armageddon_system.models.form import Form
 
 
 class DynamoManager():
@@ -18,18 +19,16 @@ class DynamoManager():
         :rtype: list of map
         """
 
-        PayOffLog = db.PayOffLogsModel.scan()
-        return PayOffLog
+        all_pay_off_log = db.PayOffLogsModel.scan()
+        return all_pay_off_log
 
-    def save_pay_log(self, pay_log):
+    def save_pay_log(self, id, pay_log):
         """
         精算記録を保存します。
         :param pay_log: map
         :rtype: void
         """
-        DM = DynamoManager()
-        pom = db.PayOffLogsModel
-        log = db.PayOffLogsModel(DM.get_pay_log_count() + 1)
+        log = db.PayOffLogsModel(id)
         log.IsPaid = False
         log.PayOffLog = {
             'Timestamp': datetime.datetime.now(),
@@ -62,33 +61,64 @@ class DynamoManager():
         :param pay_log_id: int
         :return: void
         """
+        pay_log = db.PayOffLogsModel.get(hash_key=pay_log_id)
+        pay_log.delete()
 
-    def get_pay_item_all(self, pay_items):
+    def get_form_all(self, is_ascending=False):
         """
-        精算項目を全件取得します。
-        :param pay_items: list of map
-        :rtype: void
+        精算項目を全件取得します。(通常はidで降順)
+        is_ascending=Trueの場合昇順
+        :rtype: all_form: list of map
         """
+        all_form = db.FormsModel.scan()
+        # pay_itemsの
+        return_items = []
+        for item in all_form:
+            form = Form(
+                form_id=item.FormId,
+                form_name=item.FormName,
+                fee=item.Fee,
+                issuance_days=item.IssuanceDays,
+                qr=item.QR
+            )
+            return_items.append(form)
+        if is_ascending:
+            return_items = reversed(return_items)
+        return return_items
 
-    def save_pay_item(self, pay_item):
+    def save_form(self, form: Form):
         """
         精算項目を保存します。
         :param pay_item: map
         :rtype: void
         """
+        new_form = db.FormsModel(int(form.form_id))
+        # Formsの項目に埋め込む処理
+        new_form.FormName = form.form_name
+        new_form.Fee = int(form.fee)
+        new_form.IssuanceDays = int(form.issuance_days)
+        new_form.QR = form.qr
 
-    def del_pay_item(self, form_id):
+        new_form.save()
+
+    def del_form(self, form_id):
         """
         指定したIDの精算項目を削除します。
         :param form_id:　int
         :rtype: void
         """
+        fm = db.FormsModel
+        form_item = fm.get(hash_key=form_id)
+        form_item.delete()
 
     def get_qa_all(self):
         """
         QAを全件取得します。
         :rtype: list of map
         """
+        all_qa = db.QuestionAndAnswersModel.scan()
+        # QAに埋め込む処理
+        return all_qa
 
     def save_qa(self, qa):
         """
@@ -96,6 +126,9 @@ class DynamoManager():
         :param qa:list of map
         :rtype: void
         """
+        qa = db.QuestionAndAnswersModel()
+        # QAに情報を埋め込む
+        qa.save()
 
     def del_qa(self, qa_id):
         """
@@ -103,12 +136,17 @@ class DynamoManager():
         :param qa_id: int
         :rtype: void
         """
+        qa = db.QuestionAndAnswersModel.get(qa_id)
+        qa.delete()
 
     def get_message_list(self):
         """
         LINE Botのメッセージを全件取得します。
         :rtype: list of map
         """
+        message_list = db.MessagesModel.scan()
+        # messageを埋め込む処理
+        return message_list
 
     def save_message_list(self, bot_message):
         """
@@ -116,6 +154,9 @@ class DynamoManager():
         :param bot_message: map
         :rtype: void
         """
+        message = db.MessagesModel()
+        #     埋め込む処理
+        message.save()
 
     def del_message_list(self, bot_message_id):
         """
@@ -123,6 +164,8 @@ class DynamoManager():
         :param bot_message_id: int
         :rtype: void
         """
+        message = db.MessagesModel(bot_message_id)
+        message.delete()
 
     def save_session_log(self, user_id):
         """
@@ -130,6 +173,9 @@ class DynamoManager():
         :param user_id: int
         :rtype: void
         """
+        session_log = db.MessagesModel()
+        # 情報を埋め込む
+        session_log.save()
 
     def check_login_id(self, user_id, user_pass):
         """
@@ -138,3 +184,6 @@ class DynamoManager():
         :param user_pass: str
         :rtype: bool
         """
+        session_log = db.MessagesModel()
+        # 情報を埋め込む
+        session_log.save()

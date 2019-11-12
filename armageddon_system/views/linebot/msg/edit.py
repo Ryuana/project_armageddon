@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from armageddon_system.models.message import Message
-from armageddon_system.models.DynamoManager import DynamoManager as db
+from armageddon_system.models.dynamo_manager import DynamoManager as db
 
 def edit_message(request):
 

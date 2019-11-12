@@ -13,7 +13,10 @@ class FormsModel(Model):
         region = env.AWS_REGION
 
     FormId = NumberAttribute(hash_key=True)
-    Form = attributes.FormAttribute(null=True)
+    FormName = UnicodeAttribute(null=False)
+    Fee = NumberAttribute(null=False)
+    IssuanceDays = NumberAttribute(null=False)
+    QR = UnicodeAttribute(null=True)
 
     def __iter__(self):
         for name, attr in self._get_attributes().items():
@@ -153,3 +156,5 @@ if not SchoolsModel.exists():
     SchoolsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
 if not UsersModel.exists():
     UsersModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+if not Transactions.exists():
+    Transactions.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)

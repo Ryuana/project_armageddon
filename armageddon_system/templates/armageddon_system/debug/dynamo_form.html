@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_ul }}
+        <tr>
+            <td colspan="2"><input type="submit" value="確定"></td>
+        </tr>
+    </table>
+    <br>
+    {{ id }}
+</form>
+<br>
+↓↓ALL FORM↓↓<br>
+{#{{ all_form }}#}
+<table>
+    <tr>
+        <th>form_id</th>
+        <th>form_name</th>
+        <th>fee</th>
+        <th>issuance_days</th>
+        <td>QRcode</td>
+    </tr>
+    {% for form_item in all_form %}
+        <tr>
+            <td>{{ form_item.form_id }}</td>
+            <td>{{ form_item.form_name }}</td>
+            <td>{{ form_item.fee }}</td>
+            <td>{{ form_item.issuance_days }}</td>
+            <td>{{ form_item.qr }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
