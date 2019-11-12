@@ -25,7 +25,8 @@ SECRET_KEY = 'y03xt_ly-$u*tzfr4$s(yw*xa!g7zj0$-2i(e^kgd1q^7f5xhi'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1', #localhost
+    '127.0.0.1',
+    'localhost',
     '192.168.43.204' #テザリング用
 ]
 
