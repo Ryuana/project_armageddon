@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
+from armageddon_system.models import DynamoClass as dc
+from armageddon_system.models import arrmagedon_models as model
 from armageddon_system.models import dynamo_manager as db
-from armageddon_system.models import model
 import json
 
 
@@ -22,7 +23,8 @@ def dynamo(request):
     # dbm = db.DynamoManager()
     # pay_log = dbm.get_pay_log_all()
     # context = {'pay_log': pay_log}
-    pom = model.PayOffLogsModel
+
+    pom = dc.PayOffLogsModel()
     pom_get = pom.scan()
     context['pom_data'] = []
     for pom_item in pom_get:
@@ -38,7 +40,22 @@ def dynamo(request):
 
 def add_pay_log(id):
     dbm = db.DynamoManager()
-    dbm.save_pay_log(id, "a")
+    import datetime
+    fm = model.Form(form_id=1,
+                    form_name="申請書(仮)",
+                    issuance_days=3,
+                    fee=300,
+                    qr="abcdefghijklmnopqrstuvwxyz")
+    formlist = [{"form": fm, "quantity": 3}]
+    paylog = model.PayLog(time_stamp=datetime.datetime.now(),
+                          student_id=12345678, 
+                          school_id=12,
+                          school_name="麻生情報",
+                          course_id=34,
+                          course_name="情報工学",
+                          form_list=formlist
+                          )
+    dbm.save_pay_log(id, paylog)
 
 
 def delete_pay_log(id):
@@ -49,7 +66,7 @@ def delete_pay_log(id):
 def paylog(request):
     context = {}
     dbm = db.DynamoManager()
-    all_pay_log =  dbm.get_pay_log_all()
+    all_pay_log = dbm.get_pay_log_all()
     context['paylog'] = all_pay_log
     return render(request, 'armageddon_system/debug/dynamo_paylog.html', context)
 

@@ -11,7 +11,9 @@ class PayLog:
     form_list: list
     total = 0
 
-    def __init__(self, time_stamp, student_id, school_id, school_name, course_id, course_name, form_list):
+    def __init__(self, time_stamp, student_id,
+                 school_id, school_name, course_id,
+                 course_name, form_list):
         self.time_stamp = time_stamp
         self.student_id = student_id
         self.school_id = school_id

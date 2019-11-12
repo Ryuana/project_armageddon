@@ -8,14 +8,16 @@ def log(request):
     dbm = db()
     pay_logs = dbm.get_pay_log_all()
     a: Form
-    for fm in pay_logs.form_list:
-        a = fm['form']
-        print(a.fee)
+    for pay_log in pay_logs:
+        for fm in pay_log.form_list:
+            a = fm['form']
+            print(a.fee)
     return render(request, 'armageddon_system/pay/log.html')
 
 #成功 forms[x番目].変数でデータ取得可能
 def item_list(request):
-    forms = db.get_form_all()
+    dbm = db()
+    forms = dbm.get_form_all()
     print(forms[0].form_id)
     return render(request, 'armageddon_system/pay/item/list.html')
 
