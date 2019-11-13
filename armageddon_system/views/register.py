@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
-from armageddon_system.models.Transactions import Transactions
+from armageddon_system.models import DynamoClass as db
 
 
 LINE_PAY_URL = env.LINE_PAY_URL
@@ -30,7 +30,7 @@ def register_confirm(request):
     print(order_id, transaction_id, product_name, amount, currency)
     # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
     #                    product_name=product_name, amount=amount, currency=currency)
-    obj = Transactions(str(transaction_id))
+    obj = db.Transactions(str(transaction_id))
     obj.order_id = order_id
     obj.product_name = product_name
     obj.amount = amount
@@ -43,7 +43,7 @@ def register_confirm(request):
 
 def linepay_confirm(request):
     transaction_id = request.GET.get('transactionId')
-    obj = Transactions.get(hash_key=transaction_id)
+    obj = db.Transactions.get(hash_key=transaction_id)
 
     if obj is None:
         raise Exception("Error: transaction_id not found.")

@@ -4,42 +4,23 @@
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 　　　<script src="jquery.qrcode.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="armageddon_system\css\systems.css">
     <title>QRコード表示画面</title>
-    <style>
-        body{
-            font-size: 20px;
-        }
-
-        #app_form{
-            text-align: center;
-            position: relative;
-            bottom: 100px;
-            left: 100px;
-
-        }
-        #price{
-            text-align: center;
-            position: relative;
-            bottom: 50px;
-            left: 100px;
-        }
-        #printing{
-            position: relative;
-            top: 30px;
-            left: 870px;
-        }
-        #qrcode{
-            width: 250px;
-            height: 250px;
-            background: #555555;
-            opacity: 0.3;
-            position: relative;
-            top: 150px;
-            left: 210px;
-        }
-    </style>
 </head>
 <body>
+<nav>
+    <div class="panel">
+        <ul>
+            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
+            <li><a href="/pay/item/list">精算項目</a></li>
+            <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
+            <li><a href="/linebot/msg/list">メッセージ管理</a></li>
+            <li><a href="#">ログアウト</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="systems">
 <div id="qrcode"></div>
 <div id="app_form">
 <p>申請書名</p><p></p>
@@ -49,5 +30,7 @@
 <p>金額</p><p></p>
 </div>
 <button id="printing" style="width:60px;height:30px">印刷</button>
+</div>
+
 </body>
 </html>
