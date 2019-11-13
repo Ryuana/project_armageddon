@@ -9,7 +9,7 @@ urlpatterns = [
     path('pay/log', views.pay.log, name='pay_log'),
     path('linebot/qa/list', views.linebot.qa_list, name='qa_list'),
     path('linebot/msg/edit', views.linebot.msg_edit, name='msg_edit'),
-    path('linebot/msg/list', views.linebot.msg_list, name='msg_list'),
+    path('linebot/msg/list', views.linebot.display_messages, name='msg_list'),
 
     # path('accounts/', include('django.contrib.auth.urls'))
 

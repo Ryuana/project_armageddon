@@ -11,7 +11,6 @@ def log(request):
     for pay_log in pay_logs:
         for fm in pay_log.form_list:
             a = fm['form']
-            print(a.fee)
     return render(request, 'armageddon_system/pay/log.html')
 
 #成功 forms[x番目].変数でデータ取得可能
