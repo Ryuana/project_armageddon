@@ -62,7 +62,7 @@ class MessagesModel(Model):
         region = env.AWS_REGION
 
     MessageId = NumberAttribute(hash_key=True)
-    attributes.MessageAttribute(null=False)
+    Message = attributes.MessageAttribute(null=False)
 
     def __iter__(self):
         for name, attr in self._get_attributes().items():

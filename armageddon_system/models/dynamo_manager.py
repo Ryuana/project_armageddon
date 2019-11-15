@@ -96,7 +96,7 @@ class DynamoManager():
             'Timestamp': pay_log.time_stamp,
             'Total': pay_log.total,
             'Buyer': buyer_info,
-            'PayItems':pay_items,
+            'PayItems': pay_items,
         }
         log.save()
 
@@ -163,17 +163,32 @@ class DynamoManager():
         """
         all_qa = db.QuestionAndAnswersModel.scan()
         # QAに埋め込む処理
+        qa_list = []
+        for item in all_qa:
+            question = item.QuestionAndAnswer['Questions']
+            answer = item.QuestionAndAnswer['Answer']
+            qa = model.QA(
+                qa_id=item.QuestionAndAnswerId,
+                question=question,
+                answer=answer
+            )
+            qa_list.append(qa)
+
         return all_qa
 
-    def save_qa(self, qa):
+    def save_qa(self, qa_id, qa: model.QA):
         """
         QAを保存します。
         :param qa:list of map
         :rtype: void
         """
-        qa = db.QuestionAndAnswersModel()
+        qa_item = db.QuestionAndAnswersModel(int(qa_id))
+        qa_item.QuestionAndAnswerId = {
+            'Questions': qa.question,
+            'Answer': qa.answer
+        }
         # QAに情報を埋め込む
-        qa.save()
+        qa_item.save()
 
     def del_qa(self, qa_id):
         """
@@ -190,17 +205,24 @@ class DynamoManager():
         :rtype: list of map
         """
         message_list = db.MessagesModel.scan()
+        messages = []
         # messageを埋め込む処理
-        return message_list
+        for item in message_list:
+            messages.append(json.dumps(dict(item)))
+        return messages
 
-    def save_message_list(self, bot_message):
+    def save_message_list(self, message_id, bot_message: model.Message):
         """
         LINE Botのメッセージを保存します。
         :param bot_message: map
         :rtype: void
         """
-        message = db.MessagesModel()
-        #     埋め込む処理
+        message = db.MessagesModel(int(message_id))
+        message.Message = {
+            'MessageContent': bot_message.message,
+            'ImagePath': bot_message.image,
+            'Timestamp': bot_message.time_stamp
+        }
         message.save()
 
     def del_message_list(self, bot_message_id):
@@ -212,16 +234,6 @@ class DynamoManager():
         message = db.MessagesModel(bot_message_id)
         message.delete()
 
-    def save_session_log(self, user_id):
-        """
-        セッションログを保存します。
-        :param user_id: int
-        :rtype: void
-        """
-        session_log = db.MessagesModel()
-        # 情報を埋め込む
-        session_log.save()
-
     def check_login_id(self, user_id, user_pass):
         """
         ユーザIDとパスワードからログイン可否します。
@@ -229,6 +241,8 @@ class DynamoManager():
         :param user_pass: str
         :rtype: bool
         """
-        session_log = db.MessagesModel()
-        # 情報を埋め込む
-        session_log.save()
+        user = db.UsersModel(user_id)
+        if user.Password == user_pass:
+            return True
+        else:
+            return False
