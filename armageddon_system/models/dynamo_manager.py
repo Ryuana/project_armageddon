@@ -71,14 +71,14 @@ class DynamoManager():
         pay_items = []
         for form_item in pay_log.form_list:
             form_map = {
-                'PayItemNo': form_item,
-                'FormId': 1,
-                'FormName': '証明書',
-                'Fee': 99999,
-                'Quantity': 999
+                'PayItemNo': form_item.PayItemNo,
+                'FormId': form_item.FormId,
+                'FormName': form_item.FormName,
+                'Fee': form_item.Fee,
+                'Quantity': form_item.Quantity
 
             }
-            pay_items.append()
+            pay_items.append(form_map)
         if pay_log.isStudent:
             buyer_info = {
                 'BuyerNo': pay_log.student_id,
@@ -96,22 +96,7 @@ class DynamoManager():
             'Timestamp': pay_log.time_stamp,
             'Total': pay_log.total,
             'Buyer': buyer_info,
-            'PayItems': [
-                {
-                    'PayItemNo': 1,
-                    'FormId': 1,
-                    'FormName': '証明書',
-                    'Fee': 99999,
-                    'Quantity': 999
-                },
-                {
-                    'PayItemNo': 2,
-                    'FormId': 2,
-                    'FormName': '証明書2',
-                    'Fee': 99999,
-                    'Quantity': 999
-                }
-            ],
+            'PayItems':pay_items,
         }
         log.save()
 
