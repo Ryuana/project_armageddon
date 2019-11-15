@@ -1,11 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from armageddon_system.models.dynamo_manager import DynamoManager as db
-from armageddon_system.models.form import Form
-from armageddon_system.models.pay_log import PayLog
 import qrcode
 
-#後で考える
 def log(request):
 
     dbm = db()

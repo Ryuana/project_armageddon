@@ -4,7 +4,6 @@ import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
 from armageddon_system.models import DynamoClass as db
 
-
 LINE_PAY_URL = env.LINE_PAY_URL
 LINE_PAY_CHANNEL_ID = env.LINE_PAY_CHANNEL_ID
 LINE_PAY_CHANNEL_SECRET = env.LINE_PAY_CHANNEL_SECRET

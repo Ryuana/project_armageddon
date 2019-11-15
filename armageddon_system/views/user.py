@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from armageddon_system.views import pay
-from django.http import HttpResponse
 
 def login(request):
 
