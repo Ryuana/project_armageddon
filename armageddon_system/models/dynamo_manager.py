@@ -199,6 +199,13 @@ class DynamoManager():
         qa = db.QuestionAndAnswersModel.get(qa_id)
         qa.delete()
 
+    def get_next_qa_id(self):
+        all_qa = db.QuestionAndAnswersModel.scan()
+        count = 1
+        for i in range(all_qa):
+            count += 1
+        return count
+
     def get_message_list(self):
         """
         LINE Botのメッセージを全件取得します。
