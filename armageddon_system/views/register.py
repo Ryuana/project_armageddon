@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
-from armageddon_system.models import DynamoClass as db
+from armageddon_system.models.dynamo_manager import DynamoManager as db
 
 LINE_PAY_URL = env.LINE_PAY_URL
 LINE_PAY_CHANNEL_ID = env.LINE_PAY_CHANNEL_ID
@@ -16,29 +16,38 @@ def register_form(request):
     return render(request, 'armageddon_system/register/form.html')
 
 def register_confirm(request):
-    product_name = "卒業証明書(テスト)"
-    amount = 3000
-    currency = "JPY"
 
-    # (order_id, response) = pay.request_payments(product_name=product_name, amount=amount, currency=currency)
-    (order_id, response) = pay.request_payments(product_name=product_name, amount=amount, currency=currency)
+    dbm = db()
+    context = {}
+    context['student_id'] = request.GET['student_id']
+    context['form_list'] = request.GET['form_list']
+    context['quentitiy'] = request.GET['quentitiy']
+
+    dbm.save_pay_log(context)
+
+    return render(request, 'armageddon_system/register/confirm.html', context)
+
+
+
+
+def payments(request, form_name, fee):
+    (order_id, response) = pay.request_payments(product_name=form_name, amount=fee, currency="JPY")
     print(response["returnCode"])
     print(response["returnMessage"])
 
     transaction_id = response["info"]["transactionId"]
-    print(order_id, transaction_id, product_name, amount, currency)
+    print(order_id, transaction_id, form_name, fee, "JPY")
     # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
     #                    product_name=product_name, amount=amount, currency=currency)
     obj = db.Transactions(str(transaction_id))
     obj.order_id = order_id
-    obj.product_name = product_name
-    obj.amount = amount
-    obj.currency = currency
+    obj.product_name = form_name
+    obj.amount = fee
+    obj.currency = "JPY"
     obj.save()
 
     redirect_url = response["info"]["paymentUrl"]["web"]
     return redirect(redirect_url)
-    # return render(request, 'armageddon_system/register/confirm.html')
 
 def linepay_confirm(request):
     transaction_id = request.GET.get('transactionId')
@@ -52,3 +61,5 @@ def linepay_confirm(request):
     print(response["returnMessage"])
 
     return HttpResponse("Payment successfully finished.")
+
+
