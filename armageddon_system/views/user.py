@@ -20,3 +20,9 @@ def login(request):
             # return render(request, 'armageddon_system/pay/log.html')
         else:
             return render(request, 'armageddon_system/user/login.html')
+
+def logout(request):
+
+    request.session.clear()
+
+    return render(request, 'armageddon_system/user/login.html')
