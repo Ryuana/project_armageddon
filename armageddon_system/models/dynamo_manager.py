@@ -206,6 +206,18 @@ class DynamoManager():
             count += 1
         return count
 
+    def get_qa(self, qa_id):
+        """
+        qa_idを渡して対象のQAを取得
+        """
+        qa = db.QuestionAndAnswersModel(qa_id)
+        qa_item = model.QA(
+            qa_id=qa.QuestionAndAnswerId,
+            question=qa.QuestionAndAnswer['Questions'],
+            answer=qa.QuestionAndAnswer['Answer']
+        )
+        return qa_item
+
     def get_message_list(self):
         """
         LINE Botのメッセージを全件取得します。
