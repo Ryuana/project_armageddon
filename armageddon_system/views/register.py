@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
-from armageddon_system import models as db
+from armageddon_system.models import DynamoClass as db
 
 
 LINE_PAY_URL = env.LINE_PAY_URL
