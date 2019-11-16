@@ -28,9 +28,6 @@ class PayOffLogAttribute(MapAttribute):
     PayItems = ListAttribute(of=PayItemsAttribute)
 
 
-class QuestionAndAnswerAttribute(MapAttribute):
-    Questions = ListAttribute(null=True)
-    Answer = UnicodeAttribute(null=False)
 
 
 class MessageAttribute(MapAttribute):

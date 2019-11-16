@@ -47,7 +47,8 @@ class QuestionAndAnswersModel(Model):
         region = env.AWS_REGION
 
     QuestionAndAnswerId = NumberAttribute(hash_key=True)
-    QuestionAndAnswer = attributes.QuestionAndAnswerAttribute(null=False)
+    Questions = ListAttribute(null=True)
+    Answer = UnicodeAttribute(null=False)
 
     def __iter__(self):
         for name, attr in self._get_attributes().items():
