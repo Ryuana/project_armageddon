@@ -25,10 +25,12 @@ def dynamo(request):
     # context = {'pay_log': pay_log}
 
     pom = dc.PayOffLogsModel()
-    pom_get = pom.scan()
+    # pom_get = pom.scan()
+    dbm = db.DynamoManager()
+    pom_get = dbm.get_pay_log_all()
     context['pom_data'] = []
     for pom_item in pom_get:
-        context['pom_data'].append(json.dumps(dict(pom_item)))
+        context['pom_data'].append(dict(pom_item))
 
     # pom_count = pom.count(hash_key=1)
     dbm = db.DynamoManager()
@@ -41,6 +43,15 @@ def dynamo(request):
 def add_pay_log(id):
     dbm = db.DynamoManager()
     import datetime
+    # form_list = dbm.get_form_all()
+
+    # dbm.save_pay_log(pay_log={'form_list': {"form":[form_list[0]]},
+    #                           'isStudent':False,
+    #                           # 'time_stamp':datetime.datetime.now()
+    #                           'time_stamp':datetime.datetime.now()
+    #                           },
+    #                  )
+
     fm = model.Form(form_id=1,
                     form_name="申請書(仮)",
                     issuance_days=3,
@@ -48,14 +59,14 @@ def add_pay_log(id):
                     qr="abcdefghijklmnopqrstuvwxyz")
     formlist = [{"form": fm, "quantity": 3}]
     paylog = model.PayLog(time_stamp=datetime.datetime.now(),
-                          student_id=12345678, 
+                          student_id=12345678,
                           school_id=12,
                           school_name="麻生情報",
                           course_id=34,
                           course_name="情報工学",
                           form_list=formlist
                           )
-    dbm.save_pay_log(id, paylog)
+    dbm.save_pay_log(pay_log=paylog, id=id)
 
 
 def delete_pay_log(id):

@@ -59,23 +59,33 @@ class DynamoManager():
             return_items.append(pay_log_item)
         return return_items
 
-    def save_pay_log(self, id, pay_log: pay_log, IsPaid=False):
+    def save_pay_log(self, pay_log: pay_log, id=False, IsPaid=False):
         """
         精算記録を保存します。
         :param pay_log: map
         :rtype: void
         """
+        if id == False:
+            all_pol = db.PayOffLogsModel().scan()
+            count = 1
+            for i in all_pol:
+                count += 1
+            id = count
         log = db.PayOffLogsModel(id)
         log.IsPaid = IsPaid
         buyer_info = {}
         pay_items = []
+        count = 0
         for form_item in pay_log.form_list:
+            count += 1
+            print(form_item)
+            fm = form_item['form']
             form_map = {
-                'PayItemNo': form_item.PayItemNo,
-                'FormId': form_item.FormId,
-                'FormName': form_item.FormName,
-                'Fee': form_item.Fee,
-                'Quantity': form_item.Quantity
+                'PayItemNo': count,
+                'FormId': fm.form_id,
+                'FormName': fm.form_name,
+                'Fee': fm.fee,
+                'Quantity': form_item['quantity']
 
             }
             pay_items.append(form_map)

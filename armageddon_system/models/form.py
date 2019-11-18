@@ -12,3 +12,13 @@ class Form:
         self.fee = fee
         self.issuance_days = issuance_days
         self.qr = qr
+
+    def __iter__(self):
+        yield 'form_id', self.form_id
+        yield 'form_name', self.form_name
+        yield 'fee', self.fee
+        yield 'issuance_days' , self.issuance_days
+        yield 'qr' , self.qr
+
+
+

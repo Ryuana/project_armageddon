@@ -1,6 +1,7 @@
 from armageddon_system.models.form import Form
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 
+
 class PayLog:
     time_stamp = ""
     isStudent = True
@@ -50,7 +51,19 @@ class PayLog:
                 qr=None
             )
             self.form_list.append(
-                {'form': all_form[l['form_id']], 'quantity': l['quantity']}
+                {'form': all_form[l['form'].form_id], 'quantity': l['quantity']}
             )
 
             self.total += form.fee * l['quantity']
+
+    def __iter__(self):
+        yield 'time_stamp', self.time_stamp
+        yield 'form_list', self.form_list
+        yield 'isStudent', self.isStudent,
+        yield 'student_id', self.student_id,
+        yield 'school_id', self.school_id,
+        yield 'school_name', self.school_name,
+        yield 'course_id', self.course_id,
+        yield 'course_name', self.course_name,
+        yield 'buyer_name', self.buyer_name,
+        yield 'buyer_birth', self.buyer_birth,
