@@ -4,52 +4,163 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>申請者情報入力画面</title>
-    <link rel="stylesheet" media="all" href="css/systems.css">
 
 
 </head>
+<style>
+    .num1 {
+        position: relative;
+        top: 68px;
+    }
+
+    #school_num {
+        font-size: 25px;
+        font-weight: 20;
+        text-align: center;
+        position: relative;
+        right: 180px;
+    }
+
+    #school_num #school-control {
+        position: relative;
+        left: 200px;
+        width: 180px;
+        height: 20px;
+    }
+
+    #check {
+        font-size: 20px;
+        font-weight: 10;
+        position: relative;
+        top: 20px;
+        left: 210px;
+    }
+
+    .num2 {
+        position: relative;
+        top: 68px;
+    }
+
+    #app_name {
+        font-size: 25px;
+        font-weight: 20;
+        text-align: center;
+        position: relative;
+        right: 180px;
+    }
+
+    #app_name #name-control {
+        position: relative;
+        left: 200px;
+        width: 180px;
+        height: 20px;
+    }
+
+    .num3 {
+        position: relative;
+        top: 68px;
+    }
+
+    #app_form {
+        font-size: 25px;
+        font-weight: 20;
+        text-align: center;
+        position: relative;
+        right: 180px;
+    }
+
+    #app_form #form-control {
+        position: relative;
+        left: 200px;
+        width: 180px;
+        height: 20px;
+    }
+
+    #qr_btn {
+        position: relative;
+        top: 80px;
+        left: 600px;
+    }
+
+    #send_btn {
+        text-align: center;
+        position: relative;
+        top: 130px;
+        left: 610px;
+    }
+
+    #sampleOutput {
+        font-size: 18px;
+        font-weight: 17;
+        text-align: center;
+        position: relative;
+        bottom: 35px;
+        left: 370px;
+    }
+
+    #plus {
+        position: relative;
+        bottom: 38px;
+        left: 355px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px; /* for Safari and Chrome 対応*/
+        -moz-border-radius: 10px; /* for Firefox 対応*/
+        text-decoration: none;
+
+    }
+</style>
 <body>
 
 <div id="school_num">
-<p>学籍番号</p>
-     <input type="text" class="school-control" placeholder="">
-     学籍番号がない場合<input type="checkbox" name="check" value="check">
+    <p class="num1">学籍番号</p>
+    <input type="text" id="school-control" placeholder="">
+    <div id="check">学籍番号がない場合<input type="checkbox" name="check" value="check"></div>
 </div>
 
 <div id="app_name">
-    <p>申請者名</p>
-    <input type="text" class="name-control" placeholder="">
+    <p class="num2">申請者名</p>
+    <input type="text" id="name-control" placeholder="">
 </div>
 
 <div id="app_form">
-<p>申請書名</p>
-    <input class="count" type="text" name="quantity" value="1" tabindex="1">
-    <!--<div class="button">
-        <input type="button" name="spinner_up" class="spinner_up" value="" onclick="javascript:spinner('up');">
-        <input type="button" name="spinner_up" class="spinner_down" value="" onclick="javascript:spinner('down');">
-    </div>-->
-
-<div id="input_pluralBox">
-    <div id="input_plural">
-        <input type="text" class="form-control" placeholder="">
-        <input type="button" value="＋" class="add pluralBtn">
-        <input type="button" value="－" class="del pluralBtn">
+    <p class="num3">申請書名</p>
+    <input type="text" id="form-control" placeholder="">
+    <div class="count">
+        <input type="button" value="+" id="plus" onclick="sampleCountUp();">
+        <span id="sampleOutput">0</span>
     </div>
-</div>
 </div>
 
 <button id="qr_btn">QR読取</button>
 
 <form>
-    <input id="send_btn" type="submit" value="決定">
+    <input id="send_btn" type="submit" value="決定" onclick="send_data();">
 </form>
+<script>
+    var $sampleCount = 0;
 
-  <p>決済方法を選択してください</p>
-  <form action="./confirm" method="post">
-      {% csrf_token %}
-    <button type="submit">決済</button>
-  </form>
+    function sampleCountUp() {
+        document.getElementById("sampleOutput").innerHTML = ++$sampleCount;
+    }
 
-
+    function send_data() {
+        if (document.getElementById('school-control').value == "") {
+            //学籍番号が空
+            console.log("動いとりまっせ");
+            alert("学籍番号が入力されていません");
+            return false;
+        }else if (document.getElementById('name-control').value == "") {
+            //申請者名が空
+            alert("申請者名が入力されていません");
+            return false;
+        }else if (document.getElementById('form-control').value = "") {
+            //申請書名が空
+            alert("申請書名が入力されていません");
+            return false;
+    }else{
+            return true;
+        }
+    }
+</script>
 </body>
 </html>

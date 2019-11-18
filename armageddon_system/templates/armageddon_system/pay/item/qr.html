@@ -2,11 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-　　　<script src="jquery.qrcode.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="armageddon_system\css\systems.css">
     <title>QRコード表示画面</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
+          integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <!--<link rel="stylesheet" type="text/css" href="armageddon_system/systems.css">-->
 </head>
+<style>
+
+    h1{
+      text-align: center;
+      position: relative;
+      bottom: 130px;
+    }
+
+    table{
+        position: relative;
+        left: 50px;
+        top: 20px;
+    }
+
+        * {
+            -webkit-transition-property: all;
+            -webkit-transition-duration: .2s;
+          -moz-transition-timing-function: cubic-bezier(100,50,21,6);
+            -moz-transition-property: all;
+        }
+
+    body{
+      font-size: 20px;
+      padding:75px;
+      font-family: 'Oswald', sans-serif;
+    }
+
+        #items p{
+            margin-bottom: 30px;
+        }
+
+        button{
+            position: relative;
+            left: 633px;
+            top: 140px;
+
+        }
+        #app_form p{
+            position: relative;
+            top: 400px;
+            left: 790px;
+        }
+        #price p{
+            position: relative;
+            top: 250px;
+            left: 805px;
+        }
+
+    form p{
+        font-size: 20px;
+        position: relative;
+        left: 200px;
+        top: 100px;
+        }
+
+/*QA管理画面*/
+     .panel ul{
+		text-align: left;
+		color: #000;
+	}
+	.panel li{
+		display: inline-block;
+        vertical-align: middle;
+		color: #000;
+        position: relative;
+        right: 52px;
+        bottom: 122px;
+        margin: 50px;
+	}
+	.panel a{
+		font-weight: bold;
+		position: relative;
+		top: 20px;
+		left: 110px;
+        color:#000;
+		text-decoration: none;
+	}
+	.panel a::after{
+      position: absolute;
+	  bottom: -4px;
+	  left: 0;
+	  content: '';
+	  width: 100%;
+	  height: 2px;
+	  background: #008000;
+	  transform: scale(0, 1);
+	  transform-origin: left top;
+	  transition: transform .3s;
+	}
+	.panel a:hover::after{
+		transform: scale(1, 1);
+	}
+        #systems{
+            position: relative;
+            bottom: 290px;
+            right: 60px;
+
+        }
+    textarea{
+        width: 400px;
+        height: 170px;
+    }
+
+    #printing{
+        position: relative;
+        left: 800px;
+        top: 400px;
+    }
+
+    #qrcode{
+        color: #000;
+    }
+
+
+</style>
 <body>
 <nav>
     <div class="panel">
@@ -20,6 +146,7 @@
     </div>
 </nav>
 
+
 <div id="systems">
 <div id="qrcode"></div>
 <div id="app_form">
@@ -29,8 +156,10 @@
 <div id="price">
 <p>金額</p><p></p>
 </div>
-<button id="printing" style="width:60px;height:30px">印刷</button>
+<button id="printing" style="width:60px;height:30px" onclick="window.print();">印刷</button>
 </div>
-
+<script>
+    window.print();
+</script>
 </body>
 </html>

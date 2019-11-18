@@ -2,14 +2,17 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('user/display', views.user.login, name='display'),
     path('user/login', views.user.login, name='login'),
+    path('user/logout', views.user.logout, name='logout'),
     path('pay/item/list', views.pay.item_list, name='item_list'),
     path('pay/item/qr', views.pay.item_qr, name='item_qr'),
-    path('pay/log', views.pay.log, name='pay_log'),
-    path('linebot/qa/list', views.linebot.qa_list, name='qa_list'),
-    path('linebot/msg/edit', views.linebot.msg_edit, name='msg_edit'),
+    path('pay/log', views.pay.log, name='log'),
+    path('linebot/qa/list', views.linebot.display_qa_list, name='display_qa_list'),
+    path('linebot/qa/save', views.linebot.save_qa, name='save_qa'),
+    path('linebot/qa/delete', views.linebot.delete_qa, name='delete_qa'),
     path('linebot/msg/list', views.linebot.display_messages, name='msg_list'),
+    path('linebot/msg/edit', views.linebot.edit_message, name='edit_message'),
+    path('linebot/msg/save', views.linebot.save_message, name='save_message'),
 
     # path('accounts/', include('django.contrib.auth.urls'))
 
