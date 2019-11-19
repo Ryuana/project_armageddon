@@ -11,6 +11,7 @@ class PayItemsAttribute(MapAttribute):
 
 
 class BuyerAttribute(MapAttribute):
+    BuyerType = NumberAttribute(null=True)
     BuyerNo = NumberAttribute(null=True)
     BuyerName = UnicodeAttribute(null=True)
     BirthDay = UTCDateTimeAttribute(null=True)
@@ -27,9 +28,6 @@ class PayOffLogAttribute(MapAttribute):
     PayItems = ListAttribute(of=PayItemsAttribute)
 
 
-class QuestionAndAnswerAttribute(MapAttribute):
-    Questions = ListAttribute(null=True)
-    Answer = UnicodeAttribute(null=False)
 
 
 class MessageAttribute(MapAttribute):

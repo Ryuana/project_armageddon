@@ -1,5 +1,5 @@
 from . import DynamoClass as db
-from . import arrmagedon_models as model
+from . import pay_log, qa, form, message
 
 import datetime
 import json
@@ -27,7 +27,7 @@ class DynamoManager():
             for form_item in item.PayOffLog.PayItems:
                 pay_log_form_item = {
                     "pay_item_no": form_item.PayItemNo,
-                    "form": model.Form(
+                    "form": form.Form(
                         form_name=form_item.FormName,
                         form_id=form_item.FormId,
                         fee=form_item.Fee,
@@ -46,7 +46,7 @@ class DynamoManager():
                 'course_id': buyer_item.CourseId,
                 'course_name': buyer_item.CourseName,
             }
-            pay_log_item = model.PayLog(
+            pay_log_item = pay_log.PayLog(
                 time_stamp=item.PayOffLog.Timestamp,
                 # student_id=item.PayOffLog['Buyer']['BuyerNo'],
                 student_id=buyer['student_id'],
@@ -59,42 +59,54 @@ class DynamoManager():
             return_items.append(pay_log_item)
         return return_items
 
-    def save_pay_log(self, id, pay_log: model.PayLog, IsPaid=False):
+    def save_pay_log(self, pay_log: pay_log, id=False, IsPaid=False):
         """
         精算記録を保存します。
         :param pay_log: map
         :rtype: void
         """
+        if id == False:
+            all_pol = db.PayOffLogsModel().scan()
+            count = 1
+            for i in all_pol:
+                count += 1
+            id = count
         log = db.PayOffLogsModel(id)
         log.IsPaid = IsPaid
-        log.PayOffLog = {
-            'Timestamp': pay_log.time_stamp,
-            'Total': pay_log.total,
-            'Buyer': {
+        buyer_info = {}
+        pay_items = []
+        count = 0
+        for form_item in pay_log.form_list:
+            count += 1
+            print(form_item)
+            fm = form_item['form']
+            form_map = {
+                'PayItemNo': count,
+                'FormId': fm.form_id,
+                'FormName': fm.form_name,
+                'Fee': fm.fee,
+                'Quantity': form_item['quantity']
+
+            }
+            pay_items.append(form_map)
+        if pay_log.isStudent:
+            buyer_info = {
                 'BuyerNo': pay_log.student_id,
-                # 'BuyerName': pay_log.,
-                # 'BirthDay': datetime.datetime.now(),
                 'SchoolId': pay_log.school_id,
                 'SchoolName': pay_log.school_name,
                 'CourseId': pay_log.course_id,
                 'CourseName': pay_log.course_name
-            },
-            'PayItems': [
-                {
-                    'PayItemNo': 1,
-                    'FormId': 1,
-                    'FormName': '証明書',
-                    'Fee': 99999,
-                    'Quantity': 999
-                },
-                {
-                    'PayItemNo': 2,
-                    'FormId': 2,
-                    'FormName': '証明書2',
-                    'Fee': 99999,
-                    'Quantity': 999
-                }
-            ],
+            }
+        else:
+            buyer_info = {
+                'BuyerName': pay_log.buyer_name,
+                'BirthDay': pay_log.buyer_birth,
+            }
+        log.PayOffLog = {
+            'Timestamp': pay_log.time_stamp,
+            'Total': pay_log.total,
+            'Buyer': buyer_info,
+            'PayItems': pay_items,
         }
         log.save()
 
@@ -117,19 +129,19 @@ class DynamoManager():
         # pay_itemsの
         return_items = []
         for item in all_form:
-            form = model.Form(
+            rt_form = form.Form(
                 form_id=item.FormId,
                 form_name=item.FormName,
                 fee=item.Fee,
                 issuance_days=item.IssuanceDays,
                 qr=item.QR
             )
-            return_items.append(form)
+            return_items.append(rt_form)
         if is_ascending:
             return_items = reversed(return_items)
         return return_items
 
-    def save_form(self, form: model.Form):
+    def save_form(self, form: form.Form):
         """
         精算項目を保存します。
         :param pay_item: map
@@ -161,17 +173,32 @@ class DynamoManager():
         """
         all_qa = db.QuestionAndAnswersModel.scan()
         # QAに埋め込む処理
+        qa_list = []
+        for item in all_qa:
+            question = item.QuestionAndAnswer['Questions']
+            answer = item.QuestionAndAnswer['Answer']
+            rt_qa = qa.QA(
+                qa_id=item.QuestionAndAnswerId,
+                question=question,
+                answer=answer
+            )
+            qa_list.append(rt_qa)
+
         return all_qa
 
-    def save_qa(self, qa):
+    def save_qa(self, qa_id, qa: qa.QA):
         """
         QAを保存します。
         :param qa:list of map
         :rtype: void
         """
-        qa = db.QuestionAndAnswersModel()
+        qa_item = db.QuestionAndAnswersModel(int(qa_id))
+        qa_item.QuestionAndAnswerId = {
+            'Questions': qa.question,
+            'Answer': qa.answer
+        }
         # QAに情報を埋め込む
-        qa.save()
+        qa_item.save()
 
     def del_qa(self, qa_id):
         """
@@ -182,23 +209,49 @@ class DynamoManager():
         qa = db.QuestionAndAnswersModel.get(qa_id)
         qa.delete()
 
+    def get_next_qa_id(self):
+        all_qa = db.QuestionAndAnswersModel.scan()
+        count = 1
+        for i in all_qa:
+            count += 1
+        return count
+
+    def get_qa(self, qa_id):
+        """
+        qa_idを渡して対象のQAを取得
+        """
+        qam = db.QuestionAndAnswersModel(qa_id)
+        qa_item = qa.QA(
+            qa_id=qam.QuestionAndAnswerId,
+            question=qam.Questions,
+            answer=qam.Answer
+        )
+        return qa_item
+
     def get_message_list(self):
         """
         LINE Botのメッセージを全件取得します。
         :rtype: list of map
         """
         message_list = db.MessagesModel.scan()
+        messages = []
         # messageを埋め込む処理
-        return message_list
+        for item in message_list:
+            messages.append(json.dumps(dict(item)))
+        return messages
 
-    def save_message_list(self, bot_message):
+    def save_message_list(self, message_id, bot_message: message.Message):
         """
         LINE Botのメッセージを保存します。
         :param bot_message: map
         :rtype: void
         """
-        message = db.MessagesModel()
-        #     埋め込む処理
+        message = db.MessagesModel(int(message_id))
+        message.Message = {
+            'MessageContent': bot_message.message,
+            'ImagePath': bot_message.image,
+            'Timestamp': bot_message.time_stamp
+        }
         message.save()
 
     def del_message_list(self, bot_message_id):
@@ -210,16 +263,6 @@ class DynamoManager():
         message = db.MessagesModel(bot_message_id)
         message.delete()
 
-    def save_session_log(self, user_id):
-        """
-        セッションログを保存します。
-        :param user_id: int
-        :rtype: void
-        """
-        session_log = db.MessagesModel()
-        # 情報を埋め込む
-        session_log.save()
-
     def check_login_id(self, user_id, user_pass):
         """
         ユーザIDとパスワードからログイン可否します。
@@ -227,6 +270,8 @@ class DynamoManager():
         :param user_pass: str
         :rtype: bool
         """
-        session_log = db.MessagesModel()
-        # 情報を埋め込む
-        session_log.save()
+        user = db.UsersModel(user_id)
+        if user.Password == user_pass:
+            return True
+        else:
+            return False

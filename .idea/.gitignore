@@ -1,3 +1,5 @@
 # Default ignored files
 /workspace.xml
 ../armageddon_system/env.py
+# Datasource local storage ignored files
+/dataSources.local.xml
