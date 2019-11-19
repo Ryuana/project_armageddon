@@ -100,12 +100,12 @@ class SchoolsModel(Model):
 
 class UsersModel(Model):
     class Meta:
-        table_name = "Schools"
+        table_name = "Users"
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
         region = env.AWS_REGION
 
-    UserId = NumberAttribute(hash_key=True)
+    UserId = UnicodeAttribute(hash_key=True)
     Password = UnicodeAttribute(null=False)
     UserLogs = attributes.UserLogAttribute(null=True)
 

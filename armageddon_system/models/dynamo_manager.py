@@ -270,7 +270,7 @@ class DynamoManager():
         :param user_pass: str
         :rtype: bool
         """
-        user = db.UsersModel(user_id)
+        user = db.UsersModel.get(user_id)
         if user.Password == user_pass:
             return True
         else:
