@@ -10,7 +10,6 @@ def display_messages(request):
     dbm = db()
     context = {}
     context['message'] = dbm.get_message_list()
-
     return render(request, 'armageddon_system/linebot/msg/list.html', context)
 
 #メッセージ編集画面

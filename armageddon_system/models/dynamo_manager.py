@@ -237,7 +237,8 @@ class DynamoManager():
         messages = []
         # messageを埋め込む処理
         for item in message_list:
-            messages.append(json.dumps(dict(item)))
+            item.Message['Timestamp'] = datetime.datetime.strptime(item.Message['Timestamp'], '%Y-%m-%d')
+            messages.append(dict(item))
         return messages
 
     def save_message_list(self, message_id, bot_message: message.Message):
