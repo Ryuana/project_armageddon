@@ -235,9 +235,13 @@ class DynamoManager():
         """
         message_list = db.MessagesModel.scan()
         messages = []
+        print(message_list)
         # messageを埋め込む処理
         for item in message_list:
-            item.Message['Timestamp'] = datetime.datetime.strptime(item.Message['Timestamp'], '%Y-%m-%d')
+            # item.Message['Timestamp'] = datetime.datetime.strftime(ite.Message['Timestamp'], '%Y-%m-%d')
+            # item.Message['Timestamp'] = item.Message['Timestamp'].isoformat()
+            # print(item.Message['Timestamp'].strftime('%Y-%m-%d %H:%M:%S'))
+            # item.Message['Timestamp'] = item.Message['Timestamp'].strftime('%Y-%m-%d %H:%M:%S')
             messages.append(dict(item))
         return messages
 

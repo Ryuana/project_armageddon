@@ -100,12 +100,12 @@ class SchoolsModel(Model):
 
 class UsersModel(Model):
     class Meta:
-        table_name = "Schools"
+        table_name = "Users"
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
         region = env.AWS_REGION
 
-    UserId = NumberAttribute(hash_key=True)
+    UserId = UnicodeAttribute(hash_key=True)
     Password = UnicodeAttribute(null=False)
     UserLogs = attributes.UserLogAttribute(null=True)
 
@@ -113,15 +113,15 @@ class UsersModel(Model):
         for name, attr in self._get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
-class Transactions(Model):
 
+class Transactions(Model):
     class Meta:
         aws_access_key_id = env.AWS_ACCESS_KEY_ID
         aws_secret_access_key = env.AWS_SECRET_ACCESS_KEY
         table_name = "linepay_test"
         region = env.AWS_REGION
 
-    #PynamoDBに変更する必要あり
+    # PynamoDBに変更する必要あり
     transaction_id = UnicodeAttribute(hash_key=True)
     order_id = UnicodeAttribute(null=True)
     product_name = UnicodeAttribute(null=True)
@@ -130,7 +130,7 @@ class Transactions(Model):
     register_date = UTCDateTimeAttribute(null=True)
     user_id = UnicodeAttribute(null=True)
 
-    #自身のオブジェクトから値を取得する専用のメソッド定義するときに使う
+    # 自身のオブジェクトから値を取得する専用のメソッド定義するときに使う
     @property
     def serialize(self):
         return {
@@ -140,8 +140,9 @@ class Transactions(Model):
             'amount': self.amount,
             'currency': self.currency,
             'register_date': self.register_date.strftime('%Y-%m-%d %H:%M:%S'),
-            'user_id':self.user_id
+            'user_id': self.user_id
         }
+
 
 if not FormsModel.exists():
     FormsModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
