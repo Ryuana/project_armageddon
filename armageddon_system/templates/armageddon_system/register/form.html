@@ -144,6 +144,7 @@
     }
 
     function send_data() {
+        $sampleCount
         if (document.getElementById('school-control').value == "") {
             //学籍番号が空
             console.log("学籍番号未入力");
@@ -154,7 +155,7 @@
             console.log("申請者名未入力");
             alert("申請者名が入力されていません");
             return false;
-        } else if (document.getElementById('form-control').value = "") {
+        } else if (document.getElementById('form-control').value == "") {
             //申請書名が空
             console.log("申請書名未入力");
             alert("申請書名が入力されていません");
@@ -164,7 +165,8 @@
                 console.log("学籍番号問題有");
                 alert("学籍番号に問題があります");
                 return false;
-        } else if (document.getElementById('sampleOutput').value = 0) {
+        {# else if (document.getElementById('sampleOutput').value == 0) #}
+        } else if ($sampleCount == "0") {
             //申請書枚数が0
             alert("申請書枚数が0枚です");
             return false;
