@@ -48,46 +48,10 @@
         font-family: 'Oswald', sans-serif;
     }
 
-    #school_name {
+    #school {
         position: relative;
-        bottom: 70px;
-    }
-
-    #items p {
-        margin-bottom: 30px;
-    }
-
-    button {
-        position: relative;
-        left: 633px;
-        top: 140px;
-
-    }
-
-    #school_num p {
-        position: relative;
-        top: 40px;
-        right: 100px;
-    }
-
-    #app_name p {
-        position: relative;
-        top: 40px;
-        right: 100px;
-    }
-
-
-    #app_form p {
-        position: relative;
-        top: 67px;
-        left: 450px;
-    }
-
-    form p {
-        font-size: 20px;
-        position: relative;
-        left: 200px;
-        top: 100px;
+        bottom: 120px;
+        left: 230px;
     }
 
     .panel ul {
@@ -134,26 +98,20 @@
     table {
         position: relative;
         top: 30px;
-        left: -35px;
-    }
-
-    #systems {
-        position: relative;
-        bottom: 50px;
         left: 100px;
     }
 
-    p {
+    .school{
         position: relative;
-        right: 70px;
-        top: 50px;
+        left: 125px;
+        bottom: 70px;
     }
 
     #downloadCsvBtn {
         text-align: right;
         position: relative;
-        left: 130px;
-        top: 60px;
+        left: 955px;
+        bottom: 10px;
         font-size: 0.8em;
         font-weight: bold;
         padding: 10px 30px;
@@ -175,12 +133,17 @@
         width: 120px;
     }
 
-    #sub_systems {
+    .system {
         position: relative;
-        left: 30px;
-        margin-bottom: 70px;
+        left: 230px;
+        bottom: 120px;
     }
-
+    .days{
+        text-align: left;
+        position: relative;
+        bottom: 70px;
+        left: 140px;
+    }
 </style>
 <body>
 <nav id="menuber">
@@ -196,155 +159,264 @@
 </nav>
 
 <h1>精算記録</h1>
+<p class="school">学校名</p>
+<select name="school" id="school">
+    <option value="num1">麻生情報ビジネス</option>
+    <option value="num2">麻生公務員</option>
+    <option value="num3">麻生製菓</option>
+    <option value="num4">麻生外国語</option>
+</select>
 
+<p class="days">日付</p>
+<div class="system">
+    <input name="year" type="text" class="js-changeYear"> 年
 
-<div id="systems">
-    <div id="sub_systems">
-        <div id="school_name">
-            <p>学校名</p>
-            <select name="school">
-                <option value="num1">麻生情報ビジネス</option>
-                <option value="num2">麻生公務員</option>
-                <option value="num3">麻生製菓</option>
-                <option value="num4">麻生外国語</option>
-            </select>
-        </div>
-        <p>日付</p>
-        <a id="year"></a><a id="month"></a><a id="day"></a>
-        ~
-        <input name="year2" type="text" class="js-changeYear"> 年
+    <select name="month" class="js-changeMonth">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select> 月
 
-        <select name="month2" class="js-changeMonth">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-        </select> 月
+    <select name="date" class="js-changeDay">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+    </select> 日
+    ~
+      <input name="year" type="text" class="js-changeYear"> 年
 
-        <select name="date2" class="js-changeDay">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-        </select> 日
+    <select name="month" class="js-changeMonth">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select> 月
 
-        <b><a id="downloadCsvBtn" href="#" download="test.csv" onclick="handleDownload()">CSV出力</a></b>
-    </div>
-
-    <table border="1" id="table1">
-        <thead>
-        <tr id="object">
-            <th width="140" height="40">日時</th>
-            <th width="140" height="40">学校名</th>
-            <th width="140" height="40">学科</th>
-            <th width="140" height="40">学籍番号</th>
-            <th width="140" height="40">申請書名</th>
-            <th width="140" height="40">枚数</th>
-            <th width="140" height="40">金額</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-
-        </tr>
-        <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <th id="total" colspan="1">合計</th>
-            <td></td>
-        </tr>
-        </tfoot>
-    </table>
+    <select name="date" class="js-changeDay">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+    </select> 日
 </div>
+
+
+<b><a id="downloadCsvBtn" href="#" download="test.csv" onclick="handleDownload()">CSV出力</a></b>
+
+<table border="1" id="table1">
+    <thead>
+    <tr id="object">
+        <th width="140" height="40">日時</th>
+        <th width="140" height="40">学校名</th>
+        <th width="140" height="40">学科</th>
+        <th width="140" height="40">学籍番号</th>
+        <th width="140" height="40">申請書名</th>
+        <th width="140" height="40">枚数</th>
+        <th width="140" height="40">金額</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th id="total" colspan="1">合計</th>
+        <td></td>
+    </tr>
+    </tfoot>
+</table>
 <script>
 
-    window.onload = function getDate() {
-        var yyyy, mm, dd, today
-        today = new Date();
-        yyyy = today.getFullYear();
-        mm = today.getMonth() + 1;
-        dd = today.getDate();
-
-        //年
-        $Year = "<select>";
-        for (var i = 2000; i <= 2030; i++) {
-            if (i == yyyy) {
-                $Year += "<option value=\"" + i + "\" selected >" + i + "</option>";
-            } else {
-                $Year += "<option value=\"" + i + "\" >" + i + "</option>";
-            }
-        }
-        $Year += "</select>";
-        document.getElementById("year").innerHTML = $Year + "年";
-
-        //月
-        $Month = "<select>";
-        for (var i = 1; i <= 12; i++) {
-            if (i == mm) {
-                $Month += "<option value=\"" + i + "\" selected >" + i + "</option>";
-            } else {
-                $Month += "<option value=\"" + i + "\" >" + i + "</option>";
-            }
-        }
-        $Month += "</select>";
-        document.getElementById("month").innerHTML = $Month + "月";
-
-        //日付
-        $Day = "<select>";
-        for (var i = 1; i <= 31; i++) {
-            if (i == dd) {
-                $Day += "<option value=\"" + i + "\" selected >" + i + "</option>";
-            } else {
-                $Day += "<option value=\"" + i + "\" >" + i + "</option>";
-            }
-        }
-        $Day += "</select>";
-        document.getElementById("day").innerHTML = $Day + "日";
+   (function($){
+  function formSetDay(){
+    var lastday = formSetLastDay($('.js-changeYear').val(), $('.js-changeMonth').val());
+    var option = '';
+    for (var i = 1; i <= lastday; i++) {
+      if (i === $('.js-changeDay').val()){
+        option += '<option value="' + i + '" selected="selected">' + i + '</option>\n';
+      }else{
+        option += '<option value="' + i + '">' + i + '</option>\n';
+      }
     }
+    $('.js-changeDay').html(option);
+  }
+
+  function formSetLastDay(year, month){
+    var lastday = new Array('', 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0){
+      lastday[2] = 29;
+    }
+    return lastday[month];
+  }
+
+  $('.js-changeYear, .js-changeMonth').change(function(){
+    formSetDay();
+  });
+})(jQuery);
 
     function handleDownload() {
         var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定

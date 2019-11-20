@@ -17,81 +17,99 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="css/systems.css">
-
-      <style>
-        .hide {
-            display: none;
-        }
-       h1{
-      text-align: center;
-      color:#696969;
-      font-weight:100;
-      text-align: center;
-      position: relative;
-      bottom: 90px;
-    }
-    body{
-            font-size: 20px;
-        }
-
-        * {
-            -webkit-transition-property: all;
-            -webkit-transition-duration: .2s;
-          -moz-transition-timing-function: cubic-bezier(100,50,21,6);
-            -moz-transition-property: all;
-        }
-
-    body{
-      padding:75px;
-      font-family: 'Oswald', sans-serif;
+</head>
+<style>
+    h1 {
+        text-align: center;
+        position: relative;
+        bottom: 130px;
     }
 
-         .panel ul{
-		text-align: left;
-		color: #000;
-	}
-	.panel li{
-		display: inline-block;
+    * {
+        -webkit-transition-property: all;
+        -webkit-transition-duration: .2s;
+        -moz-transition-timing-function: cubic-bezier(100, 50, 21, 6);
+        -moz-transition-property: all;
+    }
+
+    body {
+        font-size: 20px;
+        padding: 75px;
+        font-family: 'Oswald', sans-serif;
+    }
+
+    #items p {
+        margin-bottom: 30px;
+    }
+
+
+
+    form p {
+        font-size: 20px;
+        position: relative;
+        left: 200px;
+        top: 100px;
+    }
+
+    /*QA管理画面*/
+    .panel ul {
+        text-align: left;
+        color: #000;
+    }
+
+    .panel li {
+        display: inline-block;
         vertical-align: middle;
-		color: #000;
+        color: #000;
         position: relative;
         right: 52px;
         bottom: 122px;
         margin: 50px;
-	}
-	.panel a{
-		font-weight: bold;
-		position: relative;
-		top: 20px;
-		left: 110px;
-        color:#000;
-		text-decoration: none;
-	}
-	.panel a::after{
-      position: absolute;
-	  bottom: -4px;
-	  left: 0;
-	  content: '';
-	  width: 100%;
-	  height: 2px;
-	  background: #008000;
-	  transform: scale(0, 1);
-	  transform-origin: left top;
-	  transition: transform .3s;
-	}
-	.panel a:hover::after{
-		transform: scale(1, 1);
-	}
-    table{
+    }
+
+    .panel a {
+        font-weight: bold;
+        position: relative;
+        top: 20px;
+        left: 110px;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .panel a::after {
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: #008000;
+        transform: scale(0, 1);
+        transform-origin: left top;
+        transition: transform .3s;
+    }
+
+    .panel a:hover::after {
+        transform: scale(1, 1);
+    }
+
+    table {
         position: relative;
         top: 70px;
-          }
-    table th{
+        left: 140px;
+    }
+
+    textarea {
+        width: 400px;
+        height: 170px;
+    }
+    #add{
         position: relative;
-        left: 80px;
-          }
-    </style>
-</head>
+        left: 140px;
+        top: 40px;
+    }
+
+</style>
 <body>
 
 <nav>
@@ -107,26 +125,151 @@
 </nav>
 
 <h1>QA管理</h1>
-<table class="table table-striped" id="target">
-    <thead>
-    <tr>
-        <th scope="row">質問</th>
-        <th>回答</th>
-    </tr>
-    </thead>
-    <tbody id="params">
+<div id="systems">
+    <form id="frm" name="frm" method="GET" action="">
+        <div><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
+        <table border="1" id="tbl">
+            <tr>
+                <th style="text-align:right; width:40px;">No.</th>
+                <th style="">質問ワード</th>
+                <th style="">応答</th>
+                <th style="width:40px;"></th>
+                <th style="width:40px;"></th>
+            </tr>
+            <tr>
+                <td style="text-align:right; width:40px;"><span class="seqno">1</span></td>
+                <td style=""><input class="inpval" type="text" id="txt1" name="txt1" value="null" size="30" readonly
+                                    style="border:none"></td>
+                <td style=""><input class="inpval" type="text" id="txt1" name="txt1" value="null" size="30" readonly
+                                    style="border:none"></td>
+                <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集"
+                                               onclick="editRow(this)"></td>
+                <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除"
+                                               onclick="deleteRow(this)"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    function appendRow() {
+        var objTBL = document.getElementById("tbl");
+        if (!objTBL)
+            return;
 
-    <tr class="add_row"
-        onclick="let node=this.nextElementSibling.cloneNode(true);node.removeAttribute('id');node.classList.remove('hide');this.parentNode.insertBefore(node,this)">
-        <td colspan="3" style="text-align: center"><i class="fas fa-plus"></i></td>
-    </tr>
+        var count = objTBL.rows.length;
 
-    <tr class="hide">
-        <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
-        <td><input style="width: 100%;outline: 0;border: 0px;background: transparent;"></td>
-        <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
-    </tr>
-    </tbody>
-</table>
+        // 最終行に新しい行追加
+        var row = objTBL.insertRow(count);
+
+        // 列追加
+        var c1 = row.insertCell(0);
+        var c2 = row.insertCell(1);
+        var c3 = row.insertCell(2);
+        var c4 = row.insertCell(3);
+        var c5 = row.insertCell(4);
+
+        // 各列にスタイル設定
+        c1.style.cssText = "text-align:right; width:40px;";
+        c2.style.cssText = "width:200px;";
+        c3.style.cssText = "width:200px;";
+        c4.style.cssText = "width:40px;";
+        c5.style.cssText = "width:40px;";
+
+        // 各列に表示内容を設定
+        c1.innerHTML = '<span class="seqno">' + count + '</span>';
+        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
+        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
+        c4.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="editRow(this)">';
+        c5.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this)">';
+
+        // 追加した行の入力フィールドにフォーカスを設定
+        var objInp = document.getElementById("txt1" + count);
+        if (objInp)
+            objInp.focus();
+    }
+
+    /*
+     * deleteRow: 削除ボタン該当行を削除
+     */
+    function deleteRow(obj) {
+        // 確認
+        if (!confirm("この行を削除しますか？"))
+            return;
+
+        if (!obj)
+            return;
+
+        var objTR = obj.parentNode.parentNode;
+        var objTBL = objTR.parentNode;
+
+        if (objTBL)
+            objTBL.deleteRow(objTR.sectionRowIndex);
+
+        // <span> 行番号ふり直し
+        var tagElements = document.getElementsByTagName("span");
+        if (!tagElements)
+            return false;
+
+        var seq = 1;
+        for (var i = 0; i < tagElements.length; i++) {
+            if (tagElements[i].className.match("seqno"))
+                tagElements[i].innerHTML = seq++;
+        }
+
+        // id/name ふり直し
+        var tagElements = document.getElementsByTagName("input");
+        if (!tagElements)
+            return false;
+        var seq = 1;
+        for (var i = 0; i < tagElements.length; i++) {
+            if (tagElements[i].className.match("inpval")) {
+                tagElements[i].setAttribute("id", "txt" + seq);
+                tagElements[i].setAttribute("name", "txt" + seq);
+                ++seq;
+            }
+        }
+        seq = 1;
+        for (var i = 0; i < tagElements.length; i++) {
+            if (tagElements[i].className.match("edtbtn")) {
+                tagElements[i].setAttribute("id", "edtBtn" + seq);
+                ++seq;
+            }
+        }
+
+        // <input type="button" id="delBtnN">
+        seq = 1;
+        for (var i = 0; i < tagElements.length; i++) {
+            if (tagElements[i].className.match("delbtn")) {
+                tagElements[i].setAttribute("id", "delBtn" + seq);
+                ++seq;
+            }
+        }
+    }
+
+    /*
+     *編集ボタン該当行の内容を入力・編集、モード切り替え
+     */
+    function editRow(obj) {
+        var objTR = obj.parentNode.parentNode;
+        var rowId = objTR.sectionRowIndex;
+        var objInp = document.getElementById("txt" + rowId);
+        var objBtn = document.getElementById("edtBtn" + rowId);
+
+        if (!objInp || !objBtn)
+            return;
+
+        // モード切り替えはボタンの値で判定
+        if (objBtn.value == "編集") {
+            objInp.style.cssText = "border:1px solid #888;"
+            objInp.readOnly = false;
+            objInp.focus();
+            objBtn.value = "確定";
+        } else {
+            objInp.style.cssText = "border:none;"
+            objInp.readOnly = true;
+            objBtn.value = "編集";
+        }
+    }
+</script>
 </body>
 </html>
