@@ -134,7 +134,7 @@
 <button id="qr_btn">QR読取</button>
 
 <form>
-    <input id="send_btn" type="submit" value="決定" onclick="send_data();">
+    <input id="send_btn" type="button" value="決定" onclick="send_data();">
 </form>
 <script>
     var $sampleCount = 0;
@@ -149,27 +149,30 @@
             //学籍番号が空
             console.log("学籍番号未入力");
             alert("学籍番号が入力されていません");
-            return false;
-        } else if (document.getElementById('name-control').value == "") {
+            {#return false;#}
+        }
+        if (document.getElementById('name-control').value == "") {
             //申請者名が空
             console.log("申請者名未入力");
             alert("申請者名が入力されていません");
-            return false;
-        } else if (document.getElementById('form-control').value == "") {
+            {#return false;#}
+        }
+        if (document.getElementById('form-control').value == "") {
             //申請書名が空
             console.log("申請書名未入力");
             alert("申請書名が入力されていません");
-            return false;
-        } else if ($("#checkbox").prop("checked") == true && document.getElementById('school-control').value == "") {
-                //チェックがついていて、学籍番号が入力されている
-                console.log("学籍番号問題有");
-                alert("学籍番号に問題があります");
-                return false;
-        {# else if (document.getElementById('sampleOutput').value == 0) #}
-        } else if ($sampleCount == "0") {
+            {#return false;#}
+        }
+        if (document.getElementById("checkbox").value == true && document.getElementById('school-control').value == "") {
+            //チェックがついていて、学籍番号が入力されている
+            console.log("学籍番号問題有");
+            alert("学籍番号に問題があります");
+            {#return false;#}
+        }
+        if ($sampleCount == "0") {
             //申請書枚数が0
             alert("申請書枚数が0枚です");
-            return false;
+            {#return false;#}
         } else {
             //画面遷移&入力フォーム情報を移す&チェックボックス=trueの場合、学籍番号の値を"無し"にする
 
