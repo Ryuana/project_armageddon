@@ -18,7 +18,7 @@ def display_messages(request):
         t_str, tz = t_with_tz[:-5], t_with_tz[-5:]
         t = datetime.datetime.strptime(t_str, "%Y-%m-%dT%H:%M:%S.%f")
         message['message_id'] = str(all_message_list[i]['MessageId'])
-        message['timestamp'] = t.strftime("%Y-%m-%d %H:%M")
+        message['timestamp'] = t.strftime("%Y-%m-%d")
         message['message_content'] = all_message_list[i]['Message']['MessageContent']['S']
         message['image_path'] = all_message_list[i]['Message']['ImagePath']['S']
         message_list.append(message)
