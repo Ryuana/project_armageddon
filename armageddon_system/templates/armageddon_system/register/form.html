@@ -108,6 +108,19 @@
         text-decoration: none;
 
     }
+    #camera, #picture, {
+        justify-content:center; margin:5px;
+    }
+
+    /* リーダー部分 */
+    #picture {
+        display:none;
+    }
+    video{
+        position: relative;
+        left: 500px;
+        top:30px;
+    }
 </style>
 <body>
 
@@ -130,13 +143,119 @@
         <span id="sampleOutput">0</span>
     </div>
 </div>
+<section id="contents">
+  <!-- カメラ -->
+  <video id="camera" width="300" height="200" muted></video>
+
+  <!-- 処理用 -->
+  <canvas id="picture" width="300" height="200"></canvas>
+</section>
 
 <button id="qr_btn">QR読取</button>
 
 <form>
     <input id="send_btn" type="submit" value="決定" onclick="send_data();">
 </form>
+
+<script src = "jsQR.min.js" ></script>
 <script>
+    const video = $("#camera");
+    const canvas = $("#picture");
+    const ctx = canvas.getContext("2d");
+
+    window.onload = () => {
+        //カメラ設定
+        const constraints = {
+            audio: false,
+            video: {
+                width: 300,
+                height: 200,
+                facingMode: "user"   // フロントカメラを利用
+            }
+        };
+         //カメラと<video>同期
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+                video.srcObject = stream;
+                video.onloadedmetadata = (e) => {
+                    video.play();
+
+                    //チェック開始
+                    checkPicture();
+                };
+            })
+            .catch((err) => {
+                console.log(err.name + ": " + err.message);
+            });
+    };
+        //QRコードの読み取り
+    function checkPicture() {
+        // カメラの映像をCanvasに複写
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // QRコードの読み取り
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+        // ある場合
+        if (code) {
+            // 結果を表示
+            setQRResult("#result", code.data);  // 文字列
+            drawLine(ctx, code.location);       // 見つけた箇所に線引く
+
+            // video と canvas を入れ替え
+            canvas.style.display = 'block';
+            video.style.display = 'none';
+            video.pause();
+        }
+        //ない場合
+        else {
+            // 0.3秒後にもう一度チェックする
+            setTimeout(() => {
+                checkPicture();
+            }, 300);
+        }
+    }
+     //発見されたQRコードに線を引く
+    function drawLine(ctx, pos, options = {color: "blue", size: 5}) {
+        // 線のスタイル設定
+        ctx.strokeStyle = options.color;
+        ctx.lineWidth = options.size;
+
+        // 線を描く
+        ctx.beginPath();
+        ctx.moveTo(pos.topLeftCorner.x, pos.topLeftCorner.y);         // 左上からスタート
+        ctx.lineTo(pos.topRightCorner.x, pos.topRightCorner.y);       // 右上
+        ctx.lineTo(pos.bottomRightCorner.x, pos.bottomRightCorner.y); // 右下
+        ctx.lineTo(pos.bottomLeftCorner.x, pos.bottomLeftCorner.y);   // 左下
+        ctx.lineTo(pos.topLeftCorner.x, pos.topLeftCorner.y);         // 左上に戻る
+        ctx.stroke();
+    }
+
+    //QRコードの読み取り結果表示
+    function setQRResult(id, data) {
+        $(id).innerHTML = escapeHTML(data);
+    }
+
+    function $(selector) {
+        return (document.querySelector(selector));
+    }
+
+     //HTML表示用に文字列エスケープ
+    function escapeHTML(str) {
+        let result = "";
+        result = str.replace("&", "&amp;");
+        result = str.replace("'", "&#x27;");
+        result = str.replace("`", "&#x60;");
+        result = str.replace('"', "&quot;");
+        result = str.replace("<", "&lt;");
+        result = str.replace(">", "&gt;");
+        result = str.replace(/\n/, "<br>");
+
+        return (result);
+    }
+
+
     var $sampleCount = 0;
 
     function sampleCountUp() {
@@ -160,10 +279,10 @@
             alert("申請書名が入力されていません");
             return false;
         } else if ($("#checkbox").prop("checked") == true && document.getElementById('school-control').value == "") {
-                //チェックがついていて、学籍番号が入力されている
-                console.log("学籍番号問題有");
-                alert("学籍番号に問題があります");
-                return false;
+            //チェックがついていて、学籍番号が入力されている
+            console.log("学籍番号問題有");
+            alert("学籍番号に問題があります");
+            return false;
         } else if (document.getElementById('sampleOutput').value = 0) {
             //申請書枚数が0
             alert("申請書枚数が0枚です");
