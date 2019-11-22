@@ -13,7 +13,10 @@ pay = LinePay(channel_id=LINE_PAY_CHANNEL_ID, channel_secret=LINE_PAY_CHANNEL_SE
               confirm_url=LINE_PAY_CONFIRM_URL)
 
 def register_form(request):
-    return render(request, 'armageddon_system/register/form.html')
+    context = {}
+    form_list = db().get_form_all()
+    context['forms'] = form_list
+    return render(request, 'armageddon_system/register/form.html', context)
 
 def register_confirm(request):
 
