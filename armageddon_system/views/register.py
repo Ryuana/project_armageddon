@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
 from armageddon_system.models.dynamo_manager import DynamoManager as db
+from armageddon_system.models import DynamoClass as dc
 
 LINE_PAY_URL = env.LINE_PAY_URL
 LINE_PAY_CHANNEL_ID = env.LINE_PAY_CHANNEL_ID
@@ -26,7 +27,7 @@ def register_confirm(request):
     context['form_list'] = request.GET['form_list']
     context['quentitiy'] = request.GET['quentitiy']
 
-    dbm.save_pay_log(context)
+    # dbm.save_pay_log(context)
 
     return render(request, 'armageddon_system/register/confirm.html', context)
 
@@ -42,7 +43,7 @@ def payments(request, form_name, fee):
     print(order_id, transaction_id, form_name, fee, "JPY")
     # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
     #                    product_name=product_name, amount=amount, currency=currency)
-    obj = db.Transactions(str(transaction_id))
+    obj = dc.Transactions(str(transaction_id))
     obj.order_id = order_id
     obj.product_name = form_name
     obj.amount = fee
@@ -54,7 +55,7 @@ def payments(request, form_name, fee):
 
 def linepay_confirm(request):
     transaction_id = request.GET.get('transactionId')
-    obj = db.Transactions.get(hash_key=transaction_id)
+    obj = dc.Transactions.get(hash_key=transaction_id)
 
     if obj is None:
         raise Exception("Error: transaction_id not found.")
