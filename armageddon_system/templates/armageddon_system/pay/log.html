@@ -282,25 +282,31 @@
         <tr>
 
         </tr>
+        {% for pay_log in pay_logs %}
         <tr>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
+            {% for forms in pay_log.form_list %}
+                <td>{{ pay_log.time_stamp }}</td>
+                <td>{{ pay_log.school_name }}</td>
+                <td>{{ pay_log.course_name }}</td>
+                <td>{{ pay_log.student_id }}</td>
+                <td>{{ forms.form.form_name }}</td>
+                <td>{{ forms.quantity }}</td>
+                <td>{{ forms.subtotal }}</td>
+            {% endfor %}
         </tr>
+    {% endfor %}
         </tbody>
         <tfoot>
         <tr>
             <th id="total" colspan="1">合計</th>
-            <td></td>
+            <td>{{ total }}</td>
         </tr>
         </tfoot>
     </table>
 </div>
 <script>
+
+    const total = 0;
 
     window.onload = function getDate() {
         var yyyy, mm, dd, today
@@ -397,7 +403,13 @@
         });
     })(jQuery);
 
-</script>
+    function Multiple(fee,quantity){
 
+        let result = fee * quantity;
+        this.total += result;
+
+        return result;
+    }
+</script>
 </body>
 </html>

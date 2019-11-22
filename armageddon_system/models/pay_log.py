@@ -13,7 +13,6 @@ class PayLog:
     buyer_name = ""
     buyer_birth = ""
     form_list: list
-    total = 0
 
     def __init__(self,
                  time_stamp,
@@ -51,14 +50,12 @@ class PayLog:
                 qr=None
             )
             self.form_list.append(
-                {'form': all_form[l['form'].form_id], 'quantity': l['quantity']}
+                {'form': all_form[l['form'].form_id], 'quantity': l['quantity'], 'subtotal': (f.fee * l['quantity'])}
             )
 
-            self.total += form.fee * l['quantity']
-
     def __iter__(self):
-        yield 'time_stamp', self.time_stamp
-        yield 'form_list', self.form_list
+        yield 'time_stamp', self.time_stamp,
+        yield 'form_list', self.form_list,
         yield 'isStudent', self.isStudent,
         yield 'student_id', self.student_id,
         yield 'school_id', self.school_id,

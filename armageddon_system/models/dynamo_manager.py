@@ -22,6 +22,7 @@ class DynamoManager():
 
         all_pay_off_log = db.PayOffLogsModel.scan()
         return_items = []
+        total = 0
         for item in all_pay_off_log:
             pay_log_form_list = []
             for form_item in item.PayOffLog.PayItems:
@@ -34,8 +35,11 @@ class DynamoManager():
                         issuance_days=None,
                         qr=None
                     ),
-                    "quantity": form_item.Quantity
+                    "quantity": form_item.Quantity,
+                    "subtotal": form_item.Subtotal
                 }
+                total += form_item.Subtotal
+
                 pay_log_form_list.append(pay_log_form_item)
 
             buyer_item = item.PayOffLog.Buyer
@@ -54,10 +58,11 @@ class DynamoManager():
                 school_name=buyer['school_name'],
                 course_id=buyer['course_id'],
                 course_name=buyer['course_name'],
-                form_list=pay_log_form_list
+                form_list=pay_log_form_list,
+
             )
             return_items.append(pay_log_item)
-        return return_items
+        return return_items,total
 
     def save_pay_log(self, pay_log: pay_log, id=False, IsPaid=False):
         """
