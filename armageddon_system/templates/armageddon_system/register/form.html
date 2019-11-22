@@ -1,11 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>申請者情報入力画面</title>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"
+            integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG"
+            crossorigin="anonymous"></script>
 </head>
 <style>
     .num1 {
@@ -108,18 +110,21 @@
         text-decoration: none;
 
     }
-    #camera, #picture, {
-        justify-content:center; margin:5px;
+
+    #camera, #picture {
+        justify-content: center;
+        margin: 5px;
     }
 
     /* リーダー部分 */
     #picture {
-        display:none;
+        display: none;
     }
-    video{
+
+    video {
         position: relative;
         left: 500px;
-        top:30px;
+        top: 30px;
     }
 </style>
 <body>
@@ -144,11 +149,11 @@
     </div>
 </div>
 <section id="contents">
-  <!-- カメラ -->
-  <video id="camera" width="300" height="200" muted></video>
+    <!-- カメラ -->
+    <video id="camera" width="300" height="200" muted></video>
 
-  <!-- 処理用 -->
-  <canvas id="picture" width="300" height="200"></canvas>
+    <!-- 処理用 -->
+    <canvas id="picture" width="300" height="200"></canvas>
 </section>
 
 <button id="qr_btn">QR読取</button>
@@ -157,7 +162,7 @@
     <input id="send_btn" type="submit" value="決定" onclick="send_data();">
 </form>
 
-<script src = "jsQR.min.js" ></script>
+
 <script>
     const video = $("#camera");
     const canvas = $("#picture");
@@ -170,17 +175,18 @@
             video: {
                 width: 300,
                 height: 200,
-                facingMode: "user"   // フロントカメラを利用
+                facingMode: "user"   // フロントカメラを利用する
             }
         };
-         //カメラと<video>同期
+
+        //カメラを<video>と同期
         navigator.mediaDevices.getUserMedia(constraints)
             .then((stream) => {
                 video.srcObject = stream;
                 video.onloadedmetadata = (e) => {
                     video.play();
 
-                    //チェック開始
+                    // QRコードのチェック開始
                     checkPicture();
                 };
             })
@@ -188,7 +194,8 @@
                 console.log(err.name + ": " + err.message);
             });
     };
-        //QRコードの読み取り
+
+    //QRコードの読み取り
     function checkPicture() {
         // カメラの映像をCanvasに複写
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -197,26 +204,28 @@
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const code = jsQR(imageData.data, canvas.width, canvas.height);
 
-        // ある場合
+        // 存在する場合
         if (code) {
             // 結果を表示
-            setQRResult("#result", code.data);  // 文字列
-            drawLine(ctx, code.location);       // 見つけた箇所に線引く
+            setQRResult("#form-control", code.data);  // 文字列
+            drawLine(ctx, code.location);       // 見つかった箇所に線を引く
 
             // video と canvas を入れ替え
             canvas.style.display = 'block';
             video.style.display = 'none';
             video.pause();
         }
-        //ない場合
+        // 存在しない場合
         else {
-            // 0.3秒後にもう一度チェックする
+            // 0.3秒後にもう一度チェック
             setTimeout(() => {
                 checkPicture();
             }, 300);
         }
     }
-     //発見されたQRコードに線を引く
+
+
+    //発見されたQRコードに線を引く
     function drawLine(ctx, pos, options = {color: "blue", size: 5}) {
         // 線のスタイル設定
         ctx.strokeStyle = options.color;
@@ -232,16 +241,20 @@
         ctx.stroke();
     }
 
-    //QRコードの読み取り結果表示
+    //QRコードの読み取り結果を表示する
     function setQRResult(id, data) {
-        $(id).innerHTML = escapeHTML(data);
+        $(id).value = escapeHTML(data);
+        console.log(id);
+        console.log(escapeHTML(data));
+        console.log(data);
     }
+
 
     function $(selector) {
         return (document.querySelector(selector));
     }
 
-     //HTML表示用に文字列エスケープ
+    //HTML表示用に文字列エスケープ
     function escapeHTML(str) {
         let result = "";
         result = str.replace("&", "&amp;");
@@ -256,10 +269,10 @@
     }
 
 
-    var $sampleCount = 0;
+    var sampleCount = 0;
 
     function sampleCountUp() {
-        document.getElementById("sampleOutput").innerHTML = ++$sampleCount;
+        document.getElementById("sampleOutput").innerHTML = ++sampleCount;
     }
 
     function send_data() {
