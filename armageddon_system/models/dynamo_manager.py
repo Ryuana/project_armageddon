@@ -175,8 +175,8 @@ class DynamoManager():
         # QAに埋め込む処理
         qa_list = []
         for item in all_qa:
-            question = item.QuestionAndAnswer['Questions']
-            answer = item.QuestionAndAnswer['Answer']
+            question = item.Questions
+            answer = item.Answer
             rt_qa = qa.QA(
                 qa_id=item.QuestionAndAnswerId,
                 question=question,
