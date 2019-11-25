@@ -7,47 +7,52 @@
 </head>
 
 <style>
-    body,p,form,input{margin: 0}
-    body{
-            font-size: 20px;
-        }
-    #form{
+    body, p, form, input {
+        margin: 0
+    }
+
+    body {
+        font-size: 20px;
+    }
+
+    #form {
         width: 700px;
         height: 450px;
         margin: 30px auto;
         padding: 20px;
         border: 1px solid #555;
-        }
+    }
 
-    form p{
+    form p {
         font-size: 20px;
         position: relative;
         left: 200px;
         top: 100px;
-        }
+    }
 
-    .form-title{
+    .form-title {
         text-align: center;
         position: relative;
         top: 20px;
-        }
+    }
 
-    .id,.pass{
+    .id, .pass {
         margin-bottom: 20px;
-        }
+    }
 
     input[type="ID"],
     input[type="password"] {
         width: 300px;
         padding: 4px;
         font-size: 14px;
-        }
-    .submit{
+    }
+
+    .submit {
         position: relative;
         top: 180px;
         left: 280px;
         width: 150px;
-        height:50px;
+        height: 60px;
         line-height: 70px;
         color: #FFF;
         text-decoration: none;
@@ -57,23 +62,24 @@
         -webkit-transition: all 0.5s;
         transition: all 0.5s;
     }
-    .submit:hover{
-         background-color: #7fff00;
+
+    .submit:hover {
+        background-color: #7fff00;
     }
 
 
 </style>
 <body>
 
-    <div id="form">
-        <p class="form-title">ログイン</p>
-        <form action="post">
-            <p>ID</p>
-            <p class="id"><input type="text" name="ID"/></p>
-            <p>パスワード</p>
-            <p class="pass"><input type="password" name="pass" /></p>
-            <input type="submit" class="submit" value="ログイン" style="font-size: 18px";/>
-        </form>
-    </div>
+<div id="form">
+    <p class="form-title">ログイン</p>
+    <form action="post">
+        <p>ID</p>
+        <p class="id"><input type="text" name="ID"/></p>
+        <p>パスワード</p>
+        <p class="pass"><input type="password" name="pass"/></p>
+        <input type="submit" class="submit" value="ログイン" style="font-size: 18px; padding-bottom:30">
+    </form>
+</div>
 </body>
 </html>

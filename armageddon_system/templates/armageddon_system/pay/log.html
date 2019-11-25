@@ -16,6 +16,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"
+            integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG" crossorigin="anonymous"></script>
 </head>
 <style>
     h1 {
@@ -389,8 +391,8 @@
     </tr>
     </tfoot>
 </table>
-<script>
 
+<script>
    (function($){
   function formSetDay(){
     var lastday = formSetLastDay($('.js-changeYear').val(), $('.js-changeMonth').val());
