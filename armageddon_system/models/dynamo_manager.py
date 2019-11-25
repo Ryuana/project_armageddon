@@ -124,7 +124,7 @@ class DynamoManager():
         pay_log = db.PayOffLogsModel.get(hash_key=pay_log_id)
         pay_log.delete()
 
-    def get_form_all(self, is_ascending=False):
+    def get_form_all(self, is_ascending=True):
         """
         精算項目を全件取得します。(通常はidで降順)
         is_ascending=Trueの場合昇順

@@ -285,7 +285,7 @@
         {% for pay_log in pay_logs %}
         <tr>
             {% for forms in pay_log.form_list %}
-                <td>{{ pay_log.time_stamp }}</td>
+                <td>{{ pay_log.time_stamp|date:"Y/m/d"}}</td>
                 <td>{{ pay_log.school_name }}</td>
                 <td>{{ pay_log.course_name }}</td>
                 <td>{{ pay_log.student_id }}</td>
