@@ -1,30 +1,43 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
+import datetime
 from armageddon_system.models.qa import QA
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 
-#メッセージ一覧
-def display_messages(request):
 
+# メッセージ一覧
+def display_messages(request):
     dbm = db()
     context = {}
-    context['message'] = dbm.get_message_list()
+    all_message_list = dbm.get_message_list()
+    message_list = []
+    for i in reversed(range(len(all_message_list))):
+        message = {}
+        t_with_tz = all_message_list[i]['Message']['Timestamp']['S']
+        t_str, tz = t_with_tz[:-5], t_with_tz[-5:]
+        t = datetime.datetime.strptime(t_str, "%Y-%m-%dT%H:%M:%S.%f")
+        message['message_id'] = str(all_message_list[i]['MessageId'])
+        message['timestamp'] = t.strftime("%Y-%m-%d")
+        message['message_content'] = all_message_list[i]['Message']['MessageContent']['S']
+        message['image_path'] = all_message_list[i]['Message']['ImagePath']['S']
+        message_list.append(message)
+    context['message'] = message_list
     return render(request, 'armageddon_system/linebot/msg/list.html', context)
 
-#メッセージ編集画面
+
+# メッセージ編集画面
 def edit_message(request, message_id):
-
-    #message_idを元にmessage取り出す
+    # message_idを元にmessage取り出す
     context = {}
-    #context['message'] = get_message
+    # context['message'] = get_message
 
-    #context渡す
+    # context渡す
     return render(request, 'armageddon_system/linebot/msg/edit.html')
 
-#メッセージ保存時
-def save_message(request):
 
+# メッセージ保存時
+def save_message(request):
     dbm = db()
     message = request.GET['message']
     img = request.GET['img']
@@ -32,23 +45,23 @@ def save_message(request):
 
     return render(request, 'armageddon_system/linebot/msg/list.html')
 
-def display_qa_list(request):
 
+def display_qa_list(request):
     dbm = db()
     context = {}
     context['qa_list'] = dbm.get_qa_all()
 
     return render(request, 'armageddon_system/linebot/qa/list.html', context)
 
-def save_qa(request):
 
+def save_qa(request):
     dbm = db()
-    #qa_idの最新の値を取り出す処理
+    # qa_idの最新の値を取り出す処理
     questions = str(request.GET['questions']).split(",")
     answer = request.answer
-    #dbm.save_qa(qa_id,questions,answer)
+    # dbm.save_qa(qa_id,questions,answer)
+
 
 def delete_qa(request, qa_id):
-
     dbm = db()
     dbm.del_qa(qa_id)
