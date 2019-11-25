@@ -165,7 +165,7 @@
 
 
 <div id="systems">
-
+    <form id="frm" name="frm" method="post" action="">
         <div><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
         <table border="1" id="tbl">
             <tr>
@@ -216,7 +216,7 @@
         var c4 = row.insertCell(3);
         var c5 = row.insertCell(4);
         var c6 = row.insertCell(5);
-        var c7= row.insertCell(6);
+        var c7 = row.insertCell(6);
 
         // 各列にスタイル設定
         c1.style.cssText = "text-align:right; width:40px;";
@@ -227,14 +227,16 @@
         c6.style.cssText = "width:40px;";
         c7.style.cssText = "width:40px;";
 
+
         // 各列に表示内容を設定
         c1.innerHTML = '<span class="seqno">' + count + '</span>';
-        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="txt' + count + '" value=""  size="30" style="border:1px solid #888;">';
+        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
         c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
         c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="editRow(this)">';
+        c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="function tab(e)">';
         c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this)">';
         c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR出力" onclick="QROutput(this)">';
+
         // 追加した行の入力フィールドにフォーカスを設定
         var objInp = document.getElementById("txt1" + count);
         if (objInp)
@@ -302,26 +304,17 @@
     /*
      *編集ボタン該当行の内容を入力・編集、モード切り替え
      */
-    function editRow(obj) {
-        var objTR = obj.parentNode.parentNode;
-        var rowId = objTR.sectionRowIndex;
-        var objInp = document.getElementById("txt" + rowId);
-        var objBtn = document.getElementById("edtBtn" + rowId);
-
-        if (!objInp || !objBtn)
-            return;
-
-        // モード切り替えはボタンの値で判定
-        if (objBtn.value == "編集") {
-            objInp.style.cssText = "border:1px solid #888;"
-            objInp.readOnly = false;
-            objInp.focus();
-            objBtn.value = "確定";
-        } else {
-            objInp.style.cssText = "border:none;"
-            objInp.readOnly = true;
-            objBtn.value = "編集";
+    function tab(e) {
+        if (e.which == 13) {
+            e.target.nextSibling.nextSibling.focus();
+            e.preventDefault();
         }
+    }
+
+    var inputs = document.getElementsByTagName('input');
+    for (var x = 0; x < inputs.length; x++) {
+        var input = inputs[x];
+        input.onkeypress = tab;
     }
 
 

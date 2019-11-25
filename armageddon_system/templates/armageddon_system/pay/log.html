@@ -16,6 +16,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"
+            integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG" crossorigin="anonymous"></script>
 </head>
 <style>
     h1 {
@@ -48,46 +50,10 @@
         font-family: 'Oswald', sans-serif;
     }
 
-    #school_name {
+    #school {
         position: relative;
-        bottom: 70px;
-    }
-
-    #items p {
-        margin-bottom: 30px;
-    }
-
-    button {
-        position: relative;
-        left: 633px;
-        top: 140px;
-
-    }
-
-    #school_num p {
-        position: relative;
-        top: 40px;
-        right: 100px;
-    }
-
-    #app_name p {
-        position: relative;
-        top: 40px;
-        right: 100px;
-    }
-
-
-    #app_form p {
-        position: relative;
-        top: 67px;
-        left: 450px;
-    }
-
-    form p {
-        font-size: 20px;
-        position: relative;
-        left: 200px;
-        top: 100px;
+        bottom: 120px;
+        left: 230px;
     }
 
     .panel ul {
@@ -134,26 +100,20 @@
     table {
         position: relative;
         top: 30px;
-        left: -35px;
-    }
-
-    #systems {
-        position: relative;
-        bottom: 50px;
         left: 100px;
     }
 
-    p {
+    .school{
         position: relative;
-        right: 70px;
-        top: 50px;
+        left: 125px;
+        bottom: 70px;
     }
 
     #downloadCsvBtn {
         text-align: right;
         position: relative;
-        left: 130px;
-        top: 60px;
+        left: 955px;
+        bottom: 10px;
         font-size: 0.8em;
         font-weight: bold;
         padding: 10px 30px;
@@ -175,10 +135,16 @@
         width: 120px;
     }
 
-    #sub_systems {
+    .system {
         position: relative;
-        left: 30px;
-        margin-bottom: 70px;
+        left: 230px;
+        bottom: 120px;
+    }
+    .days{
+        text-align: left;
+        position: relative;
+        bottom: 70px;
+        left: 140px;
     }
 </style>
 <body>
@@ -195,72 +161,68 @@
 </nav>
 
 <h1>精算記録</h1>
+<p class="school">学校名</p>
+<select name="school" id="school">
+    <option value="num1">麻生情報ビジネス</option>
+    <option value="num2">麻生公務員</option>
+    <option value="num3">麻生製菓</option>
+    <option value="num4">麻生外国語</option>
+</select>
 
+<p class="days">日付</p>
+<div class="system">
+    <input name="year" type="text" class="js-changeYear"> 年
 
-<div id="systems">
-    <div id="sub_systems">
-        <div id="school_name">
-            <p>学校名</p>
-            <select name="school">
-                <option value="num1">麻生情報ビジネス</option>
-                <option value="num2">麻生公務員</option>
-                <option value="num3">麻生製菓</option>
-                <option value="num4">麻生外国語</option>
-            </select>
-        </div>
-        <p>日付</p>
-        <a id="year"></a><a id="month"></a><a id="day"></a>
-        ~
-        <input name="year2" type="text" class="js-changeYear"> 年
+    <select name="month" class="js-changeMonth">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select> 月
 
-        <select name="month2" class="js-changeMonth">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-        </select> 月
-
-        <select name="date2" class="js-changeDay">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-        </select> 日
+    <select name="date" class="js-changeDay">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+    </select> 日
+    ~
+      <input name="year" type="text" class="js-changeYear"> 年
 
         <b><a id="downloadCsvBtn" href="#" download="test.csv" onclick="handleDownload()">CSV出力</a></b>
     </div>
@@ -402,13 +364,6 @@
         });
     })(jQuery);
 
-    function Multiple(fee,quantity){
-
-        let result = fee * quantity;
-        this.total += result;
-
-        return result;
-    }
 </script>
 
 </body>
