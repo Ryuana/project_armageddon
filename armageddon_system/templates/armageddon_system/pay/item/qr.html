@@ -149,26 +149,29 @@
         </ul>
     </div>
 </nav>
-    <div id="qrcode"></div>
+    <div id="qrcode">
+        {% load static%}
+        <img src="{% static 'armageddon_system/qr_code.png' %}" />
+    </div>
     <div id="app_form">
         <p>申請書名</p>
-        <p></p>
+        <p>{{ form_name }}</p>
     </div>
 
     <div id="price">
         <p>金額</p>
-        <p></p>
+        <p>{{ form_fee }}</p>
     </div>
     <button id="printing" style="width:60px;height:30px" onclick="window.print();">印刷</button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-    <script type="text/JavaScript">
-        $(function () {
-            var qrtext = "卒業証明書,230,3";
-            var utf8qrtext = unescape(encodeURIComponent(qrtext));
-            $("#qrcode").html("");
-            $("#qrcode").qrcode({text: utf8qrtext});
-        });
-    </script>
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>#}
+{#    <script type="text/JavaScript">#}
+{#        $(function () {#}
+{#            var qrtext = "卒業証明書,230,3";#}
+{#            var utf8qrtext = unescape(encodeURIComponent(qrtext));#}
+{#            $("#qrcode").html("");#}
+{#            $("#qrcode").qrcode({text: utf8qrtext});#}
+{#        });#}
+{#    </script>#}
 </body>
 </html>

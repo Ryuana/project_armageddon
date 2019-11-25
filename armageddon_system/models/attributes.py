@@ -8,6 +8,7 @@ class PayItemsAttribute(MapAttribute):
     FormName = UnicodeAttribute(null=False)
     Fee = NumberAttribute(null=False)
     Quantity = NumberAttribute(null=False)
+    Subtotal = NumberAttribute(null=True)
 
 
 class BuyerAttribute(MapAttribute):
