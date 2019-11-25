@@ -18,78 +18,86 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="css/systems.css">
 
-      <style>
+    <style>
         .hide {
             display: none;
         }
-       h1{
-      text-align: center;
-      color:#696969;
-      font-weight:100;
-      text-align: center;
-      position: relative;
-      bottom: 90px;
-    }
-    body{
+
+        h1 {
+            text-align: center;
+            color: #696969;
+            font-weight: 100;
+            text-align: center;
+            position: relative;
+            bottom: 90px;
+        }
+
+        body {
             font-size: 20px;
         }
 
         * {
             -webkit-transition-property: all;
             -webkit-transition-duration: .2s;
-          -moz-transition-timing-function: cubic-bezier(100,50,21,6);
+            -moz-transition-timing-function: cubic-bezier(100, 50, 21, 6);
             -moz-transition-property: all;
         }
 
-    body{
-      padding:75px;
-      font-family: 'Oswald', sans-serif;
-    }
+        body {
+            padding: 75px;
+            font-family: 'Oswald', sans-serif;
+        }
 
-         .panel ul{
-		text-align: left;
-		color: #000;
-	}
-	.panel li{
-		display: inline-block;
-        vertical-align: middle;
-		color: #000;
-        position: relative;
-        right: 52px;
-        bottom: 122px;
-        margin: 50px;
-	}
-	.panel a{
-		font-weight: bold;
-		position: relative;
-		top: 20px;
-		left: 110px;
-        color:#000;
-		text-decoration: none;
-	}
-	.panel a::after{
-      position: absolute;
-	  bottom: -4px;
-	  left: 0;
-	  content: '';
-	  width: 100%;
-	  height: 2px;
-	  background: #008000;
-	  transform: scale(0, 1);
-	  transform-origin: left top;
-	  transition: transform .3s;
-	}
-	.panel a:hover::after{
-		transform: scale(1, 1);
-	}
-    table{
-        position: relative;
-        top: 70px;
-          }
-    table th{
-        position: relative;
-        left: 80px;
-          }
+        .panel ul {
+            text-align: left;
+            color: #000;
+        }
+
+        .panel li {
+            display: inline-block;
+            vertical-align: middle;
+            color: #000;
+            position: relative;
+            right: 52px;
+            bottom: 122px;
+            margin: 50px;
+        }
+
+        .panel a {
+            font-weight: bold;
+            position: relative;
+            top: 20px;
+            left: 110px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .panel a::after {
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: #008000;
+            transform: scale(0, 1);
+            transform-origin: left top;
+            transition: transform .3s;
+        }
+
+        .panel a:hover::after {
+            transform: scale(1, 1);
+        }
+
+        table {
+            position: relative;
+            top: 70px;
+        }
+
+        table th {
+            position: relative;
+            left: 80px;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +123,19 @@
     </tr>
     </thead>
     <tbody id="params">
+
+    {% for i in qa_list %}
+        <tr>
+            <td>
+                {% for question_item in i.question %}{{ question_item }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}
+            </td>
+            <td>
+                {{ i.answer }}
+            </td>
+            <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
+
+        </tr>
+    {% endfor %}
 
     <tr class="add_row"
         onclick="let node=this.nextElementSibling.cloneNode(true);node.removeAttribute('id');node.classList.remove('hide');this.parentNode.insertBefore(node,this)">

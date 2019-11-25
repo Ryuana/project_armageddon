@@ -184,7 +184,7 @@ class DynamoManager():
             )
             qa_list.append(rt_qa)
 
-        return all_qa
+        return qa_list
 
     def save_qa(self, qa_id, qa: qa.QA):
         """
