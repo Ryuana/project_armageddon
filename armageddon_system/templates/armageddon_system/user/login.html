@@ -70,9 +70,9 @@
         <form action="./login" method="post">
              {% csrf_token %}
             <p>ID</p>
-            <p class="id"><input type="text" name="ID"/></p>
+            <p class="id"><input type="text" name="user_id"/></p>
             <p>パスワード</p>
-            <p class="pass"><input type="password" name="pass" /></p>
+            <p class="pass"><input type="password" name="user_pass" /></p>
             <input type="submit" class="submit" value="ログイン" style="font-size: 18px";/>
         </form>
     </div>
