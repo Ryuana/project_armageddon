@@ -143,7 +143,7 @@ class DynamoManager():
             )
             return_items.append(rt_form)
         if is_ascending:
-            return_items = reversed(return_items)
+            return_items = list(reversed(return_items))
         return return_items
 
     def save_form(self, form: form.Form):
