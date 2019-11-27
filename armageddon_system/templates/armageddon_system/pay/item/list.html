@@ -36,7 +36,6 @@
 
 
 <div id="systems">
-    <form id="frm" name="frm" method="post" action="">
         <div><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
         <table border="1" id="tbl">
             <tr>
@@ -110,7 +109,7 @@
         c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
         c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="function tab(e)">';
         c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-        c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR出力" onclick="QROutput(this)">';
+        c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
 
         // 追加した行の入力フィールドにフォーカスを設定
         var objInp = document.getElementById("txt1" + count);
