@@ -28,9 +28,7 @@ def dynamo(request):
     # pom_get = pom.scan()
     dbm = db.DynamoManager()
     pom_get = dbm.get_pay_log_all()
-    context['pom_data'] = []
-    for pom_item in pom_get:
-        context['pom_data'].append(dict(pom_item))
+    context['pom_data'] = pom_get
 
     # pom_count = pom.count(hash_key=1)
     dbm = db.DynamoManager()
