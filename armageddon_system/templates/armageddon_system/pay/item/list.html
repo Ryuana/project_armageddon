@@ -180,6 +180,7 @@
                 <form id="frm" name="frm" method="POST" action="./qr">
                     {% csrf_token %}
                     <tr>
+
                         <td style="text-align:right; width:40px;"><span class="seqno">1</span></td>
                         <td style=""><input class="inpval" type="text" id="txt1"
                                             name="txt1" value= {{ form.form_name }} size="25" style="border:none"></td>
