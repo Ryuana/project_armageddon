@@ -166,7 +166,7 @@
 
 <div id="systems">
     <form id="frm" name="frm" method="post" action="">
-        <div><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
+        <div><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></div>
         <table border="1" id="tbl">
             <tr>
                 <th style="text-align:right; width:40px;">No.</th>
@@ -184,25 +184,25 @@
 
                         <td style="text-align:right; width:40px;"><span class="seqno">1</span></td>
                         <td style=""><input class="inpval" type="text" id="txt1"
-                                            name="txt1" value= {{ form.form_name }} size="25" style="border:none"></td>
+                                            name="form_name" value= {{ form.form_name }} size="25" style="border:none"></td>
                         <td style=""><input class="inpval" type="text" id="txt2"
-                                            name="txt2" value={{ form.fee }} size="25" style="border:none"></td>
+                                            name="fee" value={{ form.fee }} size="25" style="border:none"></td>
                         <td style=""><input class="inpval" type="text" id="txt3"
-                                            name="txt3" value={{ form.issuance_days }} size="25" style="border:none"></td>
+                                            name="issuance_days" value={{ form.issuance_days }} size="25" style="border:none"></td>
                         <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集"
-                                                       onclick="editRow(this)"></td>
+                                                       onclick="edit_form(this)"></td>
                         <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除"
-                                                       onclick="deleteRow(this)"></td>
-                        <td style="width:40px;"><input class="qrbtn" type="submit" id="qrBtn1" value="QR表示"></td>
+                                                       onclick="delete_form(this)"></td>
+                        <td style="width:40px;"><input class="qrbtn" type="submit" id="qrBtn1" value="QR表示"
+                                                       onclick="QROutput(this)"></td>
                     </tr>
                 </form>
             {% endfor %}
         </table>
-</div>
 <script>
 
 
-    function appendRow() {
+    function insert_row() {
         var objTBL = document.getElementById("tbl");
         if (!objTBL)
             return;
@@ -233,11 +233,11 @@
 
         // 各列に表示内容を設定
         c1.innerHTML = '<span class="seqno">' + count + '</span>';
-        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
+        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="form_name' + count + '" value="" size="30" ">';
+        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="fee' + count + '" value="" size="30" ">';
+        c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
         c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="function tab(e)">';
-        c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this)">';
+        c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
         c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR出力" onclick="QROutput(this)">';
 
         // 追加した行の入力フィールドにフォーカスを設定
@@ -247,9 +247,9 @@
     }
 
     /*
-     * deleteRow: 削除ボタン該当行を削除
+     * delete_form: 削除ボタン該当行を削除
      */
-    function deleteRow(obj) {
+    function delete_form(obj) {
         // 確認
         if (!confirm("この行を削除しますか？"))
             return;
@@ -261,7 +261,7 @@
         var objTBL = objTR.parentNode;
 
         if (objTBL)
-            objTBL.deleteRow(objTR.sectionRowIndex);
+            objTBL.delete_form(objTR.sectionRowIndex);
 
         // <span> 行番号ふり直し
         var tagElements = document.getElementsByTagName("span");
@@ -321,5 +321,7 @@
 
 
 </script>
+    </form>
+</div>
 </body>
 </html>
