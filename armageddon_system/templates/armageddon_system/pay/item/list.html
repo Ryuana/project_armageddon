@@ -165,6 +165,7 @@
 
 
 <div id="systems">
+    <form id="frm" name="frm" method="post" action="">
         <div><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
         <table border="1" id="tbl">
             <tr>
@@ -199,6 +200,8 @@
         </table>
 </div>
 <script>
+
+
     function appendRow() {
         var objTBL = document.getElementById("tbl");
         if (!objTBL)
@@ -291,7 +294,6 @@
             }
         }
 
-        // <input type="button" id="delBtnN">
         seq = 1;
         for (var i = 0; i < tagElements.length; i++) {
             if (tagElements[i].className.match("delbtn")) {
