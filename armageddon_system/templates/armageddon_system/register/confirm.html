@@ -3,58 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>最終確認画面</title>
-    <link rel="stylesheet" type="text/css" href="css/systems.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/register/confirm.css' %}">
 </head>
-<style>
-    #comment {
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        text-align: center;
-        position: relative;
-        right: 60px;
-    }
-
-    #items {
-        font-size: 25px;
-        font-weight: 400;
-        text-align: center;
-        position: relative;
-        right: 180px;
-        top: 30px;
-    }
-
-    #complate_btn {
-        text-align: center;
-        position: relative;
-        right: 35px;
-        top: 40px;
-    }
-
-    #cancel_btn {
-        text-align: center;
-        position: relative;
-        top: 100px;
-        left: 600px;
-    }
-    .value{
-        position: relative;
-        left: 80px;
-    }
-    .count{
-     position: relative;
-        left: 120px;
-        bottom: 63px;
-    }
-    .name{
-
-    }
-    .school_num{
-
-    }
-    .app_form{}
-</style>
-
 <body>
 <p id="comment">以下の情報でLINEPay決済します</p>
 <div id="items">
