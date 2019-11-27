@@ -47,24 +47,24 @@
         <th style="width:40px;"> </th>
         <th style="width:40px;"> </th>
     </tr>
-{% for message_item in message %}
+    {% for message_item in message %}
     <form id="frm" name="frm" method="POST" action="./edit.html">
-    {% csrf_token %}
-    <tr>
-        <input type="hidden" name="message_id" value={{ message_item.message_id }}>
-        <td style="text-align:right; width:40px;">{{message_item.message_id}}<span class="seqno"></span></td>
-        <td style=""><input class="inpval" type="text" id="txt1" name="txt1" value="{{message_item.timestamp}}" size="30" style="border:none"></td>
-        <td style=""><input class="inpval" type="text" id="txt1" name="txt1" value="{{ message_item.message_content }}" size="30" style="border:none"></td>
-        <td style=""><input class="inpval" type="text" id="txt1" name="txt1" value="{{message_item.image_path}}" size="30" style="border:none"></td>
-        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集" onclick="editRow(this)"></td>
-        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除" onclick="deleteRow(this)"></td>
-    </tr>
-        </form>
-{% endfor %}
-</table>
+        {% csrf_token %}
+        <tr>
+            <input type="hidden" name="message_id" value={{ message_item.message_id }}>
+            <td style="text-align:right; width:40px;">{{message_item.message_id}}<span class="seqno"></span></td>
+            <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp" value="{{message_item.timestamp}}" size="30" style="border:none"></td>
+            <td style=""><input class="inpval" type="text" id="txt1" name="message" value="{{ message_item.message_content }}" size="30" style="border:none"></td>
+            <td style=""><input class="inpval" type="text" id="txt1" name="image" value="{{message_item.image_path}}" size="30" style="border:none"></td>
+            <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集" onclick="edit_form(this)"></td>
+            <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除" onclick="delete_form(this)"></td>
+        </tr>
+    </form>
+    {% endfor %}
+    </table>
 </div>
 <script>
-    function appendRow() {
+    function insert_row() {
         var objTBL = document.getElementById("tbl");
         if (!objTBL)
             return;
@@ -92,11 +92,11 @@
 
         // 各列に表示内容を設定
         c1.innerHTML = '<span class="seqno">' + count + '</span>';
-        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="editRow(this)">';
-        c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this)">';
+        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="time_stamp' + count + '" value="" size="30" style="border:1px solid #888;">';
+        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="message' + count + '" value="" size="30" style="border:1px solid #888;">';
+        c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="image' + count + '" value="" size="30" style="border:1px solid #888;">';
+        c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this)">';
+        c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
 
         // 追加した行の入力フィールドにフォーカスを設定
         var objInp = document.getElementById("txt1" + count);
@@ -105,9 +105,9 @@
     }
 
     /*
-     * deleteRow: 削除ボタン該当行を削除
+     * delete_form: 削除ボタン該当行を削除
      */
-    function deleteRow(obj) {
+    function delete_form(obj) {
         // 確認
         if (!confirm("この行を削除しますか？"))
             return;
@@ -119,7 +119,7 @@
         var objTBL = objTR.parentNode;
 
         if (objTBL)
-            objTBL.deleteRow(objTR.sectionRowIndex);
+            objTBL.delete_form(objTR.sectionRowIndex);
 
         // <span> 行番号ふり直し
         var tagElements = document.getElementsByTagName("span");
@@ -165,7 +165,7 @@
     /*
      *編集ボタン該当行の内容を入力・編集、モード切り替え
      */
-    function editRow(obj) {
+    function edit_form(obj) {
         var objTR = obj.parentNode.parentNode;
         var rowId = objTR.sectionRowIndex;
         var objInp = document.getElementById("txt" + rowId);
