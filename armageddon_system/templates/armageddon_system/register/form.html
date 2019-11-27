@@ -158,30 +158,28 @@
     }
 
     function send_data() {
-        if (document.getElementById('school-control').value == "") {
+        if (document.getElementById('school-control').value == "" && document.getElementById("checkbox").checked == false) {
             //学籍番号が空
             console.log("学籍番号未入力");
             alert("学籍番号が入力されていません");
-            return false;
-        } else if (document.getElementById('name-control').value == "") {
-            //申請者名が空
-            console.log("申請者名未入力");
-            alert("申請者名が入力されていません");
-            return false;
-        } else if (document.getElementById('form-control').value == "") {
-            //申請書名が空
-            console.log("申請書名未入力");
-            alert("申請書名が入力されていません");
-            {#return false;#}
-        }
-        if (document.getElementById("checkbox").checked == true && document.getElementById('school-control').value != "") {
+            {# return false; #}
+        } if (document.getElementById("checkbox").checked == true && document.getElementById('school-control').value != "") {
             // document.getElementById("checkbox").value == true
             //チェックがついていて、学籍番号が入力されている
             console.log("学籍番号問題有");
             alert("学籍番号に問題があります");
             {#return false;#}
-        }
-        if (sampleCount == "0") {
+        } if (document.getElementById('name-control').value == "") {
+            //申請者名が空
+            console.log("申請者名未入力");
+            alert("申請者名が入力されていません");
+            {#return false;#}
+        } if (document.getElementById('form-control').value == "") {
+            //申請書名が空
+            console.log("申請書名未入力");
+            alert("申請書名が入力されていません");
+            {#return false;#}
+        } if (sampleCount == "0") {
             //申請書枚数が0
             alert("申請書枚数が0枚です");
             return false;
