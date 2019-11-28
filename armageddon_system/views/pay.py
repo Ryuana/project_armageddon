@@ -23,9 +23,9 @@ def item_list(request):
 def item_qr(request):
 
     context = {}
-    context['form_name'] = request.POST['txt1']
-    context['form_fee'] = request.POST['txt2']
-    img = qrcode.make(request.POST['txt1'])
+    context['form_name'] = request.POST['form_name']
+    context['fee'] = request.POST['fee']
+    img = qrcode.make(request.POST['form_name'])
     img.save('armageddon_system/static/armageddon_system/qr_code.png')
 
     return render(request, 'armageddon_system/pay/item/qr.html', context)
