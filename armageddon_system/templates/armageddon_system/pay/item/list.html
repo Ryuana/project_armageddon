@@ -132,7 +132,7 @@
         var objTBL = objTR.parentNode;
 
         if (objTBL)
-            objTBL.delete_form(objTR.sectionRowIndex);
+            objTBL.deleteRow(objTR.sectionRowIndex);
 
         // <span> 行番号ふり直し
         var tagElements = document.getElementsByTagName("span");
@@ -165,6 +165,7 @@
             }
         }
 
+        // <input type="button" id="delBtnN">
         seq = 1;
         for (var i = 0; i < tagElements.length; i++) {
             if (tagElements[i].className.match("delbtn")) {
