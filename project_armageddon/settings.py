@@ -28,7 +28,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     "ec2-13-113-87-53.ap-northeast-1.compute.amazonaws.com",
     'localhost',
-    '192.168.43.204' #テザリング用
+    '192.168.43.204', #テザリング用
     '13.113.87.53'
 ]
 
