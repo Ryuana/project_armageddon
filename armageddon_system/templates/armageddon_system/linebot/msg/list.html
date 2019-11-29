@@ -179,8 +179,9 @@
     <tr>
         <td style="text-align:right; width:40px;">{{message_item.message_id}}<span class="seqno"></span></td>
         <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp" value="{{message_item.timestamp}}" size="30" style="border:none"></td>
-        <td style=""><input class="inpval" type="text" id="txt1" name="message" value="{{ message_item.message_content }}" size="30" style="border:none"></td>
-        <td style=""><input class="inpval" type="text" id="txt1" name="image" value="{{message_item.image_path}}" size="30" style="border:none"></td>
+        <td style=""><input class="inpval" type="text" id="txt2" name="message" value="{{ message_item.message_content }}" size="30" style="border:none"></td>
+        <td style=""><input class="inpval" type="text" id="txt3
+" name="image" value="{{message_item.image_path}}" size="30" style="border:none"></td>
         <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集" onclick="edit_form(this)"></td>
         <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除" onclick="delete_form(this)"></td>
     </tr>
