@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import HttpResponse
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 import qrcode
 
@@ -29,3 +30,11 @@ def item_qr(request):
     img.save('armageddon_system/static/armageddon_system/qr_code.png')
 
     return render(request, 'armageddon_system/pay/item/qr.html', context)
+
+def item_delete(request):
+    dbm = db()
+    try:
+        dbm.del_form(request.GET['form_id'])
+    except KeyError:
+        pass
+    return HttpResponse("削除成功")

@@ -168,7 +168,7 @@ class DynamoManager():
         :rtype: void
         """
         fm = db.FormsModel
-        form_item = fm.get(hash_key=form_id)
+        form_item = fm.get(hash_key=int(form_id))
         form_item.delete()
 
     def get_qa_all(self):

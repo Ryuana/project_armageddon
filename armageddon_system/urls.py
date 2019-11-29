@@ -6,6 +6,7 @@ urlpatterns = [
     path('user/logout', views.user.logout, name='logout'),
     path('pay/item/list', views.pay.item_list, name='item_list'),
     path('pay/item/qr', views.pay.item_qr, name='item_qr'),
+    path('pay/item/list/delete', views.pay.item_delete, name='item_delete'),
     path('pay/log', views.pay.log, name='log'),
     path('linebot/qa/list', views.linebot.display_qa_list, name='display_qa_list'),
     path('linebot/qa/save', views.linebot.save_qa, name='save_qa'),
