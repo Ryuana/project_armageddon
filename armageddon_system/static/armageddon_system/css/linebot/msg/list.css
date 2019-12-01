@@ -7,7 +7,7 @@ h1 {
 table {
     position: relative;
     left: 50px;
-    top: 20px;
+    top: 100px;
 }
 
 * {
@@ -104,11 +104,6 @@ input[type="password"] {
     transform: scale(1, 1);
 }
 
-table {
-    position: relative;
-    top: 320px;
-    left: -35px;
-}
 
 #systems {
     position: relative;
