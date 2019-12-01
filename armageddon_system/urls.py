@@ -21,6 +21,7 @@ urlpatterns = [
     path('register/confirm', views.register.register_confirm, name='confirm'),
     path('register/form', views.register.register_form, name='form'),
     path('register/linepay', views.register.payments, name='linepay.confirm'),
+    path('register/linepay/finish', views.register.linepay_confirm, name='linepay.finish'),
 
     # デバッグ用 #
     path('debug', views.debug.debug, name='debug'),
