@@ -34,7 +34,9 @@ def register_confirm(request):
 
 
 
-def payments(request, form_name, fee):
+def payments(request):
+    form_name = request.POST['form_name']
+    fee = int(request.POST['fee'])
     (order_id, response) = pay.request_payments(product_name=form_name, amount=fee, currency="JPY")
     print(response["returnCode"])
     print(response["returnMessage"])
@@ -43,7 +45,7 @@ def payments(request, form_name, fee):
     print(order_id, transaction_id, form_name, fee, "JPY")
     # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
     #                    product_name=product_name, amount=amount, currency=currency)
-    obj = dc.Transactions(str(transaction_id))
+    obj = dc().Transactions(str(transaction_id))
     obj.order_id = order_id
     obj.product_name = form_name
     obj.amount = fee
