@@ -13,14 +13,15 @@ LINE_PAY_CONFIRM_URL = env.LINE_PAY_CONFIRM_URL
 pay = LinePay(channel_id=LINE_PAY_CHANNEL_ID, channel_secret=LINE_PAY_CHANNEL_SECRET, line_pay_url=LINE_PAY_URL,
               confirm_url=LINE_PAY_CONFIRM_URL)
 
+
 def register_form(request):
     context = {}
     form_list = db().get_form_all()
     context['forms'] = form_list
     return render(request, 'armageddon_system/register/form.html', context)
 
-def register_confirm(request):
 
+def register_confirm(request):
     dbm = db()
     context = {}
     context['student_id'] = request.GET['student_id']
@@ -30,8 +31,6 @@ def register_confirm(request):
     # dbm.save_pay_log(context)
 
     return render(request, 'armageddon_system/register/confirm.html', context)
-
-
 
 
 def payments(request):
@@ -55,6 +54,7 @@ def payments(request):
     redirect_url = response["info"]["paymentUrl"]["web"]
     return redirect(redirect_url)
 
+
 def linepay_confirm(request):
     transaction_id = request.GET.get('transactionId')
     obj = dc.Transactions.get(hash_key=transaction_id)
@@ -67,5 +67,3 @@ def linepay_confirm(request):
     print(response["returnMessage"])
 
     return HttpResponse("Payment successfully finished.")
-
-
