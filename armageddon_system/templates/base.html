@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}armageddon_system{% endblock %}</title>
+        {% block header %}{% endblock %}
+        {#    <link rel="stylesheet" href="{% static  'armageddon_system/css/base.css'%}">#}
+    </head>
+    <body>
+        <div id="menubar">
+            {% block menubar %}
+                <nav>
+                    <div class="panel">
+                        <ul>
+                            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
+                            <li><a href="/pay/item/list">精算項目</a></li>
+                            <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
+                            <li><a href="/linebot/msg/list">メッセージ管理</a></li>
+                            <li><a href="#">ログアウト</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            {% endblock %}
+        </div>
+        <div id="main-title">
+            <h1>
+                {% block main-title %}タイトル{% endblock %}
+            </h1>
+        </div>
+        <div id="main-content">
+            {% block main-content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
