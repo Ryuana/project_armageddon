@@ -25,7 +25,7 @@ def register_confirm(request):
     context = {}
     context['student_id'] = request.GET['student_id']
     context['form_list'] = request.GET['form_list']
-    context['quentitiy'] = request.GET['quentitiy']
+    context['quantity'] = request.GET['quantity']
 
     # dbm.save_pay_log(context)
 
