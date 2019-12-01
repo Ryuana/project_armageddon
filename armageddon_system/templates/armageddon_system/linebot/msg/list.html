@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>メッセージ・画像一覧画面</title>
+{% extends 'base.html' %}
+{% block title %}メッセージ画像一覧{% endblock %}
+{% block header %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
           integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -18,175 +16,170 @@
             crossorigin="anonymous"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/linebot/msg/list.css' %}">
-</head>
-<body>
-<nav>
-    <div class="panel">
-        <ul>
-            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
-            <li><a href="/pay/item/list">精算項目</a></li>
-            <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
-            <li><a href="/linebot/msg/list">メッセージ管理</a></li>
-            <li><a href="#">ログアウト</a></li>
-        </ul>
+{% endblock %}
+{% block main-title %}
+    メッセージ・画像管理
+{% endblock %}
+{% block main-content %}
+    <div id="systems">
+
+        <div>行追加<input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
+        <table border="1" id="tbl">
+            <tr>
+                <th style="text-align:right; width:40px;">No.</th>
+                <th style="">日付</th>
+                <th style="">メッセージ</th>
+                <th style="">画像</th>
+                <th style="width:40px;"></th>
+                <th style="width:40px;"></th>
+            </tr>
+            {% for message_item in message %}
+                <form id="frm" name="frm" method="POST" action="./edit.html">
+                    {% csrf_token %}
+                    <tr>
+                        <input type="hidden" name="message_id" value={{ message_item.message_id }}>
+                        <td style="text-align:right; width:40px;">{{ message_item.message_id }}<span
+                                class="seqno"></span>
+                        </td>
+                        <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp"
+                                            value="{{ message_item.timestamp }}" size="30" style="border:none"></td>
+                        <td style=""><input class="inpval" type="text" id="txt1" name="message"
+                                            value="{{ message_item.message_content }}" size="30" style="border:none">
+                        </td>
+                        <td style=""><input class="inpval" type="text" id="txt1" name="image"
+                                            value="{{ message_item.image_path }}" size="30" style="border:none"></td>
+                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集"
+                                                       onclick="edit_form(this)"></td>
+                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除"
+                                                       onclick="delete_form(this)"></td>
+                    </tr>
+                </form>
+            {% endfor %}
+        </table>
+        </form>
     </div>
-</nav>
+    <script>
+        function insert_row() {
+            var objTBL = document.getElementById("tbl");
+            if (!objTBL)
+                return;
 
-<h1>メッセージ・画像管理</h1>
+            var count = objTBL.rows.length;
 
+            // 最終行に新しい行追加
+            var row = objTBL.insertRow(count);
 
-<div id="systems">
+            // 列追加
+            var c1 = row.insertCell(0);
+            var c2 = row.insertCell(1);
+            var c3 = row.insertCell(2);
+            var c4 = row.insertCell(3);
+            var c5 = row.insertCell(4);
+            var c6 = row.insertCell(5);
 
-    <div>行追加<input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
-    <table border="1" id="tbl">
-    <tr>
-        <th style="text-align:right; width:40px;">No.</th>
-        <th style="">日付</th>
-        <th style="">メッセージ</th>
-        <th style="">画像</th>
-        <th style="width:40px;"> </th>
-        <th style="width:40px;"> </th>
-    </tr>
-    {% for message_item in message %}
-    <form id="frm" name="frm" method="POST" action="./edit.html">
-        {% csrf_token %}
-        <tr>
-            <input type="hidden" name="message_id" value={{ message_item.message_id }}>
-            <td style="text-align:right; width:40px;">{{message_item.message_id}}<span class="seqno"></span></td>
-            <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp" value="{{message_item.timestamp}}" size="30" style="border:none"></td>
-            <td style=""><input class="inpval" type="text" id="txt1" name="message" value="{{ message_item.message_content }}" size="30" style="border:none"></td>
-            <td style=""><input class="inpval" type="text" id="txt1" name="image" value="{{message_item.image_path}}" size="30" style="border:none"></td>
-            <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集" onclick="edit_form(this)"></td>
-            <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除" onclick="delete_form(this)"></td>
-        </tr>
-    </form>
-    {% endfor %}
-    </table>
-</form>
-</div>
-<script>
-    function insert_row() {
-        var objTBL = document.getElementById("tbl");
-        if (!objTBL)
-            return;
+            // 各列にスタイル設定
+            c1.style.cssText = "text-align:right; width:40px;";
+            c2.style.cssText = "";
+            c3.style.cssText = "";
+            c4.style.cssText = "";
+            c5.style.cssText = "width:40px;";
+            c6.style.cssText = "width:40px;";
 
-        var count = objTBL.rows.length;
+            // 各列に表示内容を設定
+            c1.innerHTML = '<span class="seqno">' + count + '</span>';
+            c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="time_stamp' + count + '" value="" size="30" style="border:1px solid #888;">';
+            c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="message' + count + '" value="" size="30" style="border:1px solid #888;">';
+            c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="image' + count + '" value="" size="30" style="border:1px solid #888;">';
+            c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this)">';
+            c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
 
-        // 最終行に新しい行追加
-        var row = objTBL.insertRow(count);
-
-        // 列追加
-        var c1 = row.insertCell(0);
-        var c2 = row.insertCell(1);
-        var c3 = row.insertCell(2);
-        var c4 = row.insertCell(3);
-        var c5 = row.insertCell(4);
-        var c6 = row.insertCell(5);
-
-        // 各列にスタイル設定
-        c1.style.cssText = "text-align:right; width:40px;";
-        c2.style.cssText = "";
-        c3.style.cssText = "";
-        c4.style.cssText = "";
-        c5.style.cssText = "width:40px;";
-        c6.style.cssText = "width:40px;";
-
-        // 各列に表示内容を設定
-        c1.innerHTML = '<span class="seqno">' + count + '</span>';
-        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="time_stamp' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="message' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="image' + count + '" value="" size="30" style="border:1px solid #888;">';
-        c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this)">';
-        c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-
-        // 追加した行の入力フィールドにフォーカスを設定
-        var objInp = document.getElementById("txt1" + count);
-        if (objInp)
-            objInp.focus();
-    }
-
-    /*
-     * delete_form: 削除ボタン該当行を削除
-     */
-    function delete_form(obj) {
-        // 確認
-        if (!confirm("この行を削除しますか？"))
-            return;
-
-        if (!obj)
-            return;
-
-        var objTR = obj.parentNode.parentNode;
-        var objTBL = objTR.parentNode;
-
-        if (objTBL)
-            objTBL.delete_form(objTR.sectionRowIndex);
-
-        // <span> 行番号ふり直し
-        var tagElements = document.getElementsByTagName("span");
-        if (!tagElements)
-            return false;
-
-        var seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("seqno"))
-                tagElements[i].innerHTML = seq++;
+            // 追加した行の入力フィールドにフォーカスを設定
+            var objInp = document.getElementById("txt1" + count);
+            if (objInp)
+                objInp.focus();
         }
 
-        // id/name ふり直し
-        var tagElements = document.getElementsByTagName("input");
-        if (!tagElements)
-            return false;
-        var seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("inpval")) {
-                tagElements[i].setAttribute("id", "txt" + seq);
-                tagElements[i].setAttribute("name", "txt" + seq);
-                ++seq;
+        /*
+         * delete_form: 削除ボタン該当行を削除
+         */
+        function delete_form(obj) {
+            // 確認
+            if (!confirm("この行を削除しますか？"))
+                return;
+
+            if (!obj)
+                return;
+
+            var objTR = obj.parentNode.parentNode;
+            var objTBL = objTR.parentNode;
+
+            if (objTBL)
+                objTBL.delete_form(objTR.sectionRowIndex);
+
+            // <span> 行番号ふり直し
+            var tagElements = document.getElementsByTagName("span");
+            if (!tagElements)
+                return false;
+
+            var seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("seqno"))
+                    tagElements[i].innerHTML = seq++;
             }
-        }
-        seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("edtbtn")) {
-                tagElements[i].setAttribute("id", "edtBtn" + seq);
-                ++seq;
+
+            // id/name ふり直し
+            var tagElements = document.getElementsByTagName("input");
+            if (!tagElements)
+                return false;
+            var seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("inpval")) {
+                    tagElements[i].setAttribute("id", "txt" + seq);
+                    tagElements[i].setAttribute("name", "txt" + seq);
+                    ++seq;
+                }
+            }
+            seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("edtbtn")) {
+                    tagElements[i].setAttribute("id", "edtBtn" + seq);
+                    ++seq;
+                }
+            }
+
+            // <input type="button" id="delBtnN">
+            seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("delbtn")) {
+                    tagElements[i].setAttribute("id", "delBtn" + seq);
+                    ++seq;
+                }
             }
         }
 
-        // <input type="button" id="delBtnN">
-        seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("delbtn")) {
-                tagElements[i].setAttribute("id", "delBtn" + seq);
-                ++seq;
+        /*
+         *編集ボタン該当行の内容を入力・編集、モード切り替え
+         */
+        function edit_form(obj) {
+            var objTR = obj.parentNode.parentNode;
+            var rowId = objTR.sectionRowIndex;
+            var objInp = document.getElementById("txt" + rowId);
+            var objBtn = document.getElementById("edtBtn" + rowId);
+
+            if (!objInp || !objBtn)
+                return;
+
+            // モード切り替えはボタンの値で判定
+            if (objBtn.value == "編集") {
+                objInp.style.cssText = "border:1px solid #888;"
+                objInp.readOnly = false;
+                objInp.focus();
+                objBtn.value = "確定";
+            } else {
+                objInp.style.cssText = "border:none;"
+                objInp.readOnly = true;
+                objBtn.value = "編集";
             }
         }
-    }
-
-    /*
-     *編集ボタン該当行の内容を入力・編集、モード切り替え
-     */
-    function edit_form(obj) {
-        var objTR = obj.parentNode.parentNode;
-        var rowId = objTR.sectionRowIndex;
-        var objInp = document.getElementById("txt" + rowId);
-        var objBtn = document.getElementById("edtBtn" + rowId);
-
-        if (!objInp || !objBtn)
-            return;
-
-        // モード切り替えはボタンの値で判定
-        if (objBtn.value == "編集") {
-            objInp.style.cssText = "border:1px solid #888;"
-            objInp.readOnly = false;
-            objInp.focus();
-            objBtn.value = "確定";
-        } else {
-            objInp.style.cssText = "border:none;"
-            objInp.readOnly = true;
-            objBtn.value = "編集";
-        }
-    }
-</script>
-</body>
-</html>
+    </script>
+{% endblock %}
