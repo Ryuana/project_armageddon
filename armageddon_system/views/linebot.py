@@ -31,7 +31,7 @@ def display_messages(request):
 
 
 # メッセージ編集画面
-def edit_message(request, message_id):
+def edit_message(request):
     context = {}
     context['message_id'] = request.POST['message_id']
     # message_idを元にmessage取り出す
