@@ -24,38 +24,52 @@
 
     <div id="systems">
         <input type="button" id="add" name="add" value="追加" onclick="insert_row()">
-        <table border="1" id="tbl">
-            <tr>
-                <th style="text-align:right; width:40px;">No.</th>
-                <th style="">日付</th>
-                <th style="">メッセージ</th>
-                <th style="">画像</th>
-                <th style="width:40px;"></th>
-                <th style="width:40px;"></th>
-            </tr>
-            {% for message_item in message %}
-                <form id="frm" name="frm" method="POST" action="./edit.html">
-                    {% csrf_token %}
-                    <tr>
-                        <input type="hidden" name="message_id" value={{ message_item.message_id }}>
-                        <td style="text-align:right; width:40px;">{{ message_item.message_id }}<span
-                                class="seqno"></span>
-                        </td>
-                        <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp"
-                                            value="{{ message_item.timestamp }}" size="30" style="border:none"></td>
-                        <td style=""><input class="inpval" type="text" id="txt1" name="message"
-                                            value="{{ message_item.message_content }}" size="30" style="border:none">
-                        </td>
-                        <td style=""><input class="inpval" type="text" id="txt1" name="image"
-                                            value="{{ message_item.image_path }}" size="30" style="border:none"></td>
-                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集"
-                                                       onclick="edit_form(this)"></td>
-                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除"
-                                                       onclick="delete_form(this)"></td>
-                    </tr>
-                </form>
-            {% endfor %}
-        </table>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+
+                        <table border="1" id="tbl" class="table table-bordered table-hover">
+                            <tr>
+                                <th style="text-align:right; width:40px;">No.</th>
+                                <th style="">日付</th>
+                                <th style="">メッセージ</th>
+                                <th style="">画像</th>
+                                <th style="width:40px;"></th>
+                                <th style="width:40px;"></th>
+                            </tr>
+                            {% for message_item in message %}
+                                <form id="frm" name="frm" method="POST" action="./edit.html">
+                                    {% csrf_token %}
+                                    <tr>
+                                        <input type="hidden" name="message_id" value={{ message_item.message_id }}>
+                                        <td style="text-align:right; width:40px;">{{ message_item.message_id }}<span
+                                                class="seqno"></span>
+                                        </td>
+                                        <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp"
+                                                            value="{{ message_item.timestamp }}" size="30"
+                                                            style="border:none"></td>
+                                        <td style=""><input class="inpval" type="text" id="txt1" name="message"
+                                                            value="{{ message_item.message_content }}" size="30"
+                                                            style="border:none">
+                                        </td>
+                                        <td style=""><input class="inpval" type="text" id="txt1" name="image"
+                                                            value="{{ message_item.image_path }}" size="30"
+                                                            style="border:none"></td>
+                                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1"
+                                                                       value="編集"
+                                                                       onclick="edit_form(this)"></td>
+                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
+                                                                       value="削除"
+                                                                       onclick="delete_form(this)"></td>
+                                    </tr>
+                                </form>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         </form>
     </div>
     <script>
