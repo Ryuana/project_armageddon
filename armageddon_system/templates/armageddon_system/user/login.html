@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}ログイン{% endblock %}
 {% block header %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/user/login.css' %}">
 {% endblock %}
 {% block menubar %}{% endblock %}
+{% block main-title %}学生課 小口精算システム{% endblock %}
 {% block main-content %}
-    <div id="form">
-        <p class="form-title">ログイン</p>
-        <form action="./login" method="post">
+
+    <div class="login">
+        {% if error %}
+{#            <div style="text-align: center">{{ error }}</div>#}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <div class="login-triangle"></div>
+
+        <h2 class="login-header">ログイン</h2>
+
+        <form class="login-container" action="/user/login" method="post">
             {% csrf_token %}
-            {% if error %}
-                {{ error }}
-            {% endif %}
-            <p>ID</p>
-            <p class="id"><input type="text" name="user_id"/></p>
-            <p>パスワード</p>
-            <p class="pass"><input type="password" name="user_pass"/></p>
-            <input type="submit" class="submit" value="ログイン" style="font-size: 18px" ;/>
+
+            <p><input type="text" placeholder="ログインID" name="user_id"></p>
+            <p><input type="password" placeholder="パスワード" name="user_pass"></p>
+            <p><input type="submit" value="ログイン"></p>
         </form>
-    </div>
+        </div>
 {% endblock %}

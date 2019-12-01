@@ -2,8 +2,9 @@ from django.shortcuts import render
 from armageddon_system.views import pay
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 
-def login(request):
 
+def login(request):
+    context = {}
     if request.method == 'GET':
         return render(request, 'armageddon_system/user/login.html')
 
@@ -19,10 +20,9 @@ def login(request):
                 request.session['user_id'] = user_id
                 request.session['user_pass'] = user_pass
                 is_login_success = True
-                #session_saveメソッドを作る
+                # session_saveメソッドを作る
 
             else:
-                context = {}
                 context['error'] = "IDまたはパスワードが違います"
 
         if is_login_success:
@@ -31,7 +31,7 @@ def login(request):
         else:
             return render(request, 'armageddon_system/user/login.html', context)
 
-def logout(request):
 
+def logout(request):
     request.session.clear()
     return render(request, 'armageddon_system/user/login.html')
