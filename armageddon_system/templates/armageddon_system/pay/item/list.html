@@ -27,42 +27,63 @@
 {% block main-content %}
     <div id="systems">
         <div><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></div>
-        <table border="1" id="tbl">
-            <tr>
-                <th style="text-align:right; width:40px;">No.</th>
-                <th style="">申請書名</th>
-                <th style="">金額</th>
-                <th style="">日数</th>
-                <th style="width:40px;"></th>
-                <th style="width:40px;"></th>
-                <th style="width:40px;"></th>
-            </tr>
-            {% for form in forms %}
-                <form id="frm" name="frm" method="POST" action="./qr">
-                    {% csrf_token %}
-                    <tr>
 
-                        <td style="text-align:right; width:40px;">
-                            <span class="seqno"><input type="text" name="form_id" value={{ forloop.counter }} readonly></span>
-                        </td>
-                        <td style=""><input class="inpval" type="text" id="txt1"
-                                            name="form_name" value={{ form.form_name }} size="25" style="border:none">
-                        </td>
-                        <td style=""><input class="inpval" type="text" id="txt2"
-                                            name="fee" value={{ form.fee }} size="25" style="border:none"></td>
-                        <td style=""><input class="inpval" type="text" id="txt3"
-                                            name="issuance_days" value={{ form.issuance_days }} size="25"
-                                            style="border:none"></td>
-                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集"
-                                                       onclick="edit_form(this)"></td>
-                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除"
-                                                       onclick="delete_form(this,{{ form.form_id }})"></td>
-                        <td style="width:40px;"><input class="qrbtn" type="submit" id="qrBtn1" value="QR表示"
-                                                       onclick="QROutput(this)"></td>
-                    </tr>
-                </form>
-            {% endfor %}
-        </table>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table border="1" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="text-align:right; width:40px;">No.</th>
+                                <th style="">申請書名</th>
+                                <th style="">金額</th>
+                                <th style="">日数</th>
+                                <th style="width:40px;"></th>
+                                <th style="width:40px;"></th>
+                                <th style="width:40px;"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for form in forms %}
+                                <form id="frm" name="frm" method="POST" action="./qr">
+                                    {% csrf_token %}
+                                    <tr>
+
+                                        <td style="text-align:right; width:40px;">
+                                            <span class="seqno"><input type="text" name="form_id"
+                                                                       value={{ forloop.counter }} readonly></span>
+                                        </td>
+                                        <td style=""><input class="inpval" type="text" id="txt1"
+                                                            name="form_name" value={{ form.form_name }} size="25"
+                                                            style="border:none">
+                                        </td>
+                                        <td style=""><input class="inpval" type="text" id="txt2"
+                                                            name="fee" value={{ form.fee }} size="25"
+                                                            style="border:none"></td>
+                                        <td style=""><input class="inpval" type="text" id="txt3"
+                                                            name="issuance_days"
+                                                            value={{ form.issuance_days }} size="25"
+                                                            style="border:none"></td>
+                                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1"
+                                                                       value="編集"
+                                                                       onclick="edit_form(this)"></td>
+                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
+                                                                       value="削除"
+                                                                       onclick="delete_form(this,{{ form.form_id }})">
+                                        </td>
+                                        <td style="width:40px;"><input class="qrbtn" type="submit" id="qrBtn1"
+                                                                       value="QR表示"
+                                                                       onclick="QROutput(this)"></td>
+                                    </tr>
+                                </form>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
 

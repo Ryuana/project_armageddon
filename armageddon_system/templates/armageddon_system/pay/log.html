@@ -25,109 +25,89 @@
     精算記録
 {% endblock %}
 {% block main-content %}
-    <p class="school">学校名</p>
-    <select name="school" id="school">
-        <option value="num1">麻生情報ビジネス</option>
-        <option value="num2">麻生公務員</option>
-        <option value="num3">麻生製菓</option>
-        <option value="num4">麻生外国語</option>
-    </select>
+    <p class="school">学校名
+        <select name="school" id="school">
+            <option value="num1">麻生情報ビジネス</option>
+            <option value="num2">麻生公務員</option>
+            <option value="num3">麻生製菓</option>
+            <option value="num4">麻生外国語</option>
+        </select></p>
 
-    <p class="days">日付</p>
     <div class="system">
-        <input name="year" type="text" class="js-changeYear"> 年
+        絞り込み：<input name="year" type="text" class="js-changeYear" value="2019"> 年
 
         <select name="month" class="js-changeMonth">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
+            {% with ''|center:12 as range %}
+                {% for _ in range %}
+                    <option value={{ forloop.counter }}>{{ forloop.counter }}</option>
+                {% endfor %}
+            {% endwith %}
+
         </select> 月
 
         <select name="date" class="js-changeDay">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
+            {% with ''|center:31 as range %}
+                {% for _ in range %}
+                    <option value={{ forloop.counter }}>{{ forloop.counter }}</option>
+                {% endfor %}
+            {% endwith %}
         </select> 日
         ~
         <input name="year" type="text" class="js-changeYear"> 年
 
-        <b><a id="downloadCsvBtn" href="#" download="test.csv" onclick="handleDownload()">CSV出力</a></b>
+        {# TODO： ファイル名#}
+        <button><a id="downloadCsvBtn" href="" download="test.csv" onclick="handleDownload()"
+                   style="color: black">CSV出力</a></button>
     </div>
 
-    <table border="1" id="table1">
-        <thead>
-        <tr id="object">
-            <th width="140" height="40">日時</th>
-            <th width="140" height="40">学校名</th>
-            <th width="140" height="40">学科</th>
-            <th width="140" height="40">学籍番号</th>
-            <th width="140" height="40">申請書名</th>
-            <th width="140" height="40">枚数</th>
-            <th width="140" height="40">金額</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
 
-        </tr>
-        {% for pay_log in pay_logs %}
-            <tr>
-                {% for forms in pay_log.form_list %}
-                    <td>{{ pay_log.time_stamp|date:"Y/m/d" }}</td>
-                    <td>{{ pay_log.school_name }}</td>
-                    <td>{{ pay_log.course_name }}</td>
-                    <td>{{ pay_log.student_id }}</td>
-                    <td>{{ forms.form.form_name }}</td>
-                    <td>{{ forms.quantity }}</td>
-                    <td>{{ forms.subtotal }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-        <tr>
-            <th id="total" colspan="1">合計</th>
-            <td>{{ total }}</td>
-        </tr>
-        </tfoot>
-    </table>
+                    <table border="1" id="pay_log_table" class="table table-bordered table-hover">
+                        <thead>
+                        <tr id="object">
+                            <th width="140" height="40">日時</th>
+                            <th width="140" height="40">学校名</th>
+                            <th width="140" height="40">学科</th>
+                            <th width="140" height="40">学籍番号</th>
+                            <th width="140" height="40">申請書名</th>
+                            <th width="140" height="40">枚数</th>
+                            <th width="140" height="40">金額</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pay_log in pay_logs %}
+                            <tr>
+                                {% for forms in pay_log.form_list %}
+                                    <td>{{ pay_log.time_stamp|date:"Y/m/d" }}</td>
+                                    <td>{{ pay_log.school_name }}</td>
+                                    <td>{{ pay_log.course_name }}</td>
+                                    <td>{{ pay_log.student_id }}</td>
+                                    <td>{{ forms.form.form_name }}</td>
+                                    <td>{{ forms.quantity }}</td>
+                                    <td>{{ forms.subtotal }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td id="total" colspan="1">合計</td>
+                            <td>{{ total }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <script>
 

@@ -8,12 +8,11 @@
         {% block header %}{% endblock %}
     </head>
     <body>
-        <div id="main-title">
+        <div class="main-title">
             <h1>
                 {% block main-title %}{% endblock %}
             </h1>
         </div>
-        <hr>
         <div class="nav-primary" role="navigation">
             {% block menubar %}
                 <nav>
@@ -31,8 +30,7 @@
             {% endblock %}
         </div>
 
-        <hr>
-        <div id="main-content">
+        <div class="main-content">
             {% block main-content %}
             {% endblock %}
         </div>
