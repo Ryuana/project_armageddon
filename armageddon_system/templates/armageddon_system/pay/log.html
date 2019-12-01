@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{% block header %}
     <meta charset="UTF-8">
     <title>精算記録画面</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
@@ -17,86 +16,77 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"
-            integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG" crossorigin="anonymous"></script>
+            integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG"
+            crossorigin="anonymous"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/pay/log.css' %}">
-</head>
-<body>
-<nav id="menuber">
-    <div class="panel">
-        <ul>
-            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
-            <li><a href="/pay/item/list">精算項目</a></li>
-            <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
-            <li><a href="/linebot/msg/list">メッセージ管理</a></li>
-            <li><a href="#">ログアウト</a></li>
-        </ul>
-    </div>
-</nav>
+{% endblock %}
+{% block main-title %}
+    精算記録
+{% endblock %}
+{% block main-content %}
+    <p class="school">学校名</p>
+    <select name="school" id="school">
+        <option value="num1">麻生情報ビジネス</option>
+        <option value="num2">麻生公務員</option>
+        <option value="num3">麻生製菓</option>
+        <option value="num4">麻生外国語</option>
+    </select>
 
-<h1>精算記録</h1>
-<p class="school">学校名</p>
-<select name="school" id="school">
-    <option value="num1">麻生情報ビジネス</option>
-    <option value="num2">麻生公務員</option>
-    <option value="num3">麻生製菓</option>
-    <option value="num4">麻生外国語</option>
-</select>
+    <p class="days">日付</p>
+    <div class="system">
+        <input name="year" type="text" class="js-changeYear"> 年
 
-<p class="days">日付</p>
-<div class="system">
-    <input name="year" type="text" class="js-changeYear"> 年
+        <select name="month" class="js-changeMonth">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+        </select> 月
 
-    <select name="month" class="js-changeMonth">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-    </select> 月
-
-    <select name="date" class="js-changeDay">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-        <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-    </select> 日
-    ~
-      <input name="year" type="text" class="js-changeYear"> 年
+        <select name="date" class="js-changeDay">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+        </select> 日
+        ~
+        <input name="year" type="text" class="js-changeYear"> 年
 
         <b><a id="downloadCsvBtn" href="#" download="test.csv" onclick="handleDownload()">CSV出力</a></b>
     </div>
@@ -118,18 +108,18 @@
 
         </tr>
         {% for pay_log in pay_logs %}
-        <tr>
-            {% for forms in pay_log.form_list %}
-                <td>{{ pay_log.time_stamp|date:"Y/m/d"}}</td>
-                <td>{{ pay_log.school_name }}</td>
-                <td>{{ pay_log.course_name }}</td>
-                <td>{{ pay_log.student_id }}</td>
-                <td>{{ forms.form.form_name }}</td>
-                <td>{{ forms.quantity }}</td>
-                <td>{{ forms.subtotal }}</td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
+            <tr>
+                {% for forms in pay_log.form_list %}
+                    <td>{{ pay_log.time_stamp|date:"Y/m/d" }}</td>
+                    <td>{{ pay_log.school_name }}</td>
+                    <td>{{ pay_log.course_name }}</td>
+                    <td>{{ pay_log.student_id }}</td>
+                    <td>{{ forms.form.form_name }}</td>
+                    <td>{{ forms.quantity }}</td>
+                    <td>{{ forms.subtotal }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
         </tbody>
         <tfoot>
         <tr>
@@ -138,107 +128,106 @@
         </tr>
         </tfoot>
     </table>
-</div>
-<script>
+    </div>
+    <script>
 
-    const total = 0;
+        const total = 0;
 
-    window.onload = function getDate() {
-        var yyyy, mm, dd, today
-        today = new Date();
-        yyyy = today.getFullYear();
-        mm = today.getMonth() + 1;
-        dd = today.getDate();
+        window.onload = function getDate() {
+            var yyyy, mm, dd, today
+            today = new Date();
+            yyyy = today.getFullYear();
+            mm = today.getMonth() + 1;
+            dd = today.getDate();
 
-        //年
-        $Year = "<select>";
-        for (var i = 2000; i <= 2030; i++) {
-            if (i == yyyy) {
-                $Year += "<option value=\"" + i + "\" selected >" + i + "</option>";
-            } else {
-                $Year += "<option value=\"" + i + "\" >" + i + "</option>";
-            }
-        }
-        $Year += "</select>";
-        document.getElementById("year").innerHTML = $Year + "年";
-
-        //月
-        $Month = "<select>";
-        for (var i = 1; i <= 12; i++) {
-            if (i == mm) {
-                $Month += "<option value=\"" + i + "\" selected >" + i + "</option>";
-            } else {
-                $Month += "<option value=\"" + i + "\" >" + i + "</option>";
-            }
-        }
-        $Month += "</select>";
-        document.getElementById("month").innerHTML = $Month + "月";
-
-        //日付
-        $Day = "<select>";
-        for (var i = 1; i <= 31; i++) {
-            if (i == dd) {
-                $Day += "<option value=\"" + i + "\" selected >" + i + "</option>";
-            } else {
-                $Day += "<option value=\"" + i + "\" >" + i + "</option>";
-            }
-        }
-        $Day += "</select>";
-        document.getElementById("day").innerHTML = $Day + "日";
-    }
-
-    function handleDownload() {
-        var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
-        var table = document.getElementById('table1');//id=table1という要素を取得
-        var data_csv = "";//ここに文字データとして値を格納していく
-
-        for (var i = 0; i < table.rows.length; i++) {
-            for (var j = 0; j < table.rows[i].cells.length; j++) {
-                data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
-                if (j == table.rows[i].cells.length - 1) data_csv += "\n";//行終わりに改行コードを追加
-                else data_csv += ",";//セル値の区切り文字として,を追加
-            }
-        }
-        var blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
-        if (window.navigator.msSaveBlob) { //IEの場合の処理
-            console.log("ぴ");
-            window.navigator.msSaveBlob(blob, "test.csv");
-            //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
-        } else {
-            console.log("よ");
-            document.getElementById("downloadCsvBtn").href = window.URL.createObjectURL(blob);
-        }
-        delete data_csv;//data_csvオブジェクトいらないから消去してメモリ開放
-    }
-
-    (function ($) {
-        function formSetDay() {
-            var lastday = formSetLastDay($('.js-changeYear').val(), $('.js-changeMonth').val());
-            var option = '';
-            for (var i = 1; i <= lastday; i++) {
-                if (i === $('.js-changeDay').val()) {
-                    option += '<option value="' + i + '" selected="selected">' + i + '</option>\n';
+            //年
+            $Year = "<select>";
+            for (var i = 2000; i <= 2030; i++) {
+                if (i == yyyy) {
+                    $Year += "<option value=\"" + i + "\" selected >" + i + "</option>";
                 } else {
-                    option += '<option value="' + i + '">' + i + '</option>\n';
+                    $Year += "<option value=\"" + i + "\" >" + i + "</option>";
                 }
             }
-            $('.js-changeDay').html(option);
-        }
+            $Year += "</select>";
+            document.getElementById("year").innerHTML = $Year + "年";
 
-        function formSetLastDay(year, month) {
-            var lastday = new Array('', 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-            if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-                lastday[2] = 29;
+            //月
+            $Month = "<select>";
+            for (var i = 1; i <= 12; i++) {
+                if (i == mm) {
+                    $Month += "<option value=\"" + i + "\" selected >" + i + "</option>";
+                } else {
+                    $Month += "<option value=\"" + i + "\" >" + i + "</option>";
+                }
             }
-            return lastday[month];
+            $Month += "</select>";
+            document.getElementById("month").innerHTML = $Month + "月";
+
+            //日付
+            $Day = "<select>";
+            for (var i = 1; i <= 31; i++) {
+                if (i == dd) {
+                    $Day += "<option value=\"" + i + "\" selected >" + i + "</option>";
+                } else {
+                    $Day += "<option value=\"" + i + "\" >" + i + "</option>";
+                }
+            }
+            $Day += "</select>";
+            document.getElementById("day").innerHTML = $Day + "日";
         }
 
-        $('.js-changeYear, .js-changeMonth').change(function () {
-            formSetDay();
-        });
-    })(jQuery);
+        function handleDownload() {
+            var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
+            var table = document.getElementById('table1');//id=table1という要素を取得
+            var data_csv = "";//ここに文字データとして値を格納していく
 
-</script>
+            for (var i = 0; i < table.rows.length; i++) {
+                for (var j = 0; j < table.rows[i].cells.length; j++) {
+                    data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
+                    if (j == table.rows[i].cells.length - 1) data_csv += "\n";//行終わりに改行コードを追加
+                    else data_csv += ",";//セル値の区切り文字として,を追加
+                }
+            }
+            var blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
+            if (window.navigator.msSaveBlob) { //IEの場合の処理
+                console.log("ぴ");
+                window.navigator.msSaveBlob(blob, "test.csv");
+                //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+            } else {
+                console.log("よ");
+                document.getElementById("downloadCsvBtn").href = window.URL.createObjectURL(blob);
+            }
+            delete data_csv;//data_csvオブジェクトいらないから消去してメモリ開放
+        }
 
-</body>
-</html>
+        (function ($) {
+            function formSetDay() {
+                var lastday = formSetLastDay($('.js-changeYear').val(), $('.js-changeMonth').val());
+                var option = '';
+                for (var i = 1; i <= lastday; i++) {
+                    if (i === $('.js-changeDay').val()) {
+                        option += '<option value="' + i + '" selected="selected">' + i + '</option>\n';
+                    } else {
+                        option += '<option value="' + i + '">' + i + '</option>\n';
+                    }
+                }
+                $('.js-changeDay').html(option);
+            }
+
+            function formSetLastDay(year, month) {
+                var lastday = new Array('', 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+                if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                    lastday[2] = 29;
+                }
+                return lastday[month];
+            }
+
+            $('.js-changeYear, .js-changeMonth').change(function () {
+                formSetDay();
+            });
+        })(jQuery);
+
+    </script>
+
+{% endblock %}
