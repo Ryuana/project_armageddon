@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>最終確認画面</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/register/confirm.css' %}">
-</head>
-<body>
-<p id="comment">以下の情報でLINEPay決済します</p>
-<div id="items">
-    申請者名:<p class="name">山本大地</p>
-    学籍番号:<p class="school_num">1701025</p>
-    申請書名:<p class="app_form">卒業証明書</p>
-    <p class="value">1</p>
-    <p class="count">枚</p>
-</div>
+    <head>
+        <meta charset="UTF-8">
+        <title>最終確認画面</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/register/confirm.css' %}">
+    </head>
+    <body>
 
-<form id="complate_btn">
-    <input type="submit" value="LINEPay決済">
-</form>
-<button id="cancel_btn" onclick="history.back()">キャンセル</button>
-</body>
+        <p id="comment">以下の情報でLINEPay決済します</p>
+        <form id="complate_btn" method="post" action="/register/linepay">
+            {% csrf_token %}
+            <div id="items">
+                申請者名:<input type="text" name="name" value="山本大地"><br>
+                学籍番号:<input type="text" name="school_num" value="1701025"><br>
+                申請書名:<input type="text" name="form_name" value="卒業証明書"><br>
+                　　枚数:<input type="text" name="form_count" value=1>枚<br>
+                　　金額:<input type="text" name="fee" value=500>円<br>
+            </div>
+            <input type="submit" value="LINEPay決済">
+        </form>
+        <button id="cancel_btn" onclick="history.back()">キャンセル</button>
+    </body>
 </html>
