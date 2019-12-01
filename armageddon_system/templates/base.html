@@ -8,12 +8,18 @@
         {% block header %}{% endblock %}
     </head>
     <body>
-        <div id="menubar">
+        <div id="main-title">
+            <h1>
+                {% block main-title %}{% endblock %}
+            </h1>
+        </div>
+        <hr>
+        <div class="nav-primary" role="navigation">
             {% block menubar %}
                 <nav>
                     <div class="panel">
                         <ul>
-                            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
+                            {#                            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>#}
                             <li><a href="/pay/log">精算記録</a></li>
                             <li><a href="/pay/item/list">精算項目</a></li>
                             <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
@@ -24,12 +30,7 @@
                 </nav>
             {% endblock %}
         </div>
-        <hr>
-        <div id="main-title">
-            <h1>
-                {% block main-title %}{% endblock %}
-            </h1>
-        </div>
+
         <hr>
         <div id="main-content">
             {% block main-content %}
