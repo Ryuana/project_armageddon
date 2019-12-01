@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ログイン画面</title>
+{% extends 'base.html' %}
+{% block title %}ログイン{% endblock %}
+{% block header %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/user/login.css' %}">
-</head>
-
-<style>
-
-
-
-</style>
-<body>
-
+{% endblock %}
+{% block menubar %}{% endblock %}
+{% block main-content %}
     <div id="form">
         <p class="form-title">ログイン</p>
         <form action="./login" method="post">
-             {% csrf_token %}
+            {% csrf_token %}
             {% if error %}
                 {{ error }}
             {% endif %}
             <p>ID</p>
             <p class="id"><input type="text" name="user_id"/></p>
             <p>パスワード</p>
-            <p class="pass"><input type="password" name="user_pass" /></p>
-            <input type="submit" class="submit" value="ログイン" style="font-size: 18px";/>
+            <p class="pass"><input type="password" name="user_pass"/></p>
+            <input type="submit" class="submit" value="ログイン" style="font-size: 18px" ;/>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}
