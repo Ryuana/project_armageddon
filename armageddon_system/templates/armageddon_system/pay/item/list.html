@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>精算管理項目画面</title>
+{% extends 'base.html' %}
+{% block header %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
           integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -18,24 +15,14 @@
             crossorigin="anonymous"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/pay/item/list.css' %}">
-</head>
-<body>
-<nav>
-    <div class="panel">
-        <ul>
-            <li><a href="#" onclick="window.history.back(); return false;">戻る</a></li>
-            <li><a href="/pay/item/list">精算項目</a></li>
-            <li><a href="/linebot/qa/list">LINEBOT/QA管理</a></li>
-            <li><a href="/linebot/msg/list">メッセージ管理</a></li>
-            <li><a href="#">ログアウト</a></li>
-        </ul>
-    </div>
-</nav>
+{% endblock %}
 
-<h1>精算管理項目</h1>
+{% block main-title %}
+    精算項目管理
+{% endblock %}
 
-
-<div id="systems">
+{% block main-content %}
+    <div id="systems">
         <div><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></div>
         <table border="1" id="tbl">
             <tr>
@@ -53,13 +40,16 @@
                     <tr>
 
                         <td style="text-align:right; width:40px;">
-                            <span class="seqno"><input type="text" name = "form_id" value={{ forloop.counter }} readonly></span></td>
+                            <span class="seqno"><input type="text" name="form_id" value={{ forloop.counter }} readonly></span>
+                        </td>
                         <td style=""><input class="inpval" type="text" id="txt1"
-                                            name="form_name" value= {{ form.form_name }} size="25" style="border:none"></td>
+                                            name="form_name" value={{ form.form_name }} size="25" style="border:none">
+                        </td>
                         <td style=""><input class="inpval" type="text" id="txt2"
                                             name="fee" value={{ form.fee }} size="25" style="border:none"></td>
                         <td style=""><input class="inpval" type="text" id="txt3"
-                                            name="issuance_days" value={{ form.issuance_days }} size="25" style="border:none"></td>
+                                            name="issuance_days" value={{ form.issuance_days }} size="25"
+                                            style="border:none"></td>
                         <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1" value="編集"
                                                        onclick="edit_form(this)"></td>
                         <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1" value="削除"
@@ -70,142 +60,141 @@
                 </form>
             {% endfor %}
         </table>
-</div>
-<script>
+    </div>
+    <script>
 
 
-    function insert_row() {
-        var objTBL = document.getElementById("tbl");
-        if (!objTBL)
-            return;
+        function insert_row() {
+            var objTBL = document.getElementById("tbl");
+            if (!objTBL)
+                return;
 
-        var count = objTBL.rows.length;
+            var count = objTBL.rows.length;
 
-        // 最終行に新しい行追加
-        var row = objTBL.insertRow(count);
+            // 最終行に新しい行追加
+            var row = objTBL.insertRow(count);
 
-        // 列追加
-        var c1 = row.insertCell(0);
-        var c2 = row.insertCell(1);
-        var c3 = row.insertCell(2);
-        var c4 = row.insertCell(3);
-        var c5 = row.insertCell(4);
-        var c6 = row.insertCell(5);
-        var c7 = row.insertCell(6);
+            // 列追加
+            var c1 = row.insertCell(0);
+            var c2 = row.insertCell(1);
+            var c3 = row.insertCell(2);
+            var c4 = row.insertCell(3);
+            var c5 = row.insertCell(4);
+            var c6 = row.insertCell(5);
+            var c7 = row.insertCell(6);
 
-        // 各列にスタイル設定
-        c1.style.cssText = "text-align:right; width:40px;";
-        c2.style.cssText = "";
-        c3.style.cssText = "";
-        c4.style.cssText = "";
-        c5.style.cssText = "width:40px;";
-        c6.style.cssText = "width:40px;";
-        c7.style.cssText = "width:40px;";
+            // 各列にスタイル設定
+            c1.style.cssText = "text-align:right; width:40px;";
+            c2.style.cssText = "";
+            c3.style.cssText = "";
+            c4.style.cssText = "";
+            c5.style.cssText = "width:40px;";
+            c6.style.cssText = "width:40px;";
+            c7.style.cssText = "width:40px;";
 
 
-        // 各列に表示内容を設定
-        c1.innerHTML = '<span class="seqno">' + count + '</span>';
-        c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="form_name' + count + '" value="" size="30" ">';
-        c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="fee' + count + '" value="" size="30" ">';
-        c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
-        c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
-        c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-        c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
+            // 各列に表示内容を設定
+            c1.innerHTML = '<span class="seqno">' + count + '</span>';
+            c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="form_name' + count + '" value="" size="30" ">';
+            c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="fee' + count + '" value="" size="30" ">';
+            c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
+            c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
+            c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
+            c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
 
-        // 追加した行の入力フィールドにフォーカスを設定
-        var objInp = document.getElementById("txt1" + count);
-        if (objInp)
-            objInp.focus();
-    }
-
-    /*
-     * delete_form: 削除ボタン該当行を削除
-     */
-    function delete_form(obj,form_id) {
-        // 確認
-        if (!confirm("この行を削除しますか？"))
-            return;
-
-        if (!obj)
-            return;
-
-        //form削除処理
-        let request = new XMLHttpRequest();
-        let url = location.href + "/delete?form_id=" + form_id;
-        request.open('GET', url, true);
-        request.send();
-
-        var objTR = obj.parentNode.parentNode;
-        var objTBL = objTR.parentNode;
-
-        if (objTBL)
-            objTBL.deleteRow(objTR.sectionRowIndex);
-
-        // <span> 行番号ふり直し
-        var tagElements = document.getElementsByTagName("span");
-        if (!tagElements)
-            return false;
-
-        var seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("seqno"))
-                tagElements[i].innerHTML = seq++;
+            // 追加した行の入力フィールドにフォーカスを設定
+            var objInp = document.getElementById("txt1" + count);
+            if (objInp)
+                objInp.focus();
         }
 
-        // id/name ふり直し
-        var tagElements = document.getElementsByTagName("input");
-        if (!tagElements)
-            return false;
-        var seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("inpval")) {
-                tagElements[i].setAttribute("id", "txt" + seq);
-                tagElements[i].setAttribute("name", "txt" + seq);
-                ++seq;
+        /*
+         * delete_form: 削除ボタン該当行を削除
+         */
+        function delete_form(obj, form_id) {
+            // 確認
+            if (!confirm("この行を削除しますか？"))
+                return;
+
+            if (!obj)
+                return;
+
+            //form削除処理
+            let request = new XMLHttpRequest();
+            let url = location.href + "/delete?form_id=" + form_id;
+            request.open('GET', url, true);
+            request.send();
+
+            var objTR = obj.parentNode.parentNode;
+            var objTBL = objTR.parentNode;
+
+            if (objTBL)
+                objTBL.deleteRow(objTR.sectionRowIndex);
+
+            // <span> 行番号ふり直し
+            var tagElements = document.getElementsByTagName("span");
+            if (!tagElements)
+                return false;
+
+            var seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("seqno"))
+                    tagElements[i].innerHTML = seq++;
+            }
+
+            // id/name ふり直し
+            var tagElements = document.getElementsByTagName("input");
+            if (!tagElements)
+                return false;
+            var seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("inpval")) {
+                    tagElements[i].setAttribute("id", "txt" + seq);
+                    tagElements[i].setAttribute("name", "txt" + seq);
+                    ++seq;
+                }
+            }
+            seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("edtbtn")) {
+                    tagElements[i].setAttribute("id", "edtBtn" + seq);
+                    ++seq;
+                }
+            }
+
+            // <input type="button" id="delBtnN">
+            seq = 1;
+            for (var i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("delbtn")) {
+                    tagElements[i].setAttribute("id", "delBtn" + seq);
+                    ++seq;
+                }
             }
         }
-        seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("edtbtn")) {
-                tagElements[i].setAttribute("id", "edtBtn" + seq);
-                ++seq;
+
+        /*
+         *編集ボタン該当行の内容を入力・編集、モード切り替え
+         */
+        function edit_form(obj) {
+            var objTR = obj.parentNode.parentNode;
+            var rowId = objTR.sectionRowIndex;
+            var objInp = document.getElementById("txt" + rowId);
+            var objBtn = document.getElementById("edtBtn" + rowId);
+
+            if (!objInp || !objBtn)
+                return;
+
+            // モード切り替えはボタンの値で判定
+            if (objBtn.value == "編集") {
+                objInp.style.cssText = "border:1px solid #888;"
+                objInp.readOnly = false;
+                objInp.focus();
+                objBtn.value = "確定";
+            } else {
+                objInp.style.cssText = "border:none;"
+                objInp.readOnly = true;
+                objBtn.value = "編集";
             }
         }
-
-        // <input type="button" id="delBtnN">
-        seq = 1;
-        for (var i = 0; i < tagElements.length; i++) {
-            if (tagElements[i].className.match("delbtn")) {
-                tagElements[i].setAttribute("id", "delBtn" + seq);
-                ++seq;
-            }
-        }
-    }
-
-    /*
-     *編集ボタン該当行の内容を入力・編集、モード切り替え
-     */
-    function edit_form(obj) {
-        var objTR = obj.parentNode.parentNode;
-        var rowId = objTR.sectionRowIndex;
-        var objInp = document.getElementById("txt" + rowId);
-        var objBtn = document.getElementById("edtBtn" + rowId);
-
-        if (!objInp || !objBtn)
-            return;
-
-        // モード切り替えはボタンの値で判定
-        if (objBtn.value == "編集") {
-            objInp.style.cssText = "border:1px solid #888;"
-            objInp.readOnly = false;
-            objInp.focus();
-            objBtn.value = "確定";
-        } else {
-            objInp.style.cssText = "border:none;"
-            objInp.readOnly = true;
-            objBtn.value = "編集";
-        }
-    }
-</script>
-</body>
-</html>
+    </script>
+{% endblock %}
