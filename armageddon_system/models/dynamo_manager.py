@@ -62,7 +62,7 @@ class DynamoManager():
 
             )
             return_items.append(pay_log_item)
-        return return_items,total
+        return return_items, total
 
     def save_pay_log(self, pay_log: pay_log, id=False, IsPaid=False):
         """
@@ -249,6 +249,17 @@ class DynamoManager():
             # item.Message['Timestamp'] = item.Message['Timestamp'].strftime('%Y-%m-%d %H:%M:%S')
             messages.append(dict(item))
         return messages
+
+    def get_message(self, message_id):
+        """
+        LINE Botのメッセージを全件取得します。
+        :rtype: list of map
+        """
+        message = db.MessagesModel.get(message_id)
+
+        print(message)
+        # messageを埋め込む処理
+        return message
 
     def save_message_list(self, message_id, bot_message: message.Message):
         """
