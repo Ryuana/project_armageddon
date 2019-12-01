@@ -14,31 +14,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/linebot/msg/edit.css' %}">
 {% endblock %}
 {% block main-title %}メッセージ・画像管理{% endblock %}
 {% block main-content %}
     <div id="systems">
-        <h1>メッセージ・画像</h1>
         <div id="systems">
-
-            <div id="message">
+            <form method="post" enctype="multipart/form-data">
                 <p>メッセージ</p>
-                <textarea name="message_area" rows="4" cols="40"></textarea><br>
-            </div>
-
-            <div id="img">
-                <p>画像</p>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="upload"><input type="file" name="file" id="file"></div>
-                    <div id="result"></div>
-                </form>
+                <textarea name="message_area" rows="4" cols="40">{{ message.Message.MessageContent }}</textarea><br>
+                画像
+                <div class="upload">
+                    <input type="file" name="file" id="file" value="{{ message.Message.ImagePath }}"></div>
                 <canvas id="canvas"></canvas>
-            </div>
 
-            <input type="submit" value="保存" id="save_btn" onclick="save();">
-            <input type="submit" value="送信" id="send_btn" onclick="send();">
+                <input type="submit" value="保存" id="save_btn" onclick="save();">
+                <input type="submit" value="送信" id="send_btn" onclick="send();">
+            </form>
         </div>
     </div>
     <script>

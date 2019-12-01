@@ -35,11 +35,10 @@ def edit_message(request):
     context = {}
     context['message_id'] = request.POST['message_id']
     # message_idを元にmessage取り出す
-    context = {}
-    # context['message'] = get_message
-
+    dbm = db()
+    context['message'] = dbm.get_message(int(context['message_id']))
     # context渡す
-    return render(request, 'armageddon_system/linebot/msg/edit.html')
+    return render(request, 'armageddon_system/linebot/msg/edit.html',context)
 
 
 # メッセージ保存時
