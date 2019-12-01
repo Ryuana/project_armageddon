@@ -1,53 +1,53 @@
-#comment {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    position: relative;
-    right: 60px;
-}
+/*#comment {*/
+/*    text-align: center;*/
+/*    font-size: 28px;*/
+/*    font-weight: bold;*/
+/*    text-align: center;*/
+/*    position: relative;*/
+/*    right: 60px;*/
+/*}*/
 
-#items {
-    font-size: 25px;
-    font-weight: 400;
-    text-align: center;
-    position: relative;
-    right: 180px;
-    top: 30px;
-}
+/*#items {*/
+/*    font-size: 25px;*/
+/*    font-weight: 400;*/
+/*    text-align: center;*/
+/*    position: relative;*/
+/*    right: 180px;*/
+/*    top: 30px;*/
+/*}*/
 
-#complate_btn {
-    text-align: center;
-    position: relative;
-    right: 35px;
-    top: 40px;
-}
+/*#complate_btn {*/
+/*    text-align: center;*/
+/*    position: relative;*/
+/*    right: 35px;*/
+/*    top: 40px;*/
+/*}*/
 
-#cancel_btn {
-    text-align: center;
-    position: relative;
-    top: 100px;
-    left: 600px;
-}
+/*#cancel_btn {*/
+/*    text-align: center;*/
+/*    position: relative;*/
+/*    top: 100px;*/
+/*    left: 600px;*/
+/*}*/
 
-.value {
-    position: relative;
-    left: 80px;
-}
+/*.value {*/
+/*    position: relative;*/
+/*    left: 80px;*/
+/*}*/
 
-.count {
-    position: relative;
-    left: 120px;
-    bottom: 63px;
-}
+/*.count {*/
+/*    position: relative;*/
+/*    left: 120px;*/
+/*    bottom: 63px;*/
+/*}*/
 
-.name {
+/*.name {*/
 
-}
+/*}*/
 
-.school_num {
+/*.school_num {*/
 
-}
+/*}*/
 
-.app_form {
-}
+/*.app_form {*/
+/*}*/
