@@ -44,7 +44,7 @@
                                         <td style="">
                                             <input class="inpval" type="text" id="txt1" name="txt1"
                                                    value="
-                                                           {% for question_item in i.question %}{{ question_item }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}"
+{% for question_item in i.question %}{{ question_item }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}"
                                                    size="30" readonly
                                                    style="border:none">
                                         </td>
