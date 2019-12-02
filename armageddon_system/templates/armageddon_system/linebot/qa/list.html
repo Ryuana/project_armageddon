@@ -57,9 +57,13 @@
                                                                        onclick="deleteRow(this)"></td>
                                     </tr>
                                 {% endfor %}
-                            <tr>
-                                <td></td><td></td><td></td><td></td><td><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></td>
-                            </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -73,7 +77,7 @@
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length-1;
+            var count = objTBL.rows.length - 1;
 
             // 最終行に新しい行追加
             var row = objTBL.insertRow(count);
