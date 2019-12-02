@@ -14,8 +14,8 @@ body {
 
 /*メインコンテンツ*/
 .main-content {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 /*メニューバー*/
@@ -207,10 +207,10 @@ rgba(118, 193, 157, 100) 100 %);
 }
 
 /*テーブル*/
-table caption {
-    padding: .5em 0;
-}
 
+table caption {
+    padding: 0.5em 0;
+}
 @media screen and (max-width: 767px) {
     table caption {
         border-bottom: 1px solid #ddd;
