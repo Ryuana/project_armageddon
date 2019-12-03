@@ -33,5 +33,5 @@ def login(request):
 
 
 def logout(request):
-    request.session.clear()
+    request.session.flush()
     return render(request, 'armageddon_system/user/login.html')

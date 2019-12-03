@@ -8,6 +8,8 @@ from armageddon_system.models.dynamo_manager import DynamoManager as db
 
 # メッセージ一覧
 def display_messages(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     context = {}
     all_message_list = dbm.get_message_list()
@@ -32,6 +34,8 @@ def display_messages(request):
 
 # メッセージ編集画面
 def edit_message(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     context = {}
     context['message_id'] = request.POST['message_id']
     # message_idを元にmessage取り出す
@@ -43,6 +47,8 @@ def edit_message(request):
 
 # メッセージ保存時
 def save_message(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     message = request.GET['message']
     img = request.GET['img']
@@ -52,6 +58,8 @@ def save_message(request):
 
 
 def display_qa_list(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     context = {}
     context['qa_list'] = dbm.get_qa_all()
@@ -60,6 +68,8 @@ def display_qa_list(request):
 
 
 def save_qa(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     # qa_idの最新の値を取り出す処理
     questions = str(request.GET['questions']).split(",")
@@ -68,5 +78,7 @@ def save_qa(request):
 
 
 def delete_qa(request, qa_id):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     dbm.del_qa(qa_id)

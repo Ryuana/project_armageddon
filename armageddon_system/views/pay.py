@@ -5,6 +5,8 @@ import qrcode
 
 
 def log(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     context = {}
     context['pay_logs'], context['total'] = dbm.get_pay_log_all()
@@ -13,6 +15,8 @@ def log(request):
 
 
 def item_list(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     context = {}
     context['forms'] = dbm.get_form_all()
@@ -23,6 +27,8 @@ def item_list(request):
 
 
 def item_qr(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     context = {}
     context['form_name'] = request.POST['form_name']
     context['fee'] = request.POST['fee']
@@ -33,6 +39,8 @@ def item_qr(request):
 
 
 def item_delete(request):
+    if 'user_id' not in request.session:
+        return render(request, 'armageddon_system/user/login.html')
     dbm = db()
     try:
         dbm.del_form(request.GET['form_id'])
