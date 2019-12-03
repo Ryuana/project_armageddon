@@ -26,59 +26,61 @@
     <div id="systems">
         <div><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="table-responsive">
-                        <table border="1" class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th style="text-align:right; width:40px;">No.</th>
-                                <th style="">申請書名</th>
-                                <th style="">金額</th>
-                                <th style="">日数</th>
-                                <th style="width:40px;"></th>
-                                <th style="width:40px;"></th>
-                                <th style="width:40px;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for form in forms %}
-                                <form id="frm" name="frm" method="POST" action="./qr">
-                                    {% csrf_token %}
-                                    <tr>
-
-                                        <td style="text-align:right; width:40px;">
-                                            <span class="seqno"><input type="text" name="form_id"
-                                                                       value={{ forloop.counter }} readonly></span>
-                                        </td>
-                                        <td style=""><input class="inpval" type="text" id="txt1"
-                                                            name="form_name" value={{ form.form_name }} size="25"
-                                                            style="border:none">
-                                        </td>
-                                        <td style=""><input class="inpval" type="text" id="txt2"
-                                                            name="fee" value={{ form.fee }} size="25"
-                                                            style="border:none"></td>
-                                        <td style=""><input class="inpval" type="text" id="txt3"
-                                                            name="issuance_days"
-                                                            value={{ form.issuance_days }} size="25"
-                                                            style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1"
-                                                                       value="編集"
-                                                                       onclick="edit_form(this)"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
-                                                                       value="削除"
-                                                                       onclick="delete_form(this,{{ form.form_id }})">
-                                        </td>
-                                        <td style="width:40px;"><input class="qrbtn" type="submit" id="qrBtn1"
-                                                                       value="QR表示"
-                                                                       onclick="QROutput(this)"></td>
-                                    </tr>
-                                </form>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="row">
+            <div class="col-xs-12" style="width: 100%;">
+                <div class="table-responsive">
+                    <table border="1" class="table table-bordered table-hover" style="table-layout: auto">
+                        <thead align="center">
+                        <tr>
+                            <th style="max-width: 30px; min-width: 20px" >No.</th>
+                            <th>申請書名</th>
+                            <th>金額</th>
+                            <th>日数</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for form in forms %}
+                            <form id="frm" name="frm" method="POST" action="./qr">
+                                {% csrf_token %}
+                                <tr>
+                                    <td align="right">
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td>
+                                        <input class="input-value" type="text" id="txt1" name="form_name"
+                                               value={{ form.form_name }} size="15">
+                                    </td>
+                                    <td>
+                                        <input class="input-number" type="text" id="txt2"
+                                               name="fee" value={{ form.fee }} size="3">
+                                    </td>
+                                    <td>
+                                        <input class="input-number" type="text" id="txt3" name="issuance_days"
+                                               value={{ form.issuance_days }} size="3">
+                                    </td>
+                                    <td class="button">
+                                        <input class="input-button" type="button" id="edtBtn1"
+                                               value="編集"
+                                               onclick="edit_form(this)">
+                                    </td>
+                                    <td class="button">
+                                        <input class="input-button" type="button" id="delBtn1"
+                                               value="削除"
+                                               onclick="delete_form(this,{{ form.form_id }})">
+                                    </td>
+                                    <td class="button">
+                                        <input class="input-button" type="submit" id="qrBtn1"
+                                               value="QR表示"
+                                               onclick="QROutput(this)">
+                                    </td>
+                                </tr>
+                            </form>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -117,9 +119,9 @@
 
             // 各列に表示内容を設定
             c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="form_name' + count + '" value="" size="30" ">';
-            c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="fee' + count + '" value="" size="30" ">';
-            c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
+            c2.innerHTML = '<input class="input-value" type="text"   id="txt1' + count + '" name="form_name' + count + '" value="" size="30" ">';
+            c3.innerHTML = '<input class="input-value" type="text"   id="txt2' + count + '" name="fee' + count + '" value="" size="30" ">';
+            c4.innerHTML = '<input class="input-value" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
             c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
             c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
             c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
@@ -170,7 +172,7 @@
                 return false;
             var seq = 1;
             for (var i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("inpval")) {
+                if (tagElements[i].className.match("input-value")) {
                     tagElements[i].setAttribute("id", "txt" + seq);
                     tagElements[i].setAttribute("name", "txt" + seq);
                     ++seq;

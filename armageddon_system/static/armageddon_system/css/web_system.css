@@ -211,8 +211,30 @@ rgba(118, 193, 157, 100) 100 %);
 table caption {
     padding: 0.5em 0;
 }
+
 table tfoot {
     background-color: aliceblue;
+}
+
+table input {
+    border: none;
+    background-color: transparent;
+}
+table .button {
+    text-align: center;
+}
+table .input-button {
+    border: 1px solid lightskyblue;
+    align-content: center;
+    background-color: #fdfffb;
+}
+table .input-value {
+    width: 100%;
+    text-align: left;
+}
+table .input-number {
+    width: 100%;
+    text-align: right;
 }
 @media screen and (max-width: 767px) {
     table caption {
