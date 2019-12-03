@@ -1,0 +1,212 @@
+/*メインコンテンツ*/
+.main-content {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+/*メニューバー*/
+.nav-primary {
+    font-size: 13px;
+    background: #8ae1b7;
+linear-gradient(to bottom,
+rgba(118, 193, 157, 0),
+rgba(118, 193, 157, 0) 90 %,
+rgba(118, 193, 157, 100) 90 %,
+rgba(118, 193, 157, 100) 100 %);
+    clear: both;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    padding: 0;
+    text-align: center;
+}
+.nav-primary ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+
+.nav-primary li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom; /* IE9 fix: li v-aligns with baseline on hover without this */
+}
+
+.nav-primary a {
+    color: #fff;
+    display: block;
+    font-size: 110%;
+    font-weight: bold;
+    overflow: hidden;
+    padding: 0.99em 1.5em; /* slightly less than one to prevent rounding error */
+    position: relative;
+    text-decoration: none;
+    -moz-transition: background 0.4s ease-out;
+    -o-transition: background 0.4s ease-out;
+    -webkit-transition: background 0.4s ease-out;
+    transition: background 0.4s ease-out;
+}
+
+.nav-primary a::after {
+    background: #b82222;
+    content: "";
+    height: 0.714em;
+    left: 50%;
+    margin-left: -0.42857em;
+    position: absolute;
+    top: -0.857em;
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -moz-transition: top 0.3s ease-out;
+    -o-transition: top 0.3s ease-out;
+    -webkit-transition: top 0.3s ease-out;
+    transition: top 0.3s ease-out;
+    width: 0.714em;
+}
+
+.nav-primary a:hover {
+    background: #6cb08f;
+    background-image: linear-gradient(
+            rgba(78, 127, 103, 0),
+            rgba(78, 127, 103, 0) 90%,
+            rgba(78, 127, 103, 100) 90%,
+            rgba(78, 127, 103, 100) 100%
+    );
+    overflow: hidden;
+    position: relative;
+}
+
+.nav-primary a:hover::after {
+    top: -5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-primary a {
+        border-radius: 0.6em;
+        margin: 0.35em;
+        padding: 0.5em;
+    }
+
+    .nav-primary a:hover {
+        background-image: none;
+        /*border: 0.25em solid rgba(78, 127, 103, 100);
+        padding: 0.25em;*/
+        box-shadow: inset 0 -5px 0 0 rgba(78, 127, 103, 100);
+    }
+}
+
+/*ログイン*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+/*body {*/
+/*  background: #456;*/
+/*  font-family: 'Open Sans', sans-serif;*/
+/*}*/
+.login .error {
+    text-align: center;
+}
+
+.login {
+    width: 400px;
+    margin: 16px auto;
+    font-size: 16px;
+}
+
+/* Reset top and bottom margins from certain elements */
+.login-header,
+.login p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* The triangle form is achieved by a CSS hack */
+.login-triangle {
+    width: 0;
+    margin-right: auto;
+    margin-left: auto;
+    border: 12px solid transparent;
+    border-bottom-color: #28d;
+}
+
+.login-header {
+    background: #28d;
+    padding: 20px;
+    font-size: 1.4em;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.login-container {
+    background: #ebebeb;
+    padding: 12px;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.login p {
+    padding: 12px;
+}
+
+.login input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    padding: 16px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+    background: #fff;
+    border-color: #bbb;
+    color: #555;
+}
+
+/* Text fields' focus effect */
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+    border-color: #888;
+}
+
+.login input[type="submit"] {
+    background: #28d;
+    border-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+    background: #17c;
+}
+
+/* Buttons' focus effect */
+.login input[type="submit"]:focus {
+    border-color: #05a;
+}
+
+/*テーブル*/
+table caption {
+	padding: .5em 0;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
