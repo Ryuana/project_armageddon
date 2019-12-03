@@ -8,10 +8,11 @@ from armageddon_system.models.dynamo_manager import DynamoManager as db
 
 # メッセージ一覧
 def display_messages(request):
-    if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
-    dbm = db()
     context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
     all_message_list = dbm.get_message_list()
     message_list = []
     for i in reversed(range(len(all_message_list))):
@@ -34,9 +35,10 @@ def display_messages(request):
 
 # メッセージ編集画面
 def edit_message(request):
-    if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
     context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
     context['message_id'] = request.POST['message_id']
     # message_idを元にmessage取り出す
     dbm = db()
@@ -47,8 +49,10 @@ def edit_message(request):
 
 # メッセージ保存時
 def save_message(request):
+    context = {}
     if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
     message = request.GET['message']
     img = request.GET['img']
@@ -58,18 +62,21 @@ def save_message(request):
 
 
 def display_qa_list(request):
-    if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
-    dbm = db()
     context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
     context['qa_list'] = dbm.get_qa_all()
 
     return render(request, 'armageddon_system/linebot/qa/list.html', context)
 
 
 def save_qa(request):
+    context = {}
     if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
     # qa_idの最新の値を取り出す処理
     questions = str(request.GET['questions']).split(",")
@@ -78,7 +85,9 @@ def save_qa(request):
 
 
 def delete_qa(request, qa_id):
+    context = {}
     if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
     dbm.del_qa(qa_id)

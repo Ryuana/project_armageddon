@@ -5,20 +5,22 @@ import qrcode
 
 
 def log(request):
-    if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
-    dbm = db()
     context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
     context['pay_logs'], context['total'] = dbm.get_pay_log_all()
 
     return render(request, 'armageddon_system/pay/log.html', context)
 
 
 def item_list(request):
-    if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
-    dbm = db()
     context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
     context['forms'] = dbm.get_form_all()
     # context['count'] = 1
     # {{forms.0.form_id}}でjs取得可能
@@ -27,9 +29,10 @@ def item_list(request):
 
 
 def item_qr(request):
-    if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
     context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
     context['form_name'] = request.POST['form_name']
     context['fee'] = request.POST['fee']
     img = qrcode.make(request.POST['form_name'])
@@ -39,8 +42,10 @@ def item_qr(request):
 
 
 def item_delete(request):
+    context = {}
     if 'user_id' not in request.session:
-        return render(request, 'armageddon_system/user/login.html')
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
     try:
         dbm.del_form(request.GET['form_id'])
