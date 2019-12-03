@@ -26,7 +26,7 @@ def login(request):
                 context['error'] = "IDまたはパスワードが違います"
 
         if is_login_success:
-            return pay.log(request)
+            return pay.display_pay_logs(request)
 
         else:
             return render(request, 'armageddon_system/user/login.html', context)

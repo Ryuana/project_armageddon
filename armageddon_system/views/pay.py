@@ -4,7 +4,7 @@ from armageddon_system.models.dynamo_manager import DynamoManager as db
 import qrcode
 
 
-def log(request):
+def display_pay_logs(request):
     context = {}
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
@@ -15,7 +15,7 @@ def log(request):
     return render(request, 'armageddon_system/pay/log.html', context)
 
 
-def item_list(request):
+def display_form(request):
     context = {}
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
@@ -28,7 +28,7 @@ def item_list(request):
     return render(request, 'armageddon_system/pay/item/list.html', context)
 
 
-def item_qr(request):
+def display_qrcode(request):
     context = {}
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
@@ -41,7 +41,7 @@ def item_qr(request):
     return render(request, 'armageddon_system/pay/item/qr.html', context)
 
 
-def item_delete(request):
+def delete_form(request):
     context = {}
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
