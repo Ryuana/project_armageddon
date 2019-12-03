@@ -156,7 +156,7 @@ class DynamoManager():
         new_form.FormName = form['form_name']
         new_form.Fee = int(form['fee'])
         new_form.IssuanceDays = int(form['issuance_days'])
-        new_form.qr = hashlib.md5(form['form_name'].encode()).hexdigest()
+        new_form.QR = hashlib.md5(form['form_name'].encode()).hexdigest()
         new_form.save()
 
     def del_form(self, form_id):
