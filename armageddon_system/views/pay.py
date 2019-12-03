@@ -40,6 +40,21 @@ def display_qrcode(request):
 
     return render(request, 'armageddon_system/pay/item/qr.html', context)
 
+def save_form(request):
+    context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
+    try:
+        context['form_id'] = request.GET['form_id']
+        context['form_name'] = request.GET['form_name']
+        context['fee'] = request.GET['fee']
+        context['issuance_days'] = request.GET['issuance_days']
+        dbm.save_form(context)
+    except KeyError:
+        pass
+    return HttpResponse("削除成功")
 
 def delete_form(request):
     context = {}
