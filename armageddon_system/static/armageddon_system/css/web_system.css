@@ -211,6 +211,9 @@ rgba(118, 193, 157, 100) 100 %);
 table caption {
     padding: 0.5em 0;
 }
+table tfoot {
+    background-color: aliceblue;
+}
 @media screen and (max-width: 767px) {
     table caption {
         border-bottom: 1px solid #ddd;
