@@ -1,8 +1,7 @@
 from . import DynamoClass as db
 from . import pay_log, qa, form, message
 
-import datetime
-import json
+import hashlib
 
 
 class DynamoManager():
@@ -146,19 +145,18 @@ class DynamoManager():
             return_items = list(reversed(return_items))
         return return_items
 
-    def save_form(self, form: form.Form):
+    def save_form(self, form):
         """
         精算項目を保存します。
         :param pay_item: map
         :rtype: void
         """
-        new_form = db.FormsModel(int(form.form_id))
+        new_form = db.FormsModel(int(form['form_id']))
         # Formsの項目に埋め込む処理
-        new_form.FormName = form.form_name
-        new_form.Fee = int(form.fee)
-        new_form.IssuanceDays = int(form.issuance_days)
-        new_form.QR = form.qr
-
+        new_form.FormName = form['form_name']
+        new_form.Fee = int(form['fee'])
+        new_form.IssuanceDays = int(form['issuance_days'])
+        new_form.qr = hashlib.md5(form['form_name'].encode()).hexdigest()
         new_form.save()
 
     def del_form(self, form_id):
