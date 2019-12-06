@@ -236,6 +236,7 @@ table .input-number {
     width: 100%;
     text-align: right;
 }
+
 @media screen and (max-width: 767px) {
     table caption {
         border-bottom: 1px solid #ddd;

@@ -156,7 +156,7 @@ class DynamoManager():
         new_form.FormName = form['form_name']
         new_form.Fee = int(form['fee'])
         new_form.IssuanceDays = int(form['issuance_days'])
-        new_form.qr = hashlib.md5(form['form_name'].encode()).hexdigest()
+        new_form.QR = hashlib.md5(form['form_name'].encode()).hexdigest()
         new_form.save()
 
     def del_form(self, form_id):
@@ -189,18 +189,15 @@ class DynamoManager():
 
         return qa_list
 
-    def save_qa(self, qa_id, qa: qa.QA):
+    def save_qa(self, qa):
         """
         QAを保存します。
         :param qa:list of map
         :rtype: void
         """
-        qa_item = db.QuestionAndAnswersModel(int(qa_id))
-        qa_item.QuestionAndAnswerId = {
-            'Questions': qa.question,
-            'Answer': qa.answer
-        }
-        # QAに情報を埋め込む
+        qa_item = db().QuestionAndAnswersModel(int(qa['qa_id']))
+        qa_item.Questions = qa['questions']
+        qa_item.Answer = qa['answer']
         qa_item.save()
 
     def del_qa(self, qa_id):
@@ -209,7 +206,7 @@ class DynamoManager():
         :param qa_id: int
         :rtype: void
         """
-        qa = db.QuestionAndAnswersModel.get(qa_id)
+        qa = db.QuestionAndAnswersModel.get(int(qa_id))
         qa.delete()
 
     def get_next_qa_id(self):

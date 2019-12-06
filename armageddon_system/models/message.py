@@ -1,7 +1,7 @@
 import datetime
 
-class Message:
 
+class Message:
     message_id = 0
     message = ""
     image: bytearray = ""
