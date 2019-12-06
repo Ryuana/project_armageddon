@@ -24,7 +24,6 @@
 
 {% block main-content %}
     <div id="systems">
-        <div><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></div>
 
         <div class="row">
             <div class="col-xs-12" style="width: 100%;">
@@ -32,7 +31,7 @@
                     <table border="1" class="table table-bordered table-hover" style="table-layout: auto">
                         <thead align="center">
                         <tr>
-                            <th style="max-width: 30px; min-width: 20px" >No.</th>
+                            <th style="max-width: 30px; min-width: 20px">No.</th>
                             <th>申請書名</th>
                             <th>金額</th>
                             <th>日数</th>
@@ -47,10 +46,10 @@
                                 {% csrf_token %}
                                 <tr>
                                     <td align="right">
-                                        <input type="text" name="num" value={{ forloop.counter }} readonly>
+                                        {{ forloop.counter }}
                                     </td>
-                                    <input type ="hidden" id="form_id{{ forloop.counter }}"
-                                                                        name="form_id" value={{ form.form_id }}>
+                                    <input type="hidden" id="form_id{{ forloop.counter }}"
+                                           name="form_id" value={{ form.form_id }}>
                                     <td>
                                         <input class="input-value" type="text" id="form_name" name="form_name"
                                                value={{ form.form_name }} size="15">
@@ -60,7 +59,8 @@
                                                name="fee" value={{ form.fee }} size="3">
                                     </td>
                                     <td>
-                                        <input class="input-number" type="text" id="issuance_days{{ forloop.counter }}" name="issuance_days"
+                                        <input class="input-number" type="text" id="issuance_days{{ forloop.counter }}"
+                                               name="issuance_days"
                                                value={{ form.issuance_days }} size="3">
                                     </td>
                                     <td class="button">
@@ -81,6 +81,12 @@
                             </form>
                         {% endfor %}
                         </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td class="button"><input type="button" class="input-button" id="add" name="add" value="追加" onclick="insert_row()"></td>
+                        </tr>
+                    </tfoot>
                     </table>
                 </div>
             </div>
@@ -90,11 +96,11 @@
 
 
         function insert_row() {
-            var objTBL = document.getElementById("tbl");
+            var objTBL = document.getElementById("form_table");
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length;
+            var count = objTBL.rows.length-1;
 
             // 最終行に新しい行追加
             var row = objTBL.insertRow(count);
