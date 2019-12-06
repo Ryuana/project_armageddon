@@ -40,6 +40,7 @@ def display_qrcode(request):
 
     return render(request, 'armageddon_system/pay/item/qr.html', context)
 
+
 def save_form(request):
     context = {}
     if 'user_id' not in request.session:
@@ -55,6 +56,7 @@ def save_form(request):
     except KeyError:
         pass
     return HttpResponse("保存成功")
+
 
 def delete_form(request):
     context = {}

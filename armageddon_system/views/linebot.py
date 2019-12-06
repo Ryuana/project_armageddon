@@ -28,7 +28,7 @@ def display_messages(request):
         except Exception:
             message['image_path'] = ""
         message_list.append(message)
-    message_list.sort(key=lambda x:x['message_id'])
+    message_list.sort(key=lambda x: x['message_id'])
     context['message'] = message_list
     return render(request, 'armageddon_system/linebot/msg/list.html', context)
 
@@ -44,7 +44,7 @@ def edit_message(request):
     dbm = db()
     context['message'] = dbm.get_message(int(context['message_id']))
     # context渡す
-    return render(request, 'armageddon_system/linebot/msg/edit.html',context)
+    return render(request, 'armageddon_system/linebot/msg/edit.html', context)
 
 
 # メッセージ保存時
@@ -99,4 +99,3 @@ def delete_qa(request):
     except KeyError:
         pass
     return HttpResponse("削除成功")
-

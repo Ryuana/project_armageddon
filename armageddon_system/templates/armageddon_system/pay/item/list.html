@@ -52,23 +52,28 @@
                                             <span class="seqno"><input type="text" name="num"
                                                                        value={{ forloop.counter }} readonly></span>
                                         </td>
-                                        <input type ="hidden" id="form_id{{ forloop.counter }}"
-                                                                        name="form_id" value={{ form.form_id }}>
-                                        <td style=""><input class="inpval" type="text" id="form_name{{ forloop.counter }}"
+                                        <input type="hidden" id="form_id{{ forloop.counter }}"
+                                               name="form_id" value={{ form.form_id }}>
+                                        <td style=""><input class="inpval" type="text"
+                                                            id="form_name{{ forloop.counter }}"
                                                             name="form_name" value={{ form.form_name }} size="25"
                                                             style="border:none" readonly>
                                         </td>
                                         <td style=""><input class="inpval" type="text" id="fee{{ forloop.counter }}"
                                                             name="fee" value={{ form.fee }} size="25"
                                                             style="border:none" readonly></td>
-                                        <td style=""><input class="inpval" type="text" id="issuance_days{{ forloop.counter }}"
+                                        <td style=""><input class="inpval" type="text"
+                                                            id="issuance_days{{ forloop.counter }}"
                                                             name="issuance_days"
                                                             value={{ form.issuance_days }} size="25"
                                                             style="border:none" readonly></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn{{ forloop.counter }}"
+                                        <td style="width:40px;"><input class="edtbtn" type="button"
+                                                                       id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"
-                                                                       onclick="edit_form(this,{{ forloop.counter }})"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn{{ forloop.counter }}"
+                                                                       onclick="edit_form(this,{{ forloop.counter }})">
+                                        </td>
+                                        <td style="width:40px;"><input class="delbtn" type="button"
+                                                                       id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
                                                                        onclick="delete_form(this,{{ form.form_id }})">
                                         </td>
@@ -118,9 +123,9 @@
 
             // 各列に表示内容を設定
             c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="inpval" type="text"   id="form_name' + count + '" name="form_name' + count + '" value="" size="30" ">';
-            c3.innerHTML = '<input class="inpval" type="text"   id="fee' + count + '" name="fee' + count + '" value="" size="30" ">';
-            c4.innerHTML = '<input class="inpval" type="text"   id="issuance_days' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
+            c2.innerHTML = '<input class="inpval" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
+            c3.innerHTML = '<input class="inpval" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
+            c4.innerHTML = '<input class="inpval" type="text"   id="issuance_days' + count + '" name="issuance_days" value="" size="30" ">';
             c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
             c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
             c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
@@ -141,12 +146,6 @@
 
             if (!obj)
                 return;
-
-            //form削除処理
-            let request = new XMLHttpRequest();
-            let url = location.href + "/delete?form_id=" + form_id;
-            request.open('GET', url, true);
-            request.send();
 
             let objTR = obj.parentNode.parentNode;
             let objTBL = objTR.parentNode;
@@ -193,13 +192,18 @@
                     ++seq;
                 }
             }
+            //form削除処理
+            let request = new XMLHttpRequest();
+            let url = location.href + "/delete?form_id=" + form_id;
+            request.open('GET', url, true);
+            request.send();
         }
 
         /*
          *編集ボタン該当行の内容を入力・編集、モード切り替え
          */
-        function edit_form(obj,rowId) {
-            let objTR = obj.parentNode.parentNode;
+        function edit_form(obj, rowId) {
+            {#let objTR = obj.parentNode.parentNode;#}
             {#let rowId = objTR.sectionRowIndex;#}
             let form_id = document.getElementById("form_id" + rowId);
             let form_name = document.getElementById("form_name" + rowId);

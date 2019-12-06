@@ -1,5 +1,4 @@
 class Form:
-
     form_id = 0
     form_name = ""
     fee = 0
@@ -17,8 +16,5 @@ class Form:
         yield 'form_id', self.form_id
         yield 'form_name', self.form_name
         yield 'fee', self.fee
-        yield 'issuance_days' , self.issuance_days
-        yield 'qr' , self.qr
-
-
-
+        yield 'issuance_days', self.issuance_days
+        yield 'qr', self.qr
