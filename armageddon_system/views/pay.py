@@ -54,7 +54,7 @@ def save_form(request):
         dbm.save_form(context)
     except KeyError:
         pass
-    return HttpResponse("削除成功")
+    return HttpResponse("保存成功")
 
 def delete_form(request):
     context = {}

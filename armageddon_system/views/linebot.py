@@ -78,16 +78,25 @@ def save_qa(request):
         context['error'] = "ログインしてください"
         return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
-    # qa_idの最新の値を取り出す処理
-    questions = str(request.GET['questions']).split(",")
-    answer = request.answer
-    # dbm.save_qa(qa_id,questions,answer)
+    try:
+        context['qa_id'] = request.GET['qa_id']
+        context['questions'] = request.GET['questions'].split(",")
+        context['answer'] = request.GET['answer']
+        dbm.save_qa(context)
+    except KeyError:
+        pass
+    return HttpResponse("保存成功")
 
 
-def delete_qa(request, qa_id):
+def delete_qa(request):
     context = {}
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
         return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
-    dbm.del_qa(qa_id)
+    try:
+        dbm.del_qa(request.GET['qa_id'])
+    except KeyError:
+        pass
+    return HttpResponse("削除成功")
+
