@@ -276,7 +276,7 @@ class DynamoManager():
         :param bot_message_id: int
         :rtype: void
         """
-        message = db.MessagesModel(bot_message_id)
+        message = db.MessagesModel(int(bot_message_id))
         message.delete()
 
     def check_login_id(self, user_id, user_pass):

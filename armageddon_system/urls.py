@@ -13,6 +13,7 @@ urlpatterns = [
     path('linebot/qa/list/save', views.linebot.save_qa, name='save_qa'),
     path('linebot/qa/list/delete', views.linebot.delete_qa, name='delete_qa'),
     path('linebot/msg/list', views.linebot.display_messages, name='msg_list'),
+    path('linebot/msg/list/delete', views.linebot.delete_message, name='msg_list'),
     path('linebot/msg/edit', views.linebot.edit_message, name='edit_message'),
     path('linebot/msg/save', views.linebot.save_message, name='save_message'),
 

@@ -60,6 +60,18 @@ def save_message(request):
 
     return render(request, 'armageddon_system/linebot/msg/list.html')
 
+def delete_message(request):
+    context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
+    try:
+        dbm.del_message_list(request.GET['message_id'])
+    except KeyError:
+        pass
+    return HttpResponse("削除成功")
+
 
 def display_qa_list(request):
     context = {}
