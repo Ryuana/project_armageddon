@@ -250,25 +250,24 @@ class DynamoManager():
         LINE Botのメッセージを全件取得します。
         :rtype: list of map
         """
-        message = db.MessagesModel.get(message_id)
-
-        print(message)
+        message = db.MessagesModel.get(int(message_id))
         # messageを埋め込む処理
         return message
 
-    def save_message_list(self, message_id, bot_message: message.Message):
+    def save_message_list(self, message):
         """
         LINE Botのメッセージを保存します。
         :param bot_message: map
         :rtype: void
         """
-        message = db.MessagesModel(int(message_id))
-        message.Message = {
-            'MessageContent': bot_message.message,
-            'ImagePath': bot_message.image,
-            'Timestamp': bot_message.time_stamp
+        new_message = db.MessagesModel(int(message['message_id']))
+        import datetime
+        new_message.Message = {
+            'MessageContent': message['message'],
+            'ImagePath': message['image'],
+            'Timestamp': datetime.datetime.strptime(message['time_stamp'],'%Y-%m-%d')
         }
-        message.save()
+        new_message.save()
 
     def del_message_list(self, bot_message_id):
         """

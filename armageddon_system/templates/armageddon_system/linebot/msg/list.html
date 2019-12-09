@@ -53,9 +53,9 @@
                                         <td style=""><input class="inpval" type="text" id="image{{ forloop.counter }}" name="image"
                                                             value="{{ message_item.image_path }}" size="30"
                                                             style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="submit" id="edtBtn1"
+                                        <td style="width:40px;"><input class="edtbtn" type="submit" id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
+                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
                                                                        onclick="delete_form(this,{{ message_item.message_id }})"></td>
                                     </tr>

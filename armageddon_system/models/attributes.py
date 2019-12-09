@@ -31,7 +31,7 @@ class PayOffLogAttribute(MapAttribute):
 
 class MessageAttribute(MapAttribute):
     MessageContent = UnicodeAttribute(null=False)
-    ImagePath = UnicodeAttribute(null=False)
+    ImagePath = UnicodeAttribute(null=True)
     Timestamp = UTCDateTimeAttribute(null=True)
 
 
