@@ -8,25 +8,23 @@
 {% block menubar %}{% endblock %}
 {% block main-title %}証明書発行申請{% endblock %}
 {% block main-content %}
-    <div id="school_num">
-        <p class="num1">学籍番号</p>
+    <p class="num1">学籍番号
         <input type="text" id="school-control" placeholder="">
-        <div id="check">学籍番号がない場合<input type="checkbox" id="checkbox" name="check" value="check"></div>
-    </div>
+        学籍番号がない場合<input type="checkbox" id="checkbox" name="check" value="check">
+    </p>
 
-    <div id="app_name">
-        <p class="num2">申請者名</p>
+
+    <p class="num2">申請者名
         <input type="text" id="name-control" placeholder="">
-    </div>
+    </p>
 
-    <div id="app_form">
-        <p class="num3">申請書名</p>
+
+
+    <p class="num3">申請書名
         <input type="text" id="form-control" placeholder="">
-        <div class="count">
-            <input type="button" value="+" id="plus" onclick="sampleCountUp();">
-            <span id="sampleOutput">0</span>
-        </div>
-    </div>
+        <input type="button" value="+" id="plus" onclick="sampleCountUp();">
+        <span id="sampleOutput">0</span>
+    </p>
     <section id="contents">
         <!-- カメラ -->
         <video id="camera" width="300" height="200" muted></video>

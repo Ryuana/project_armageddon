@@ -60,50 +60,48 @@
                    style="color: black">CSV出力</a></button>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="table-responsive">
-                    <table border="1" id="pay_log_table" class="table table-bordered table-hover">
-                        <thead>
-                        <tr id="object">
-                            <th width="140" height="40">日時</th>
-                            <th width="140" height="40">学校名</th>
-                            <th width="140" height="40">学科</th>
-                            <th width="140" height="40">学籍番号</th>
-                            <th width="140" height="40">申請書名</th>
-                            <th width="140" height="40">枚数</th>
-                            <th width="140" height="40">金額</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for pay_log in pay_logs %}
-                            <tr>
-                                {% for forms in pay_log.form_list %}
-                                    <td>{{ pay_log.time_stamp|date:"Y/m/d" }}</td>
-                                    <td>{{ pay_log.school_name }}</td>
-                                    <td>{{ pay_log.course_name }}</td>
-                                    <td>{{ pay_log.student_id }}</td>
-                                    <td>{{ forms.form.form_name }}</td>
-                                    <td>{{ forms.quantity }}</td>
-                                    <td>{{ forms.subtotal }}</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        <tfoot>
+    <div class="row">
+        <div class="col-xs-12" style="width: 100%;">
+            <div class="table-responsive">
+                <table border="1" id="pay_log_table" class="table table-bordered table-hover" style="table-layout: auto">
+                    <thead align="center">
+                    <tr id="object">
+                        <th>日時</th>
+                        <th>学校名</th>
+                        <th>学科</th>
+                        <th>学籍番号</th>
+                        <th>申請書名</th>
+                        <th>枚数</th>
+                        <th>金額</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for pay_log in pay_logs %}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td id="total" colspan="1">合計</td>
-                            <td>{{ total }}</td>
+                            {% for forms in pay_log.form_list %}
+                                <td align="right">{{ pay_log.time_stamp|date:"Y/m/d" }}</td>
+                                <td>{{ pay_log.school_name }}</td>
+                                <td>{{ pay_log.course_name }}</td>
+                                <td align="right">{{ pay_log.student_id }}</td>
+                                <td>{{ forms.form.form_name }}</td>
+                                <td align="right">{{ forms.quantity }}</td>
+                                <td align="right">{{ forms.subtotal }}</td>
+                            {% endfor %}
                         </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total" colspan="1" align="center">合計</td>
+                        <td align="right">{{ total }}</td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>

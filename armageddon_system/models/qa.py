@@ -1,5 +1,4 @@
 class QA:
-
     qa_id = 0
     question = []
     answer = ""

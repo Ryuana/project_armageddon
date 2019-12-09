@@ -24,22 +24,21 @@
 
 {% block main-content %}
     <div id="systems">
-        <div><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></div>
 
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="width: 100%;">
                     <div class="table-responsive">
-                        <table border="1" class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th style="text-align:right; width:40px;">No.</th>
-                                <th style="">申請書名</th>
-                                <th style="">金額</th>
-                                <th style="">日数</th>
-                                <th style="width:40px;"></th>
-                                <th style="width:40px;"></th>
-                                <th style="width:40px;"></th>
+                        <table border="1" class="table table-bordered table-hover" style="table-layout: auto">
+                            <thead align="center">
+                            <tr id="object">
+                                <th>No.</th>
+                                <th>申請書名</th>
+                                <th>金額</th>
+                                <th>日数</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,32 +46,34 @@
                                 <form id="frm" name="frm" method="POST" action="./qr">
                                     {% csrf_token %}
                                     <tr>
-
-                                        <td style="text-align:right; width:40px;">
-                                            <span class="seqno"><input type="text" name="form_id"
-                                                                       value={{ forloop.counter }} readonly></span>
-                                        </td>
-                                        <td style=""><input class="inpval" type="text" id="txt1"
+                                        <input type="hidden" id="form_id{{ forloop.counter }}"
+                                               name="form_id" value={{ form.form_id }}>
+                                        <td text-align="right">{{ forloop.counter }}</td>
+                                        <td style=""><input class="inpval" type="text"
+                                                            id="form_name{{ forloop.counter }}"
                                                             name="form_name" value={{ form.form_name }} size="25"
-                                                            style="border:none">
+                                                            style="border:none" readonly>
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="txt2"
+                                        <td style=""><input class="inpval" type="text" id="fee{{ forloop.counter }}"
                                                             name="fee" value={{ form.fee }} size="25"
-                                                            style="border:none"></td>
-                                        <td style=""><input class="inpval" type="text" id="txt3"
+                                                            style="border:none" readonly></td>
+                                        <td style=""><input class="inpval" type="text"
+                                                            id="issuance_days{{ forloop.counter }}"
                                                             name="issuance_days"
                                                             value={{ form.issuance_days }} size="25"
-                                                            style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1"
+                                                            style="border:none" readonly></td>
+                                        <td style="width:40px;"><input class="edtbtn" type="button"
+                                                                       id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"
-                                                                       onclick="edit_form(this)"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
+                                                                       onclick="edit_form(this,{{ forloop.counter }})">
+                                        </td>
+                                        <td style="width:40px;"><input class="delbtn" type="button"
+                                                                       id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
                                                                        onclick="delete_form(this,{{ form.form_id }})">
                                         </td>
                                         <td style="width:40px;"><input class="qrbtn" type="submit" id="qrBtn1"
-                                                                       value="QR表示"
-                                                                       onclick="QROutput(this)"></td>
+                                                                       value="QR表示"></td>
                                     </tr>
                                 </form>
                             {% endfor %}
@@ -117,15 +118,15 @@
 
             // 各列に表示内容を設定
             c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="form_name' + count + '" value="" size="30" ">';
-            c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="fee' + count + '" value="" size="30" ">';
-            c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="issuance_days' + count + '" value="" size="30" ">';
+            c2.innerHTML = '<input class="input-value" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
+            c3.innerHTML = '<input class="input-number" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
+            c4.innerHTML = '<input class="input-number" type="text"   id="issuance_days' + count + '" name="issuance_days" value="" size="30" ">';
             c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
             c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
             c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
 
             // 追加した行の入力フィールドにフォーカスを設定
-            var objInp = document.getElementById("txt1" + count);
+            let objInp = document.getElementById("form_name" + count);
             if (objInp)
                 objInp.focus();
         }
@@ -141,14 +142,8 @@
             if (!obj)
                 return;
 
-            //form削除処理
-            let request = new XMLHttpRequest();
-            let url = location.href + "/delete?form_id=" + form_id;
-            request.open('GET', url, true);
-            request.send();
-
-            var objTR = obj.parentNode.parentNode;
-            var objTBL = objTR.parentNode;
+            let objTR = obj.parentNode.parentNode;
+            let objTBL = objTR.parentNode;
 
             if (objTBL)
                 objTBL.deleteRow(objTR.sectionRowIndex);
@@ -169,15 +164,15 @@
             if (!tagElements)
                 return false;
             var seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("inpval")) {
+            for (let i = 0; i < tagElements.length; i++) {
+                if (tagElements[i].className.match("input-value") || tagElements[i].className.match("input-number")) {
                     tagElements[i].setAttribute("id", "txt" + seq);
                     tagElements[i].setAttribute("name", "txt" + seq);
                     ++seq;
                 }
             }
             seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            for (let i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("edtbtn")) {
                     tagElements[i].setAttribute("id", "edtBtn" + seq);
                     ++seq;
@@ -186,35 +181,52 @@
 
             // <input type="button" id="delBtnN">
             seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            for (let i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("delbtn")) {
                     tagElements[i].setAttribute("id", "delBtn" + seq);
                     ++seq;
                 }
             }
+            //form削除処理
+            let request = new XMLHttpRequest();
+            let url = location.href + "/delete?form_id=" + form_id;
+            request.open('GET', url, true);
+            request.send();
         }
 
         /*
          *編集ボタン該当行の内容を入力・編集、モード切り替え
          */
-        function edit_form(obj) {
-            var objTR = obj.parentNode.parentNode;
-            var rowId = objTR.sectionRowIndex;
-            var objInp = document.getElementById("txt" + rowId);
-            var objBtn = document.getElementById("edtBtn" + rowId);
+        function edit_form(obj, rowId) {
+            {#let objTR = obj.parentNode.parentNode;#}
+            {#let rowId = objTR.sectionRowIndex;#}
+            let form_id = document.getElementById("form_id" + rowId);
+            let form_name = document.getElementById("form_name" + rowId);
+            let fee = document.getElementById("fee" + rowId);
+            let issuance_days = document.getElementById("issuance_days" + rowId);
+            let objBtn = document.getElementById("edtBtn" + rowId);
 
-            if (!objInp || !objBtn)
+            //
+            if (!form_name || !objBtn)
                 return;
 
             // モード切り替えはボタンの値で判定
             if (objBtn.value == "編集") {
-                objInp.style.cssText = "border:1px solid #888;"
-                objInp.readOnly = false;
-                objInp.focus();
+                form_name.style.cssText = "border:1px solid #888;";
+                form_name.readOnly = false;
+                fee.readOnly = false;
+                issuance_days.readOnly = false;
+                form_name.focus();
                 objBtn.value = "確定";
             } else {
-                objInp.style.cssText = "border:none;"
-                objInp.readOnly = true;
+                form_name.style.cssText = "border:none;";
+                form_name.readOnly = true;
+                fee.readOnly = true;
+                issuance_days.readOnly = true;
+                let request = new XMLHttpRequest();
+                let url = location.href + "/save?form_id=" + form_id.value + "&form_name=" + form_name.value + "&fee=" + fee.value + "&issuance_days=" + issuance_days.value;
+                request.open('GET', url, true);
+                request.send();
                 objBtn.value = "編集";
             }
         }

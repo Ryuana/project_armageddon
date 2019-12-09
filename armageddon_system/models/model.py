@@ -19,7 +19,7 @@ class FormsModel(Model):
     QR = UnicodeAttribute(null=True)
 
     def __iter__(self):
-        for name, attr in self._get_attributes().items():
+        for name, attr in self.get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 
@@ -35,7 +35,7 @@ class PayOffLogsModel(Model):
     IsPaid = BooleanAttribute(null=False)
 
     def __iter__(self):
-        for name, attr in self._get_attributes().items():
+        for name, attr in self.get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 
@@ -51,7 +51,7 @@ class QuestionAndAnswersModel(Model):
     Answer = UnicodeAttribute(null=False)
 
     def __iter__(self):
-        for name, attr in self._get_attributes().items():
+        for name, attr in self.get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 
@@ -66,7 +66,7 @@ class MessagesModel(Model):
     Message = attributes.MessageAttribute(null=False)
 
     def __iter__(self):
-        for name, attr in self._get_attributes().items():
+        for name, attr in self.get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 
@@ -82,7 +82,7 @@ class AlermsModel(Model):
     AlermDateTime = UTCDateTimeAttribute(null=False)
 
     def __iter__(self):
-        for name, attr in self._get_attributes().items():
+        for name, attr in self.get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 
@@ -110,7 +110,7 @@ class UsersModel(Model):
     UserLogs = attributes.UserLogAttribute(null=True)
 
     def __iter__(self):
-        for name, attr in self._get_attributes().items():
+        for name, attr in self.get_attributes().items():
             yield name, attr.serialize(getattr(self, name))
 
 

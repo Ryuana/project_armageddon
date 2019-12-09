@@ -16,8 +16,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'armageddon_system/css/linebot/qa/list.css' %}">
 {% endblock %}
 {% block main-title %}
     LINEBOT QA一覧
@@ -25,10 +23,9 @@
 {% block main-content %}
     <div id="systems">
         <form id="frm" name="frm" method="GET" action="">
-            <div><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></div>
-            <div class="container">
+            <div class="container" style="margin-left: 0; margin-right: 0;">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="width: 100%;">
                         <div class="table-responsive">
                             <table border="1" id="tbl" class="table table-bordered table-hover">
                                 <tr>
@@ -38,29 +35,43 @@
                                     <th style="width:40px;"></th>
                                     <th style="width:40px;"></th>
                                 </tr>
-                                {% for i in qa_list %}
+                                {% for qa in qa_list %}
                                     <tr>
-                                        <td style="text-align:right; width:40px;"><span class="seqno">1</span></td>
+                                        <td style="text-align:right; width:40px;"><span
+                                                class="seqno">{{ forloop.counter }}</span></td>
+                                        <input type="hidden" id="qa_id{{ forloop.counter }}"
+                                               name="qa_id" value={{ qa.qa_id }}>
                                         <td style="">
-                                            <input class="inpval" type="text" id="txt1" name="txt1"
+                                            <input class="inpval" type="text" id="questions{{ forloop.counter }}"
+                                                   name="questions"
                                                    value="
-{% for question_item in i.question %}{{ question_item }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}"
+{% for question_item in qa.question %}{{ question_item }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}"
                                                    size="30" readonly
                                                    style="border:none">
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="txt1" name="txt1"
-                                                            value="{{ i.answer }}"
+                                        <td style=""><input class="inpval" type="text" id="answer{{ forloop.counter }}"
+                                                            name="answer"
+                                                            value="{{ qa.answer }}"
                                                             size="30" readonly
                                                             style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="button" id="edtBtn1"
+                                        <td style="width:40px;"><input class="edtbtn" type="button"
+                                                                       id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"
-                                                                       onclick="editRow(this)"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
+                                                                       onclick="editRow(this,{{ forloop.counter }})">
+                                        </td>
+                                        <td style="width:40px;"><input class="delbtn" type="button"
+                                                                       id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
-                                                                       onclick="deleteRow(this)"></td>
+                                                                       onclick="deleteRow(this,{{ qa.qa_id }})"></td>
                                     </tr>
                                 {% endfor %}
-
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -74,7 +85,7 @@
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length;
+            var count = objTBL.rows.length - 1;
 
             // 最終行に新しい行追加
             var row = objTBL.insertRow(count);
@@ -95,13 +106,13 @@
 
             // 各列に表示内容を設定
             c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
-            c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="txt' + count + '" value="" size="30" style="border:1px solid #888;">';
+            c2.innerHTML = '<input class="inpval" type="text"   id="questions' + count + '" name="questions" value="" size="30" style="border:1px solid #888;">';
+            c3.innerHTML = '<input class="inpval" type="text"   id="answer' + count + '" name="answer" value="" size="30" style="border:1px solid #888;">';
             c4.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="editRow(this)">';
             c5.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this)">';
 
             // 追加した行の入力フィールドにフォーカスを設定
-            var objInp = document.getElementById("txt1" + count);
+            var objInp = document.getElementById("question" + count);
             if (objInp)
                 objInp.focus();
         }
@@ -109,7 +120,7 @@
         /*
          * deleteRow: 削除ボタン該当行を削除
          */
-        function deleteRow(obj) {
+        function deleteRow(obj, qa_id) {
             // 確認
             if (!confirm("この行を削除しますか？"))
                 return;
@@ -162,29 +173,42 @@
                     ++seq;
                 }
             }
+            //qa削除処理
+            let request = new XMLHttpRequest();
+            let url = location.href + "/delete?qa_id=" + qa_id;
+            request.open('GET', url, true);
+            request.send();
         }
 
         /*
          *編集ボタン該当行の内容を入力・編集、モード切り替え
          */
-        function editRow(obj) {
-            var objTR = obj.parentNode.parentNode;
-            var rowId = objTR.sectionRowIndex;
-            var objInp = document.getElementById("txt" + rowId);
-            var objBtn = document.getElementById("edtBtn" + rowId);
+        function editRow(obj, rowId) {
+            {#let objTR = obj.parentNode.parentNode;#}
+            {#var rowId = objTR.sectionRowIndex;#}
+            let qa_id = document.getElementById("qa_id" + rowId);
+            let questions = document.getElementById("questions" + rowId);
+            let answer = document.getElementById("answer" + rowId);
+            let objBtn = document.getElementById("edtBtn" + rowId);
 
-            if (!objInp || !objBtn)
+            if (!questions || !objBtn)
                 return;
 
             // モード切り替えはボタンの値で判定
             if (objBtn.value == "編集") {
-                objInp.style.cssText = "border:1px solid #888;"
-                objInp.readOnly = false;
-                objInp.focus();
+                questions.style.cssText = "border:1px solid #888;"
+                questions.readOnly = false;
+                answer.readOnly = false;
+                questions.focus();
                 objBtn.value = "確定";
             } else {
-                objInp.style.cssText = "border:none;"
-                objInp.readOnly = true;
+                questions.style.cssText = "border:none;";
+                questions.readOnly = true;
+                answer.readOnly = true;
+                let request = new XMLHttpRequest();
+                let url = location.href + "/save?qa_id=" + qa_id.value + "&questions=" + questions.value + "&answer=" + answer.value;
+                request.open('GET', url, true);
+                request.send();
                 objBtn.value = "編集";
             }
         }

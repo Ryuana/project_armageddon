@@ -2,9 +2,10 @@ import urllib3
 import json
 import uuid
 
+
 class LinePay:
 
-    #初期化処理
+    # 初期化処理
     def __init__(self, channel_id: str, channel_secret: str, line_pay_url: str, confirm_url: str,
                  confirm_url_type: str = "CLIENT", check_confirm_url_browser: bool = False,
                  cancel_url: str = None):
