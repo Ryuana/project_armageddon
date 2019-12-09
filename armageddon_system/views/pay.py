@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 import qrcode
+import hashlib
 
 
 def display_pay_logs(request):
@@ -35,7 +36,8 @@ def display_qrcode(request):
         return render(request, 'armageddon_system/user/login.html', context)
     context['form_name'] = request.POST['form_name']
     context['fee'] = request.POST['fee']
-    img = qrcode.make(request.POST['form_name'])
+    qr = hashlib.md5(request.POST['form_name'].encode()).hexdigest()
+    img = qrcode.make(qr)
     img.save('armageddon_system/static/armageddon_system/qr_code.png')
 
     return render(request, 'armageddon_system/pay/item/qr.html', context)
