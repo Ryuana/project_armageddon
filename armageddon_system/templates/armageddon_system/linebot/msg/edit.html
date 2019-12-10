@@ -27,8 +27,6 @@
                 画像
                 <div class="upload">
                     <input type="file" name="file" id="file" value="{{ message.Message.ImagePath }}"></div>
-                    {% load static %}
-                    <img src="{% static 'armageddon_system/' %}{{message.Message.ImagePath}}">
                 <canvas id="canvas"></canvas>
 
                 <input type="submit" value="保存" id="save_btn">
@@ -37,21 +35,21 @@
         </div>
     </div>
     <script>
-        var file = document.getElementById('file');
-        var canvas = document.getElementById('canvas');
+        let file = document.getElementById('file');
+        let canvas = document.getElementById('canvas');
         {#var canvasWidth = 400;#}
         {#var canvasHeight = 300;#}
-        var uploadImgSrc;
+        let uploadImgSrc;
 
         {#canvas.width = canvasWidth;#}
         {#canvas.height = canvasHeight;#}
         canvas.width = 480;
         canvas.height = 480;
-        var ctx = canvas.getContext('2d');
+        let ctx = canvas.getContext('2d');
 
         function loadLocalImage(e) {
 
-            var fileData = e.target.files[0];
+            let fileData = e.target.files[0];
 
             if (!fileData.type.match('image.*')) {
                 alert('画像を選択してください');
@@ -70,12 +68,23 @@
 
         function canvasDraw() {
             {#ctx.clearRect(0, 0, 300, 300);#}
-            var img = new Image();
+            let img = new Image();
             img.src = uploadImgSrc;
+            let w;
+            let h;
+
             img.onload = function () {
-                ctx.drawImage(img,0,0);
+                if (this.width >= this.height) {
+                    w = canvas.width;
+                    h = (this.height / this.width) * canvas.height
+                } else {
+                    w = (this.width / this.height) * canvas.width;
+                    h = canvas.height;
+                }
+                ctx.drawImage(img, 0, 0, w, h);
             }
         }
+
         {#function save() {#}
         {#    let message_id = document.getElementById("message_id");#}
         {#    let message = document.getElementById("message");#}
