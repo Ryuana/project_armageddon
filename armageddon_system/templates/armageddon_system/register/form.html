@@ -5,7 +5,12 @@
             integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG"
             crossorigin="anonymous"></script>
     {#    jQueryの読み込み#}
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    {#    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>#}
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.js"
+            integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+            crossorigin="anonymous"></script>
+
 
 {% endblock %}
 {% block menubar %}{% endblock %}
@@ -41,9 +46,9 @@
     </form>
     <script>
 
-        const video = $("#camera");
-        const canvas = $("#picture");
-        {#const ctx = canvas.getContext('2d');#}
+        const video = $("#camera")[0];
+        const canvas = $("#picture")[0];
+        const ctx = canvas.getContext("2d");
 
         window.onload = () => {
             //カメラ設定
@@ -52,7 +57,7 @@
                 video: {
                     width: 300,
                     height: 200,
-                    facingMode: "user"   // フロントカメラを利用する
+                    facingMode: "environment"   // フロントカメラを利用する
                 }
             };
 
@@ -62,7 +67,6 @@
                     video.srcObject = stream;
                     video.onloadedmetadata = (e) => {
                         video.play();
-
                         // QRコードのチェック開始
                         checkPicture();
                     };
@@ -75,6 +79,7 @@
         //QRコードの読み取り
         function checkPicture() {
             // カメラの映像をCanvasに複写
+            console.log(ctx);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
             // QRコードの読み取り
@@ -127,9 +132,6 @@
             console.log(data);
         }
 
-
-        {#function $(selector) {#}
-        {#    return (document.querySelector(selector));#}
 
         //HTML表示用に文字列エスケープ
         function escapeHTML(str) {
