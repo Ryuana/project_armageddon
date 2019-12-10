@@ -71,7 +71,7 @@
                        style="table-layout: auto">
                     <thead align="center">
                     <tr id="object">
-                        <th>日時</th>
+                        <th>日付</th>
                         <th>学校名</th>
                         <th>学科</th>
                         <th>学籍番号</th>
@@ -163,7 +163,7 @@
             var table = document.getElementById('pay_log_table');//id=table1という要素を取得
             var data_csv = "";//ここに文字データとして値を格納していく
 
-            for (var i = 0; i < table.rows.length; i++) {
+            for (var i = 0; i < table.rows.length - 1; i++) {
                 for (var j = 0; j < table.rows[i].cells.length; j++) {
                     data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
                     if (j == table.rows[i].cells.length - 1) {
@@ -174,7 +174,6 @@
                     }
                 }
             }
-            alert(data_csv)
             var blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
             if (window.navigator.msSaveBlob) { //IEの場合の処理
                 window.navigator.msSaveBlob(blob, "test.csv");
