@@ -110,7 +110,7 @@
         const total = 0;
 
         window.onload = function getDate() {
-            var yyyy, mm, dd, today
+            let yyyy, mm, dd, today;
             today = new Date();
             yyyy = today.getFullYear();
             mm = today.getMonth() + 1;
@@ -118,7 +118,7 @@
 
             //年
             $Year = "<select>";
-            for (var i = 2000; i <= 2030; i++) {
+            for (let i = 2000; i <= 2030; i++) {
                 if (i == yyyy) {
                     $Year += "<option value=\"" + i + "\" selected >" + i + "</option>";
                 } else {
@@ -126,11 +126,11 @@
                 }
             }
             $Year += "</select>";
-            document.getElementById("year").innerHTML = $Year + "年";
+            document.getElementsByName("year").innerHTML = $Year + "年";
 
             //月
             $Month = "<select>";
-            for (var i = 1; i <= 12; i++) {
+            for (let i = 1; i <= 12; i++) {
                 if (i == mm) {
                     $Month += "<option value=\"" + i + "\" selected >" + i + "</option>";
                 } else {
@@ -138,11 +138,11 @@
                 }
             }
             $Month += "</select>";
-            document.getElementById("month").innerHTML = $Month + "月";
+            document.getElementsByName("month").innerHTML = $Month + "月";
 
             //日付
             $Day = "<select>";
-            for (var i = 1; i <= 31; i++) {
+            for (let i = 1; i <= 31; i++) {
                 if (i == dd) {
                     $Day += "<option value=\"" + i + "\" selected >" + i + "</option>";
                 } else {
@@ -150,22 +150,22 @@
                 }
             }
             $Day += "</select>";
-            document.getElementById("day").innerHTML = $Day + "日";
+            document.getElementsByName("day").innerHTML = $Day + "日";
         }
 
         function handleDownload() {
-            var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
-            var table = document.getElementById('table1');//id=table1という要素を取得
-            var data_csv = "";//ここに文字データとして値を格納していく
+            let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
+            let table = document.getElementById('table1');//id=table1という要素を取得
+            let data_csv = "";//ここに文字データとして値を格納していく
 
-            for (var i = 0; i < table.rows.length; i++) {
-                for (var j = 0; j < table.rows[i].cells.length; j++) {
+            for (let i = 0; i < table.rows.length; i++) {
+                for (let j = 0; j < table.rows[i].cells.length; j++) {
                     data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
                     if (j == table.rows[i].cells.length - 1) data_csv += "\n";//行終わりに改行コードを追加
                     else data_csv += ",";//セル値の区切り文字として,を追加
                 }
             }
-            var blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
+            let blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
             if (window.navigator.msSaveBlob) { //IEの場合の処理
                 console.log("ぴ");
                 window.navigator.msSaveBlob(blob, "test.csv");
@@ -179,9 +179,9 @@
 
         (function ($) {
             function formSetDay() {
-                var lastday = formSetLastDay($('.js-changeYear').val(), $('.js-changeMonth').val());
-                var option = '';
-                for (var i = 1; i <= lastday; i++) {
+                let lastday = formSetLastDay($('.js-changeYear').val(), $('.js-changeMonth').val());
+                let option = '';
+                for (let i = 1; i <= lastday; i++) {
                     if (i === $('.js-changeDay').val()) {
                         option += '<option value="' + i + '" selected="selected">' + i + '</option>\n';
                     } else {
@@ -192,7 +192,7 @@
             }
 
             function formSetLastDay(year, month) {
-                var lastday = new Array('', 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+                let lastday = new Array('', 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
                 if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
                     lastday[2] = 29;
                 }
