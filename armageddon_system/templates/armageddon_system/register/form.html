@@ -18,19 +18,21 @@
 {% block main-content %}
     <form name="requestForm">
         <p>学籍番号
-            <input type="text" id="student-id" name="studentId" placeholder="1234567">
+            <input type="number" id="student-id" name="studentId" placeholder="1234567">
+            <span id="studentIdErr"></span>
         </p>
 
         <p>
-            学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="check" value="true"
+            学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="check"
                             onchange=changeHasStudentId()><br>
             申請者名
             <input type="text" id="user-name" name="userName" disabled placeholder="学籍番号がない場合入力">
+            <span id="userNameErr"></span>
         </p>
 
         QRコードを読み取ってください
-        <input hidden name="count_form_type" value="0">
-        <input type='button' id="qr_btn" value="追加">
+        <input hidden id="countFormTypes" value="0">
+        <input type='button' id="qr_add" value="追加" disabled>
         <input id="send_btn" type="button" value="決定" onclick="send_data();">
         <br>
         <div id="form_list">
@@ -159,36 +161,73 @@
         }
 
         function send_data() {
-            let hasStudentId = !document.getElementById('has-not-student-id')
-            let studentId = document.getElementById('student-id');
-            let userName = document.getElementById('user-name');
+            let hasStudentId = !document.getElementById('has-not-student-id').checked;
+            let studentId = document.getElementById('student-id').value;
+            let userName = document.getElementById('user-name').value;
+            let countFormTypes = document.getElementById('countFormTypes');
 
+            console.log(hasStudentId);
             if (hasStudentId) {
                 if (studentId === "") {
-                    alert("test");
-                } else {
-                    alert('test2')
+                    alert("学籍番号を入力してください。")
                 }
             } else {
                 //画面遷移&入力フォーム情報を移す&チェックボックス=trueの場合、学籍番号の値を"無し"にする
             }
         }
 
+        {#カメラを再度動かす#}
+        $('#qr_add').click(function () {
+            checkPicture();
+        });
         {#証明書の追加#}
-        let request_count = 0;
-        $('#qr_btn').click(function () {
+
+        function read_qrcode(code) {
             let options;
             for (var i = 1; i < 10; i++) {
                 options += `<option value=${i}>${i}</option>`
             }
             request_count++;
             let text = `証明書${request_count}` +
-                '<input type="text" id="form" readonly placeholder="QRコード読み取り">' +
+                `<input type="text" id="form${request_count}" value=${formDict.code} readonly placeholder="QRコード読み取り">` +
                 '<select id="count" value="1">' +
                 options +
                 '</select><br>';
-            $('#form_list').append(text)
-        });
+            $('#form_list').append(text);
+            $('#qr_add').attr('disabled', false);
+        }
 
+        $(function () {
+            let form_elements = document.forms.requestForm;
+            let $studentId = $('#student-id');
+            let $userName = $('#user-name');
+            let $hasStudentId = !$('#has-not-student-id');
+            let idCheck = false;
+            let nameCheck = false;
+            let qrCheck = false;
+
+            $studentId.on('input', function () {
+                if ($studentId.val().length === 7) {
+                    $('#studentIdErr').text("OK");
+                    idCheck = false
+                } else if ($studentId.val().length > 7) {
+                    $('#studentIdErr').text("学籍番号は七桁で入力してください");
+                    idCheck = true
+                } else {
+                    $('#studentIdErr').text("");
+                    idCheck = false
+                }
+            });
+
+            $userName.on('input', function () {
+                if ($userName.val() === "") {
+                    $('#userNameErr').text('名前を入力してください');
+                } else {
+                    $('#userNameErr').text('');
+                    nameCheck = true
+                }
+            });
+
+        });
     </script>
 {% endblock %}
