@@ -34,11 +34,29 @@ def register_form(request):
 def register_confirm(request):
     dbm = db()
     context = {}
-    context['student_id'] = request.GET['student_id']
-    context['form_list'] = request.GET['form_list']
-    context['quantity'] = request.GET['quantity']
-
-    # dbm.save_pay_log(context)
+    context['all'] = request.POST
+    if request.POST.get('hasNotStudentId', False):
+        context['student_id'] = request.POST['userName']
+    else:
+        context['student_id'] = request.POST['studentId']
+    form_list = []
+    total = 0
+    for i in range(int(request.POST['countFormTypes'])):
+        id = int(request.POST[f'form_id{i}'])
+        name = request.POST[f'form_name{i}']
+        count = int(request.POST[f'count{i}'])
+        fee = int(request.POST[f'fee{i}'])
+        subtotal = fee * count
+        total += subtotal
+        form_list.append({
+            'id': id,
+            'name': name,
+            'count': count,
+            'fee': fee,
+            'subtotal': subtotal
+        })
+    context['form_list'] = form_list
+    context['total'] = total
 
     return render(request, 'armageddon_system/register/confirm.html', context)
 

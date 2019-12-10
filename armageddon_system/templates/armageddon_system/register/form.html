@@ -5,7 +5,6 @@
             integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG"
             crossorigin="anonymous"></script>
     {#    jQueryの読み込み#}
-    {#    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>#}
     <script
             src="https://code.jquery.com/jquery-3.4.1.slim.js"
             integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
@@ -17,13 +16,14 @@
 {% block main-title %}証明書発行申請{% endblock %}
 {% block main-content %}
     <form name="requestForm">
+        {% csrf_token %}
         <p>学籍番号
             <input type="number" id="student-id" name="studentId" placeholder="1234567">
             <span id="studentIdErr"></span>
         </p>
 
         <p>
-            学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="check"
+            学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="hasNotStudentId"
                             onchange=changeHasStudentId()><br>
             申請者名
             <input type="text" id="user-name" name="userName" disabled placeholder="学籍番号がない場合入力">
@@ -31,7 +31,7 @@
         </p>
 
         QRコードを読み取ってください
-        <input hidden id="countFormTypes" value="0">
+        <input id="countFormTypes" type='number' name="countFormTypes" value=0 hidden>
         <input type='button' id="qr_add" value="追加" disabled>
         <input id="send_btn" type="button" value="決定" onclick="send_data();">
         <br>
@@ -87,7 +87,6 @@
         //QRコードの読み取り
         function checkPicture() {
             // カメラの映像をCanvasに複写
-            console.log(ctx);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
             // QRコードの読み取り
@@ -135,9 +134,6 @@
         //QRコードの読み取り結果を表示する
         function setQRResult(id, data) {
             $(id).value = escapeHTML(data);
-            console.log(id);
-            console.log(escapeHTML(data));
-            console.log(data);
         }
 
 
@@ -157,37 +153,87 @@
 
         function changeHasStudentId() {
             let form_elements = document.forms.requestForm;
-            form_elements.userName.disabled = !form_elements.check.checked;
-            form_elements.studentId.disabled = form_elements.check.checked;
+            form_elements.userName.disabled = !form_elements.hasNotStudentId.checked;
+            form_elements.studentId.disabled = form_elements.hasNotStudentId.checked;
 
         }
 
         function send_data() {
-            let hasStudentId = !document.getElementById('has-not-student-id').checked;
-            let studentId = document.getElementById('student-id').value;
-            let userName = document.getElementById('user-name').value;
-            {#let countFormTypes = document.getElementById('countFormTypes');#}
+            let hasNoStudentId = document.getElementById('has-not-student-id');
+            let studentId = document.getElementById('student-id');
+            let userName = document.getElementById('user-name');
+            let csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0];
+            let countFormTypes = document.getElementById('countFormTypes');
             let form_list = [];
-            console.log(hasStudentId);
             let is_input_ok = true;
-            if (hasStudentId) {
-                if (studentId === "") {
+            if (hasNoStudentId.checked) {
+                if (studentId.value === "") {
                     alert("学籍番号を入力してください。");
                     is_input_ok = false
                 }
             }
-            if (is_input_ok) {
+            if (!is_input_ok) {
+                return false;
+            } else {
+                let total = 0;
                 for (i = 1; i <= request_count; i++) {
                     let formId = document.getElementById(`form_id${i}`).value;
+                    let formName = document.getElementById(`form_name${i}`).value;
                     let count = document.getElementById(`count${i}`).value;
-                    let fee = document.getElementById(`form_id${i}`).value;
+                    let fee = document.getElementById(`fee${i}`).value;
                     let form_map = {
                         'formId': formId,
+                        'formName': formName,
                         'count': count,
                         'fee': fee
                     };
+                    total += count * fee;
                     form_list.push(form_map);
                 }
+                {#    画面遷移用のフォームを生成#}
+                let form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/register/confirm';
+
+                {#各属性の関連付け#}
+                form.appendChild(hasNoStudentId);
+                form.appendChild(userName);
+                form.appendChild(studentId);
+                form.appendChild(countFormTypes);
+                alert(countFormTypes.value);
+                for (i = 0; i < form_list.length; i++) {
+
+                    {#証明書ID#}
+                    let form_item_id = document.createElement('input');
+                    form_item_id.type = 'hidden';
+                    form_item_id.name = `form_id${i}`;
+                    form_item_id.value = form_list[i].formId;
+                    form.appendChild(form_item_id);
+                    {#証明書名#}
+                    let form_item_name = document.createElement('input');
+                    form_item_name.type = 'hidden';
+                    form_item_name.name = `form_name${i}`;
+                    form_item_name.value = form_list[i].formName;
+                    form.appendChild(form_item_name);
+                    {#金額#}
+                    let form_item_fee = document.createElement('input');
+                    form_item_fee.type = 'hidden';
+                    form_item_fee.name = `fee${i}`;
+                    {#form_item_fee.value = `${form_list[i]}.fee`;#}
+                    form_item_fee.value = form_list[i]['fee'];
+                    form.appendChild(form_item_fee);
+                    {#枚数#}
+                    let form_item_count = document.createElement('input');
+                    form_item_count.type = 'hidden';
+                    form_item_count.name = `count${i}`;
+                    form_item_count.value = form_list[i].count;
+                    form.appendChild(form_item_count);
+
+                }
+
+                form.appendChild(csrfToken);
+                document.body.appendChild(form);
+                form.submit();
             }
         }
 
@@ -204,8 +250,9 @@
                 options += `<option value=${i}>${i}</option>`
             }
             request_count++;
+            $('#countFormTypes').val(request_count);
             let text = `証明書${request_count}` +
-                `<input type="text" id="form${request_count}" value=${formDict[code].form_name} readonly placeholder="QRコード読み取り">` +
+                `<input type="text" id="form_name${request_count}" value=${formDict[code].form_name} readonly placeholder="QRコード読み取り">` +
                 `<input type="text" id="form_id${request_count}" value=${formDict[code].form_id} hidden> ` +
                 `<input type="text" id="fee${request_count}" value=${formDict[code].fee} hidden> ` +
                 `<select id="count${request_count}" value="1" onchange='subtotal(${request_count})'>` +
@@ -213,6 +260,7 @@
                 '</select>枚 ' +
                 `<span id="subtotal${request_count}"> ${formDict[code].fee}</span>円<br>`;
             $('#form_list').append(text);
+
             $('#qr_add').attr('disabled', false);
         }
 
