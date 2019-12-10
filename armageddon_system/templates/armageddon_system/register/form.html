@@ -207,11 +207,19 @@
             let text = `証明書${request_count}` +
                 `<input type="text" id="form${request_count}" value=${formDict[code].form_name} readonly placeholder="QRコード読み取り">` +
                 `<input type="text" id="form_id${request_count}" value=${formDict[code].form_id} hidden> ` +
-                `<select id="count${request_count}" value="1">` +
+                `<input type="text" id="fee${request_count}" value=${formDict[code].fee} hidden> ` +
+                `<select id="count${request_count}" value="1" onchange='subtotal(${request_count})'>` +
                 options +
-                '</select><br>';
+                '</select>枚 ' +
+                `<span id="subtotal${request_count}"> ${formDict[code].fee}</span>円<br>`;
             $('#form_list').append(text);
             $('#qr_add').attr('disabled', false);
+        }
+
+        function subtotal(request_no) {
+            let fee = $(`#fee${request_no}`).val();
+            let count = $(`#count${request_no}`).val();
+            $(`#subtotal${request_no}`).text(fee * count);
         }
 
         $(function () {
