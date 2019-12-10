@@ -37,7 +37,7 @@ class DynamoManager():
                     "quantity": form_item.Quantity,
                     "subtotal": form_item.Subtotal
                 }
-                total += form_item.Subtotal
+                total += form_item.Fee * form_item.Quantity
 
                 pay_log_form_list.append(pay_log_form_item)
 
@@ -217,6 +217,7 @@ class DynamoManager():
         for i in all_qa:
             max_id = max(max_id, i.QuestionAndAnswerId)
         return max_id + 1
+
     def get_next_message_id(self):
         all_message = db.MessagesModel.scan()
         max_id = 0
@@ -281,7 +282,7 @@ class DynamoManager():
         new_message.Message = {
             'MessageContent': message['message'],
             'ImagePath': message['image'],
-            'Timestamp': datetime.datetime.strptime(message['time_stamp'],'%Y-%m-%d')
+            'Timestamp': datetime.datetime.strptime(message['time_stamp'], '%Y-%m-%d')
         }
         new_message.save()
 
