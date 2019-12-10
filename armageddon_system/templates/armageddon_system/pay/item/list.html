@@ -48,16 +48,18 @@
                                     <tr>
                                         <input type="hidden" id="form_id{{ forloop.counter }}"
                                                name="form_id" value={{ form.form_id }}>
-                                        <td text-align="right">{{ forloop.counter }}</td>
-                                        <td style=""><input class="inpval" type="text"
+                                        <td><input type="number" class="input-number"
+                                                   value={{ forloop.counter }} readonly></td>
+                                        <td style=""><input class="input-value" type="text"
                                                             id="form_name{{ forloop.counter }}"
                                                             name="form_name" value={{ form.form_name }} size="25"
                                                             style="border:none" readonly>
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="fee{{ forloop.counter }}"
+                                        <td style=""><input class="input-number" type="text"
+                                                            id="fee{{ forloop.counter }}"
                                                             name="fee" value={{ form.fee }} size="25"
                                                             style="border:none" readonly></td>
-                                        <td style=""><input class="inpval" type="text"
+                                        <td style=""><input class="input-number" type="text"
                                                             id="issuance_days{{ forloop.counter }}"
                                                             name="issuance_days"
                                                             value={{ form.issuance_days }} size="25"
@@ -72,16 +74,16 @@
                                                                        value="削除"
                                                                        onclick="delete_form(this,{{ form.form_id }})">
                                         </td>
-                                        <td style="width:40px;"><input class="qrbtn" type="button" id="qrBtn1" onclick="submit()"
+                                        <td style="width:40px;"><input class="qrbtn" type="button" id="qrBtn1"
+                                                                       onclick="submit()"
                                                                        value="QR表示"></td>
                                     </tr>
                                 </form>
                             {% endfor %}
                             </tbody>
-                        <tfoot>
-{#                        <td colspan="7" align="center"><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></td>#}
-                        <td colspan="7" align="center" onclick="insert_row()">追　加　す　る</td>
-                        </tfoot>
+                            <tfoot>
+                            <td colspan="7" align="center" onclick="insert_row()">追　加　す　る</td>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -96,41 +98,32 @@
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length-1;
+            var count = objTBL.rows.length - 1;
 
             // 最終行に新しい行追加
             var row = objTBL.insertRow(count);
 
             // 列追加
-            var c1 = row.insertCell(0);
-            var c2 = row.insertCell(1);
-            var c3 = row.insertCell(2);
-            var c4 = row.insertCell(3);
-            var c5 = row.insertCell(4);
-            var c6 = row.insertCell(5);
-            var c7 = row.insertCell(6);
-
-            // 各列にスタイル設定
-            c1.style.cssText = "text-align:right; width:40px;";
-            c2.style.cssText = "";
-            c3.style.cssText = "";
-            c4.style.cssText = "";
-            c5.style.cssText = "width:40px;";
-            c6.style.cssText = "width:40px;";
-            c7.style.cssText = "width:40px;";
+            var no = row.insertCell(0);
+            var form_name = row.insertCell(1);
+            var fee = row.insertCell(2);
+            var days = row.insertCell(3);
+            var form_edit = row.insertCell(4);
+            var form_delete = row.insertCell(5);
+            var display_qr = row.insertCell(6);
 
 
             // 各列に表示内容を設定
-            c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="input-value" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
-            c3.innerHTML = '<input class="input-number" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
-            c4.innerHTML = '<input class="input-number" type="text"   id="issuance_days' + count + '" name="issuance_days" value="" size="30" ">';
-            c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
-            c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-            c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
+            no.innerHTML = '<input type="number" id="form_id' + count + '" class="input-number" value="' + count + '" readonly>';
+            form_name.innerHTML = '<input class="input-value" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
+            fee.innerHTML = '<input class="input-number" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
+            days.innerHTML = '<input class="input-number" type="text"   id="issuance_days' + count + '" name="issuance_days" value="" size="30" ">';
+            form_edit.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this, ' + count + ')">';
+            form_delete.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this,' + count + ')">';
+            display_qr.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
 
             // 追加した行の入力フィールドにフォーカスを設定
-            let objInp = document.getElementById("form_name" + count);
+            let objInp = document.getElementById("form_name" + parseInt(count));
             if (objInp)
                 objInp.focus();
         }
