@@ -107,20 +107,20 @@
             }
 
             // id/name ふり直し
-            tagElements = document.getElementsByTagName("input");
+            tagElements = document.getElementsByClassName("inpval");
             if (!tagElements)
                 return false;
             seq = 1;
-            for (let i = 0; i < tagElements.length; i = i + 8) {
+            for (let i = 0; i < tagElements.length; i = i + 5) {
                 if (tagElements[i].className.match("inpval")) {
-                    tagElements[i+1].setAttribute("id", "time_stamp" + seq);
-                    tagElements[i+1].setAttribute("name", "time_stamp");
-                    tagElements[i+2].setAttribute("id", "message" + seq);
-                    tagElements[i+2].setAttribute("name", "message");
-                    tagElements[i+3].setAttribute("id", "image" + seq);
-                    tagElements[i+3].setAttribute("name", "image");
-                    tagElements[i+4].setAttribute("id", "edtBtn" + seq);
-                    tagElements[i+5].setAttribute("id", "delBtn" + seq);
+                    tagElements[i].setAttribute("id", "time_stamp" + seq);
+                    tagElements[i].setAttribute("name", "time_stamp");
+                    tagElements[i+1].setAttribute("id", "message" + seq);
+                    tagElements[i+1].setAttribute("name", "message");
+                    tagElements[i+2].setAttribute("id", "image" + seq);
+                    tagElements[i+2].setAttribute("name", "image");
+                    tagElements[i+3].setAttribute("id", "edtBtn" + seq);
+                    tagElements[i+4].setAttribute("id", "delBtn" + seq);
                     ++seq;
                 }
             }
