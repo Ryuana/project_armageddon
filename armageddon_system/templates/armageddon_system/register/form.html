@@ -32,8 +32,7 @@
 
         QRコードを読み取ってください
         <input id="countFormTypes" type='number' name="countFormTypes" value=0 hidden>
-        <input type='button' id="qr_add" value="追加" disabled>
-        <input id="send_btn" type="button" value="決定" onclick="send_data();">
+        <input id="send_btn" type="button" value="決定" onclick="send_data();" disabled>
         <br>
         <div id="form_list">
         </div>
@@ -200,7 +199,6 @@
                 form.appendChild(userName);
                 form.appendChild(studentId);
                 form.appendChild(countFormTypes);
-                alert(countFormTypes.value);
                 for (i = 0; i < form_list.length; i++) {
 
                     {#証明書ID#}
@@ -237,31 +235,38 @@
             }
         }
 
-        {#カメラを再度動かす#}
-        $('#qr_add').click(function () {
-            $('#qr_add').attr('disabled', true);
-            checkPicture();
-        });
         {#証明書の追加#}
 
         function read_qrcode(code) {
+            checkPicture();
             let options;
-            for (var i = 1; i < 10; i++) {
-                options += `<option value=${i}>${i}</option>`
+            for (var i = 0; i < 10; i++) {
+                if (i === 1) {
+                    options += `<option selected value=${i}>${i}</option>`
+                } else {
+                    options += `<option value=${i}>${i}</option>`
+                }
             }
+
+            for (i = 1; i <= request_count; i++) {
+                if (formDict[code].form_id == $(`#form_id${i}`).val()) {
+                    return
+                }
+            }
+
             request_count++;
             $('#countFormTypes').val(request_count);
             let text = `証明書${request_count}` +
                 `<input type="text" id="form_name${request_count}" value=${formDict[code].form_name} readonly placeholder="QRコード読み取り">` +
                 `<input type="text" id="form_id${request_count}" value=${formDict[code].form_id} hidden> ` +
                 `<input type="text" id="fee${request_count}" value=${formDict[code].fee} hidden> ` +
-                `<select id="count${request_count}" value="1" onchange='subtotal(${request_count})'>` +
+                `<select id="count${request_count}" onchange='subtotal(${request_count})'>` +
                 options +
                 '</select>枚 ' +
                 `<span id="subtotal${request_count}"> ${formDict[code].fee}</span>円<br>`;
             $('#form_list').append(text);
 
-            $('#qr_add').attr('disabled', false);
+            $('#send_btn').attr('disabled', false);
         }
 
         function subtotal(request_no) {
@@ -274,31 +279,39 @@
             let form_elements = document.forms.requestForm;
             let $studentId = $('#student-id');
             let $userName = $('#user-name');
-            let $hasStudentId = !$('#has-not-student-id');
+            let $hasNotStudentId = $('#has-not-student-id').prop('checked');
             let idCheck = false;
-            let nameCheck = false;
-            let qrCheck = false;
-
             $studentId.on('input', function () {
-                if ($studentId.val().length === 7) {
-                    $('#studentIdErr').text("OK");
-                    idCheck = false
-                } else if ($studentId.val().length > 7) {
-                    $('#studentIdErr').text("学籍番号は七桁で入力してください");
-                    idCheck = true
-                } else {
-                    $('#studentIdErr').text("");
-                    idCheck = false
+                $hasNotStudentId = $('#has-not-student-id').prop('checked');
+                if (!$hasNotStudentId) {
+                    if ($studentId.val().length === 7) {
+                        $('#studentIdErr').text("OK");
+                        idCheck = true
+                    } else if ($studentId.val().length > 7) {
+                        $('#studentIdErr').text("学籍番号は七桁で入力してください");
+                        idCheck = false
+                    } else {
+                        $('#studentIdErr').text("");
+                        idCheck = false
+                    }
                 }
             });
 
             $userName.on('input', function () {
-                if ($userName.val() === "") {
-                    $('#userNameErr').text('名前を入力してください');
-                } else {
-                    $('#userNameErr').text('');
-                    nameCheck = true
+                $hasNotStudentId = $('#has-not-student-id').prop('checked');
+                if ($hasNotStudentId) {
+                    if ($userName.val() === "") {
+                        $('#userNameErr').text('名前を入力してください');
+                        idCheck = false
+                    } else {
+                        $('#userNameErr').text('');
+                        idCheck = true
+                    }
                 }
+            });
+
+            $('#form_list').change(function () {
+                qrCheck = true;
             });
 
         });
