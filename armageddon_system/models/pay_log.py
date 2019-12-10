@@ -41,17 +41,34 @@ class PayLog:
         dbm = db()
         all_form = dbm.get_form_all()
         for l in form_list:
-            f = l['form']
-            form = Form(
-                form_id=f.form_id,
-                form_name=f.form_name,
-                fee=f.fee,
-                issuance_days=None,
-                qr=None
-            )
-            self.form_list.append(
-                {'form': all_form[l['form'].form_id], 'quantity': l['quantity'], 'subtotal': (f.fee * l['quantity'])}
-            )
+            if 'form' in l:
+                f = l['form']
+                form = Form(
+                    form_id=int(f.form_id),
+                    form_name=f.form_name,
+                    fee=f.fee,
+                    issuance_days=None,
+                    qr=None
+                )
+                self.form_list.append(
+                    {'form': all_form[int(f.form_id)],
+                     'quantity': l['quantity'],
+                     'subtotal': l['subtotal']
+                     }
+                )
+
+            else:
+                form = Form(
+                    form_id=int(l['form_id']),
+                    form_name=l['form_name'],
+                    fee=l['fee'],
+                    issuance_days=None,
+                    qr=None
+                )
+                self.form_list.append(
+                    {'form': all_form[int(l['form_id'])], 'quantity': int(l['quantity']),
+                     'subtotal': (int(l['fee']) * int(l['quantity']))}
+                )
 
     def __iter__(self):
         yield 'time_stamp', self.time_stamp,

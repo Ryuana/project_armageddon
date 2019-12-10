@@ -4,6 +4,7 @@ import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 from armageddon_system.models import DynamoClass as dc
+from armageddon_system.models import arrmagedon_models as am
 import json
 
 LINE_PAY_URL = env.LINE_PAY_URL
@@ -55,6 +56,7 @@ def register_confirm(request):
             'subtotal': subtotal
         })
     context['is_multiple'] = [False, True][int(request.POST['countFormTypes']) > 1]
+    context['countFormTypes'] = int(request.POST['countFormTypes'])
     context['form_list'] = form_list
     context['total'] = total
 
@@ -62,7 +64,6 @@ def register_confirm(request):
 
 
 def payments(request):
-    print(request.POST)
     if request.POST['is_multiple'] == "True":
         form_name = "証明書(複数)"
     else:
@@ -83,6 +84,28 @@ def payments(request):
     obj.amount = fee
     obj.currency = "JPY"
     obj.save()
+
+    import datetime
+    date = datetime.datetime.now()
+    student_id = request.POST['student_id']
+
+    # TODO:学籍番号から取得するように
+    school_name = "麻生情報ビジネス"
+    course_name = "情報工学科"
+    form_list = []
+    for i in range(int(request.POST['countFormTypes'])):
+        form_item = {
+            'form_id': request.POST[f'form_id{i}'],
+            'form_name': request.POST[f'form_name{i}'],
+            'fee': request.POST[f'fee{i}'],
+            'quantity': request.POST[f'form_count{i}']
+        }
+        form_list.append(form_item)
+    paylog = am().PayLog(
+        time_stamp=date,
+        form_list=form_list
+    )
+    db().save_pay_log(paylog)
 
     redirect_url = response["info"]["paymentUrl"]["web"]
     return redirect(redirect_url)

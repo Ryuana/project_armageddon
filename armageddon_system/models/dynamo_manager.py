@@ -80,6 +80,7 @@ class DynamoManager():
         buyer_info = {}
         pay_items = []
         count = 0
+        total = 0
         for form_item in pay_log.form_list:
             count += 1
             print(form_item)
@@ -90,8 +91,8 @@ class DynamoManager():
                 'FormName': fm.form_name,
                 'Fee': fm.fee,
                 'Quantity': form_item['quantity']
-
             }
+            total += fm.fee * form_item['quantity']
             pay_items.append(form_map)
         if pay_log.isStudent:
             buyer_info = {
@@ -108,7 +109,7 @@ class DynamoManager():
             }
         log.PayOffLog = {
             'Timestamp': pay_log.time_stamp,
-            'Total': pay_log.total,
+            'Total': total,
             'Buyer': buyer_info,
             'PayItems': pay_items,
         }
