@@ -19,34 +19,37 @@
 {% block main-content %}
     <div id="systems">
         <div id="systems">
-            <form method="post" enctype="multipart/form-data">
+            <form action="./save" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <p>メッセージ</p>
-                <textarea name="message_area" rows="4" cols="40">{{ message.Message.MessageContent }}</textarea><br>
+                <input type="hidden" id="message_id" name="message_id" value={{ message_id }}>
+                <textarea id="message" name="message" rows="4" cols="40">{{ message.Message.MessageContent }}</textarea><br>
                 画像
                 <div class="upload">
                     <input type="file" name="file" id="file" value="{{ message.Message.ImagePath }}"></div>
                 <canvas id="canvas"></canvas>
 
-                <input type="submit" value="保存" id="save_btn" onclick="save();">
+                <input type="submit" value="保存" id="save_btn">
                 <input type="submit" value="送信" id="send_btn" onclick="send();">
             </form>
         </div>
     </div>
     <script>
-        var file = document.getElementById('file');
-        var canvas = document.getElementById('canvas');
-        var canvasWidth = 400;
-        var canvasHeight = 300;
-        var uploadImgSrc;
+        let file = document.getElementById('file');
+        let canvas = document.getElementById('canvas');
+        {#var canvasWidth = 400;#}
+        {#var canvasHeight = 300;#}
+        let uploadImgSrc;
 
-
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-        var ctx = canvas.getContext('2d');
+        {#canvas.width = canvasWidth;#}
+        {#canvas.height = canvasHeight;#}
+        canvas.width = 480;
+        canvas.height = 480;
+        let ctx = canvas.getContext('2d');
 
         function loadLocalImage(e) {
 
-            var fileData = e.target.files[0];
+            let fileData = e.target.files[0];
 
             if (!fileData.type.match('image.*')) {
                 alert('画像を選択してください');
@@ -57,23 +60,50 @@
             reader.onload = function () {
                 uploadImgSrc = reader.result;
                 canvasDraw();
-            }
+            };
             reader.readAsDataURL(fileData);
         }
 
         file.addEventListener('change', loadLocalImage, false);
 
         function canvasDraw() {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            var img = new Image();
+            {#ctx.clearRect(0, 0, 300, 300);#}
+            let img = new Image();
             img.src = uploadImgSrc;
+            let w;
+            let h;
+
             img.onload = function () {
-                ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+                if (this.width >= this.height) {
+                    w = canvas.width;
+                    h = (this.height / this.width) * canvas.height
+                } else {
+                    w = (this.width / this.height) * canvas.width;
+                    h = canvas.height;
+                }
+                ctx.drawImage(img, 0, 0, w, h);
             }
         }
 
-        function save() {
-
-        }
+        {#function save() {#}
+        {#    let message_id = document.getElementById("message_id");#}
+        {#    let message = document.getElementById("message");#}
+        {#    let now = new Date();#}
+        {#    let year = now.getFullYear();#}
+        {#    let mon = now.getMonth()+1; //１を足すこと#}
+        {#    let day = now.getDate();#}
+        {#    let time_stamp = year + "-" + mon + "-" + day;#}
+        {#    let objBtn = document.getElementById("save_btn");#}
+        {#    let filepath = file.value.split("\\");#}
+        {#    let filename = filepath.pop();#}
+        {#    #}
+        {#    if (!save || !objBtn)#}
+        {#        return;#}
+        {#    if (file.value == null)#}
+        {#        file.value = "0";#}
+        {#    let request = new XMLHttpRequest();#}
+        {#    let url = location.href + "/save?message_id=" + message_id.value + "&message=" + message.value + "&image=" + file.value + "&time_stamp=" + time_stamp;#}
+        {#    request.open('GET', url, true);#}
+        {#    request.send();#}
     </script>
 {% endblock %}

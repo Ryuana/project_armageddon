@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.core.files.base import ContentFile
+from django.core.files.storage import  default_storage
 import datetime
 from armageddon_system.models.qa import QA
 from armageddon_system.models.dynamo_manager import DynamoManager as db
@@ -39,11 +41,13 @@ def edit_message(request):
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
         return render(request, 'armageddon_system/user/login.html', context)
-    context['message_id'] = request.POST['message_id']
-    # message_idを元にmessage取り出す
     dbm = db()
-    context['message'] = dbm.get_message(int(context['message_id']))
-    # context渡す
+    if 'message_id' in request.POST:
+        context['message_id'] = request.POST['message_id']
+        context['message'] = dbm.get_message(int(context['message_id']))
+    else:
+        context['message_id'] = dbm.get_next_message_id()
+        context['message'] = {}
     return render(request, 'armageddon_system/linebot/msg/edit.html', context)
 
 
@@ -54,11 +58,30 @@ def save_message(request):
         context['error'] = "ログインしてください"
         return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
-    message = request.GET['message']
-    img = request.GET['img']
-    dbm.save_message_list(message, img)
+    context['message_id'] = request.POST['message_id']
+    context['message'] = request.POST['message']
+    if 'file' in request.FILES:
+        context['image'] = str(request.FILES['file'])
+        image = request.FILES['file']
+        default_storage.save('armageddon_system/static/armageddon_system/' + str(request.FILES['file']), ContentFile(image.read()))
+    else:
+        context['image'] = None
+    context['time_stamp'] = str(datetime.datetime.today()).split(" ")[0]
+    dbm.save_message_list(context)
 
-    return render(request, 'armageddon_system/linebot/msg/list.html')
+    return display_messages(request)
+
+def delete_message(request):
+    context = {}
+    if 'user_id' not in request.session:
+        context['error'] = "ログインしてください"
+        return render(request, 'armageddon_system/user/login.html', context)
+    dbm = db()
+    try:
+        dbm.del_message_list(request.GET['message_id'])
+    except KeyError:
+        pass
+    return HttpResponse("削除成功")
 
 
 def display_qa_list(request):

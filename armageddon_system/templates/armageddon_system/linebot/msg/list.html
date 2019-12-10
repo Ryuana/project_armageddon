@@ -40,24 +40,24 @@
                                     {% csrf_token %}
                                     <tr>
                                         <input type="hidden" name="message_id" value={{ message_item.message_id }}>
-                                        <td style="text-align:right; width:40px;">{{ message_item.message_id }}<span
+                                        <td style="text-align:right; width:40px;">{{ forloop.counter }}<span
                                                 class="seqno"></span>
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="txt1" name="time_stamp"
+                                        <td style=""><input class="inpval" type="text" id="time_stamp{{ forloop.counter }}" name="time_stamp"
                                                             value="{{ message_item.timestamp }}" size="30"
                                                             style="border:none"></td>
-                                        <td style=""><input class="inpval" type="text" id="txt1" name="message"
+                                        <td style=""><input class="inpval" type="text" id="message{{ forloop.counter }}" name="message"
                                                             value="{{ message_item.message_content }}" size="30"
                                                             style="border:none">
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="txt1" name="image"
+                                        <td style=""><input class="inpval" type="text" id="image{{ forloop.counter }}" name="image"
                                                             value="{{ message_item.image_path }}" size="30"
                                                             style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="submit" id="edtBtn1"
+                                        <td style="width:40px;"><input class="edtbtn" type="submit" id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn1"
+                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
-                                                                       onclick="delete_form(this)"></td>
+                                                                       onclick="delete_form(this,{{ message_item.message_id }})"></td>
                                     </tr>
                                 </form>
                             {% endfor %}
@@ -67,7 +67,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="button" id="add" name="add" value="追加" onclick="insert_row()">
+                                <td><input type="button" id="add" name="add" onclick="location.href='/linebot/msg/edit'" value="追加">
                                 </td>
                             </tr>
                         </table>
@@ -78,50 +78,11 @@
         </form>
     </div>
     <script>
-        function insert_row() {
-            var objTBL = document.getElementById("tbl");
-            if (!objTBL)
-                return;
-
-            var count = objTBL.rows.length - 1;
-
-            // 最終行に新しい行追加
-            var row = objTBL.insertRow(count);
-
-            // 列追加
-            var c1 = row.insertCell(0);
-            var c2 = row.insertCell(1);
-            var c3 = row.insertCell(2);
-            var c4 = row.insertCell(3);
-            var c5 = row.insertCell(4);
-            var c6 = row.insertCell(5);
-
-            // 各列にスタイル設定
-            c1.style.cssText = "text-align:right; width:40px;";
-            c2.style.cssText = "";
-            c3.style.cssText = "";
-            c4.style.cssText = "";
-            c5.style.cssText = "width:40px;";
-            c6.style.cssText = "width:40px;";
-
-            // 各列に表示内容を設定
-            c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="inpval" type="text"   id="txt1' + count + '" name="time_stamp' + count + '" value="" size="30" style="border:1px solid #888;">';
-            c3.innerHTML = '<input class="inpval" type="text"   id="txt2' + count + '" name="message' + count + '" value="" size="30" style="border:1px solid #888;">';
-            c4.innerHTML = '<input class="inpval" type="text"   id="txt3' + count + '" name="image' + count + '" value="" size="30" style="border:1px solid #888;">';
-            c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this)">';
-            c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-
-            // 追加した行の入力フィールドにフォーカスを設定
-            var objInp = document.getElementById("txt1" + count);
-            if (objInp)
-                objInp.focus();
-        }
 
         /*
          * delete_form: 削除ボタン該当行を削除
          */
-        function delete_form(obj) {
+        function delete_form(obj,message_id) {
             // 確認
             if (!confirm("この行を削除しますか？"))
                 return;
@@ -132,8 +93,8 @@
             var objTR = obj.parentNode.parentNode;
             var objTBL = objTR.parentNode;
 
-            if (objTBL)
-                objTBL.delete_form(objTR.sectionRowIndex);
+            {#if (objTBL)#}
+            {#    objTBL.delete_form(objTR.sectionRowIndex);#}
 
             // <span> 行番号ふり直し
             var tagElements = document.getElementsByTagName("span");
@@ -174,6 +135,10 @@
                     ++seq;
                 }
             }
+            let request = new XMLHttpRequest();
+            let url = location.href + "/delete?message_id=" + message_id;
+            request.open('GET', url, true);
+            request.send();
         }
     </script>
 {% endblock %}

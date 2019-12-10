@@ -212,10 +212,23 @@ class DynamoManager():
 
     def get_next_qa_id(self):
         all_qa = db.QuestionAndAnswersModel.scan()
-        count = 1
+        max_id = 0
         for i in all_qa:
-            count += 1
-        return count
+            max_id = max(max_id, i.QuestionAndAnswerId)
+        return max_id + 1
+    def get_next_message_id(self):
+        all_message = db.MessagesModel.scan()
+        max_id = 0
+        for i in all_message:
+            max_id = max(max_id, i.MessageId)
+        return max_id + 1
+
+    def get_next_form_id(self):
+        all_form = db.FormsModel.scan()
+        max_id = 0
+        for i in all_form:
+            max_id = max(max_id, i.FormId)
+        return max_id
 
     def get_qa(self, qa_id):
         """
@@ -251,25 +264,25 @@ class DynamoManager():
         LINE Botのメッセージを全件取得します。
         :rtype: list of map
         """
-        message = db.MessagesModel.get(message_id)
-
-        print(message)
+        message = db.MessagesModel.get(int(message_id))
+        print(dict(message))
         # messageを埋め込む処理
         return message
 
-    def save_message_list(self, message_id, bot_message: message.Message):
+    def save_message_list(self, message):
         """
         LINE Botのメッセージを保存します。
         :param bot_message: map
         :rtype: void
         """
-        message = db.MessagesModel(int(message_id))
-        message.Message = {
-            'MessageContent': bot_message.message,
-            'ImagePath': bot_message.image,
-            'Timestamp': bot_message.time_stamp
+        new_message = db.MessagesModel(int(message['message_id']))
+        import datetime
+        new_message.Message = {
+            'MessageContent': message['message'],
+            'ImagePath': message['image'],
+            'Timestamp': datetime.datetime.strptime(message['time_stamp'],'%Y-%m-%d')
         }
-        message.save()
+        new_message.save()
 
     def del_message_list(self, bot_message_id):
         """
@@ -277,7 +290,7 @@ class DynamoManager():
         :param bot_message_id: int
         :rtype: void
         """
-        message = db.MessagesModel(bot_message_id)
+        message = db.MessagesModel(int(bot_message_id))
         message.delete()
 
     def check_login_id(self, user_id, user_pass):
