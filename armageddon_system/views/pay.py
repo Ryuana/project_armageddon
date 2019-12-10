@@ -23,6 +23,7 @@ def display_form(request):
         return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
     context['forms'] = dbm.get_form_all()
+    context['max_id'] = dbm.get_next_form_id()
     # context['count'] = 1
     # {{forms.0.form_id}}でjs取得可能
 

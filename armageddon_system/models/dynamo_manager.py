@@ -228,7 +228,7 @@ class DynamoManager():
         max_id = 0
         for i in all_form:
             max_id = max(max_id, i.FormId)
-        return max_id
+        return max_id + 1
 
     def get_qa(self, qa_id):
         """

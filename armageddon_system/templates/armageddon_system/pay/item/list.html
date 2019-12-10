@@ -46,9 +46,10 @@
                                 <form id="frm" name="frm" method="POST" action="./qr">
                                     {% csrf_token %}
                                     <tr>
-                                        <input type="hidden" id="form_id{{ forloop.counter }}"
-                                               name="form_id" value={{ form.form_id }}>
-                                        <td text-align="right">{{ forloop.counter }}</td>
+                                        <td text-align="right">
+                                            <span
+                                                class="seqno">{{ forloop.counter }}<input type="hidden" id="form_id{{ forloop.counter }}"
+                                                                     name="form_id" value={{ form.form_id }}></span></td>
                                         <td style=""><input class="inpval" type="text"
                                                             id="form_name{{ forloop.counter }}"
                                                             name="form_name" value={{ form.form_name }} size="25"
@@ -62,17 +63,17 @@
                                                             name="issuance_days"
                                                             value={{ form.issuance_days }} size="25"
                                                             style="border:none" readonly></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="button"
+                                        <td style="width:40px;"><input class="inpval" type="button"
                                                                        id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"
                                                                        onclick="edit_form(this,{{ forloop.counter }})">
                                         </td>
-                                        <td style="width:40px;"><input class="delbtn" type="button"
+                                        <td style="width:40px;"><input class="inpval" type="button"
                                                                        id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
                                                                        onclick="delete_form(this,{{ form.form_id }})">
                                         </td>
-                                        <td style="width:40px;"><input class="qrbtn" type="button" id="qrBtn1" onclick="submit()"
+                                        <td style="width:40px;"><input class="inpval" type="button" id="qrBtn1" onclick="submit()"
                                                                        value="QR表示"></td>
                                     </tr>
                                 </form>
@@ -89,26 +90,25 @@
         </div>
     </div>
     <script>
-
-
+    let max_id = {{ max_id }};
         function insert_row() {
-            var objTBL = document.getElementById("tbl");
+            let objTBL = document.getElementById("tbl");
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length-1;
+            let count = objTBL.rows.length-1;
 
             // 最終行に新しい行追加
-            var row = objTBL.insertRow(count);
+            let row = objTBL.insertRow(count);
 
             // 列追加
-            var c1 = row.insertCell(0);
-            var c2 = row.insertCell(1);
-            var c3 = row.insertCell(2);
-            var c4 = row.insertCell(3);
-            var c5 = row.insertCell(4);
-            var c6 = row.insertCell(5);
-            var c7 = row.insertCell(6);
+            let c1 = row.insertCell(0);
+            let c2 = row.insertCell(1);
+            let c3 = row.insertCell(2);
+            let c4 = row.insertCell(3);
+            let c5 = row.insertCell(4);
+            let c6 = row.insertCell(5);
+            let c7 = row.insertCell(6);
 
             // 各列にスタイル設定
             c1.style.cssText = "text-align:right; width:40px;";
@@ -121,13 +121,14 @@
 
 
             // 各列に表示内容を設定
-            c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="input-value" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
-            c3.innerHTML = '<input class="input-number" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
-            c4.innerHTML = '<input class="input-number" type="text"   id="issuance_days' + count + '" name="issuance_days" value="" size="30" ">';
-            c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="編集" onclick="edit_form(this)">';
-            c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-            c7.innerHTML = '<input class="qrbtn" type="button" id="qrBtn' + count + '" value="QR表示" onclick="QROutput(this)">';
+            c1.innerHTML = '<span class="seqno">' + count + '<input type="hidden" id="form_id' + count + '" name="form_id" value=' + max_id + '></span>';
+            c2.innerHTML = '<input class="inpval" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
+            c3.innerHTML = '<input class="inpval" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
+            c4.innerHTML = '<input class="inpval" type="text"   id="issuance_days' + count + '" name="issuance_days" value="" size="30" ">';
+            c5.innerHTML = '<input class="inpval" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this,' + count + ')">';
+            c6.innerHTML = '<input class="inpval" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this,' + max_id + ')">';
+            c7.innerHTML = '<input class="inpval" type="button" id="qrBtn' + count + '" value="QR表示" onclick="submit()">';
+            max_id++;
 
             // 追加した行の入力フィールドにフォーカスを設定
             let objInp = document.getElementById("form_name" + count);
@@ -158,36 +159,27 @@
                 return false;
 
             let seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            for (let i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("seqno"))
                     tagElements[i].innerHTML = seq++;
             }
 
             // id/name ふり直し
-            tagElements = document.getElementsByTagName("input");
+            tagElements = document.getElementsByClassName("inpval");
             if (!tagElements)
                 return false;
             seq = 1;
-            for (let i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("input-value") || tagElements[i].className.match("input-number")) {
-                    tagElements[i].setAttribute("id", "txt" + seq);
-                    tagElements[i].setAttribute("name", "txt" + seq);
-                    ++seq;
-                }
-            }
-            seq = 1;
-            for (let i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("edtbtn")) {
-                    tagElements[i].setAttribute("id", "edtBtn" + seq);
-                    ++seq;
-                }
-            }
-
-            // <input type="button" id="delBtnN">
-            seq = 1;
-            for (let i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("delbtn")) {
-                    tagElements[i].setAttribute("id", "delBtn" + seq);
+            for (let i = 0; i < tagElements.length; i = i + 6) {
+                if (tagElements[i].className.match("inpval")) {
+                    tagElements[i].setAttribute("id", "form_name" + seq);
+                    tagElements[i].setAttribute("name", "form_name");
+                    tagElements[i+1].setAttribute("id", "fee" + seq);
+                    tagElements[i+1].setAttribute("name", "fee");
+                    tagElements[i+2].setAttribute("id", "issuance_days" + seq);
+                    tagElements[i+2].setAttribute("name", "issuance_days");
+                    tagElements[i+3].setAttribute("id", "edtBtn" + seq);
+                    tagElements[i+4].setAttribute("id", "delBtn" + seq);
+                    tagElements[i+5].setAttribute("id", "qrBtn" + seq);
                     ++seq;
                 }
             }

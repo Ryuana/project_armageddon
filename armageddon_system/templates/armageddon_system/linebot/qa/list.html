@@ -163,10 +163,10 @@
                 }
             }
             //qa削除処理
-            {#let request = new XMLHttpRequest();#}
-            {#let url = location.href + "/delete?qa_id=" + qa_id;#}
-            {#request.open('GET', url, true);#}
-            {#request.send();#}
+            let request = new XMLHttpRequest();
+            let url = location.href + "/delete?qa_id=" + qa_id;
+            request.open('GET', url, true);
+            request.send();
         }
 
         /*
