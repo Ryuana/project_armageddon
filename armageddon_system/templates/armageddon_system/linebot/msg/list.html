@@ -67,7 +67,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="button" id="add" name="add" value="追加" onclick="insert_row()">
+                                <td><input type="button" id="add" name="add" onclick="location.href='/linebot/msg/edit'" value="追加">
                                 </td>
                             </tr>
                         </table>
@@ -78,45 +78,6 @@
         </form>
     </div>
     <script>
-        function insert_row() {
-            var objTBL = document.getElementById("tbl");
-            if (!objTBL)
-                return;
-
-            var count = objTBL.rows.length - 1;
-
-            // 最終行に新しい行追加
-            var row = objTBL.insertRow(count);
-
-            // 列追加
-            var c1 = row.insertCell(0);
-            var c2 = row.insertCell(1);
-            var c3 = row.insertCell(2);
-            var c4 = row.insertCell(3);
-            var c5 = row.insertCell(4);
-            var c6 = row.insertCell(5);
-
-            // 各列にスタイル設定
-            c1.style.cssText = "text-align:right; width:40px;";
-            c2.style.cssText = "";
-            c3.style.cssText = "";
-            c4.style.cssText = "";
-            c5.style.cssText = "width:40px;";
-            c6.style.cssText = "width:40px;";
-
-            // 各列に表示内容を設定
-            c1.innerHTML = '<span class="seqno">' + count + '</span>';
-            c2.innerHTML = '<input class="inpval" type="text"   id="time_stamp' + count + '" name="time_stamp" value="" size="30" style="border:1px solid #888;">';
-            c3.innerHTML = '<input class="inpval" type="text"   id="message' + count + '" name="message" value="" size="30" style="border:1px solid #888;">';
-            c4.innerHTML = '<input class="inpval" type="text"   id="image' + count + '" name="image" value="" size="30" style="border:1px solid #888;">';
-            c5.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="edit_form(this)">';
-            c6.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this)">';
-
-            // 追加した行の入力フィールドにフォーカスを設定
-            var objInp = document.getElementById("txt1" + count);
-            if (objInp)
-                objInp.focus();
-        }
 
         /*
          * delete_form: 削除ボタン該当行を削除

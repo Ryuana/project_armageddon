@@ -4,45 +4,46 @@
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"
             integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG"
             crossorigin="anonymous"></script>
+    {#    jQueryの読み込み#}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 {% endblock %}
 {% block menubar %}{% endblock %}
 {% block main-title %}証明書発行申請{% endblock %}
 {% block main-content %}
-    <p class="num1">学籍番号
-        <input type="text" id="school-control" placeholder="">
-        学籍番号がない場合<input type="checkbox" id="checkbox" name="check" value="check">
-    </p>
+    <form name="requestForm">
+        <p>学籍番号
+            <input type="text" id="student-id" name="studentId" placeholder="1234567">
+        </p>
 
+        <p>
+            学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="check" value="true"
+                            onchange=changeHasStudentId()><br>
+            申請者名
+            <input type="text" id="user-name" name="userName" disabled placeholder="学籍番号がない場合入力">
+        </p>
 
-    <p class="num2">申請者名
-        <input type="text" id="name-control" placeholder="">
-    </p>
+        QRコードを読み取ってください
+        <input hidden name="count_form_type" value="0">
+        <input type='button' id="qr_btn" value="追加">
+        <input id="send_btn" type="button" value="決定" onclick="send_data();">
+        <br>
+        <div id="form_list">
+        </div>
+        <section id="contents">
+            <!-- カメラ -->
+            <video id="camera" width="300" height="200" muted></video>
 
+            <!-- 処理用 -->
+            <canvas id="picture" width="300" height="200"></canvas>
+        </section>
 
-
-    <p class="num3">申請書名
-        <input type="text" id="form-control" placeholder="">
-        <input type="button" value="+" id="plus" onclick="sampleCountUp();">
-        <span id="sampleOutput">0</span>
-    </p>
-    <section id="contents">
-        <!-- カメラ -->
-        <video id="camera" width="300" height="200" muted></video>
-
-        <!-- 処理用 -->
-        <canvas id="picture" width="300" height="200"></canvas>
-    </section>
-
-    <button id="qr_btn">QR読取</button>
-
-    <form>
-        <input id="send_btn" type="submit" value="決定" onclick="send_data();">
     </form>
     <script>
 
         const video = $("#camera");
         const canvas = $("#picture");
-        const ctx = canvas.getContext("2d");
+        {#const ctx = canvas.getContext('2d');#}
 
         window.onload = () => {
             //カメラ設定
@@ -83,7 +84,7 @@
             // 存在する場合
             if (code) {
                 // 結果を表示
-                setQRResult("#form-control", code.data);  // 文字列
+                setQRResult("#form", code.data);  // 文字列
                 drawLine(ctx, code.location);       // 見つかった箇所に線を引く
 
                 // video と canvas を入れ替え
@@ -92,6 +93,7 @@
                 video.pause();
             }
             // 存在しない場合
+
             else {
                 // 0.3秒後にもう一度チェック
                 setTimeout(() => {
@@ -126,9 +128,8 @@
         }
 
 
-        function $(selector) {
-            return (document.querySelector(selector));
-        }
+        {#function $(selector) {#}
+        {#    return (document.querySelector(selector));#}
 
         //HTML表示用に文字列エスケープ
         function escapeHTML(str) {
@@ -144,46 +145,44 @@
             return (result);
         }
 
+        function changeHasStudentId() {
+            let form_elements = document.forms.requestForm;
+            form_elements.userName.disabled = !form_elements.check.checked;
+            form_elements.studentId.disabled = form_elements.check.checked;
 
-        var sampleCount = 0;
-
-        function sampleCountUp() {
-            document.getElementById("sampleOutput").innerHTML = ++sampleCount;
         }
 
         function send_data() {
-            if (document.getElementById('school-control').value == "" && document.getElementById("checkbox").checked == false) {
-                //学籍番号が空
-                console.log("学籍番号未入力");
-                alert("学籍番号が入力されていません");
-                {# return false; #}
-            }
-            if (document.getElementById("checkbox").checked == true && document.getElementById('school-control').value != "") {
-                // document.getElementById("checkbox").value == true
-                //チェックがついていて、学籍番号が入力されている
-                console.log("学籍番号問題有");
-                alert("学籍番号に問題があります");
-                {#return false;#}
-            }
-            if (document.getElementById('name-control').value == "") {
-                //申請者名が空
-                console.log("申請者名未入力");
-                alert("申請者名が入力されていません");
-                {#return false;#}
-            }
-            if (document.getElementById('form-control').value == "") {
-                //申請書名が空
-                console.log("申請書名未入力");
-                alert("申請書名が入力されていません");
-                {#return false;#}
-            }
-            if (sampleCount == "0") {
-                //申請書枚数が0
-                alert("申請書枚数が0枚です");
-                return false;
+            let hasStudentId = !document.getElementById('has-not-student-id')
+            let studentId = document.getElementById('student-id');
+            let userName = document.getElementById('user-name');
+
+            if (hasStudentId) {
+                if (studentId === "") {
+                    alert("test");
+                } else {
+                    alert('test2')
+                }
             } else {
                 //画面遷移&入力フォーム情報を移す&チェックボックス=trueの場合、学籍番号の値を"無し"にする
             }
         }
+
+        {#証明書の追加#}
+        let request_count = 0;
+        $('#qr_btn').click(function () {
+            let options;
+            for (var i = 1; i < 10; i++) {
+                options += `<option value=${i}>${i}</option>`
+            }
+            request_count++;
+            let text = `証明書${request_count}` +
+                '<input type="text" id="form" readonly placeholder="QRコード読み取り">' +
+                '<select id="count" value="1">' +
+                options +
+                '</select><br>';
+            $('#form_list').append(text)
+        });
+
     </script>
 {% endblock %}

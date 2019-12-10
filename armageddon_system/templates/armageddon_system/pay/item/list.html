@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-xs-12" style="width: 100%;">
                     <div class="table-responsive">
-                        <table border="1" class="table table-bordered table-hover" style="table-layout: auto">
+                        <table id='tbl' border="1" class="table table-bordered table-hover" style="table-layout: auto">
                             <thead align="center">
                             <tr id="object">
                                 <th>No.</th>
@@ -78,6 +78,10 @@
                                 </form>
                             {% endfor %}
                             </tbody>
+                        <tfoot>
+{#                        <td colspan="7" align="center"><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></td>#}
+                        <td colspan="7" align="center" onclick="insert_row()">追　加　す　る</td>
+                        </tfoot>
                         </table>
                     </div>
                 </div>
@@ -92,7 +96,7 @@
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length;
+            var count = objTBL.rows.length-1;
 
             // 最終行に新しい行追加
             var row = objTBL.insertRow(count);
