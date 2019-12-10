@@ -55,6 +55,7 @@ def register_confirm(request):
             'fee': fee,
             'subtotal': subtotal
         })
+    context['is_multiple'] = [False, True][int(request.POST['countFormTypes']) > 1]
     context['form_list'] = form_list
     context['total'] = total
 
@@ -62,8 +63,12 @@ def register_confirm(request):
 
 
 def payments(request):
-    form_name = request.POST['form_name']
-    fee = int(request.POST['fee'])
+    print(request.POST)
+    if request.POST['is_multiple'] == "True":
+        form_name = "証明書(複数)"
+    else:
+        form_name = request.POST['form_name0']
+    fee = int(request.POST['total'])
     (order_id, response) = pay.request_payments(product_name=form_name, amount=fee, currency="JPY")
     print(response["returnCode"])
     print(response["returnMessage"])

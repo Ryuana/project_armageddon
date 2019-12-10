@@ -15,9 +15,11 @@
         <hr>
         <div id="items">
             <p>学籍番号:<input hidden type="text" name="school_num" value="{{ student_id }}">{{ student_id }}</p>
+            <input hidden name='is_multiple' value="{{ is_multiple }}">
             <p>
             <table>
                 {% for i in form_list %}
+                    <input hidden name='form_id{{ forloop.counter0 }}' value="{{ i.id }}">
                     <tr>
                         <td><input hidden type="text" name="form_name{{ forloop.counter0 }}"
                                    value="{{ i.name }}">{{ i.name }}:
