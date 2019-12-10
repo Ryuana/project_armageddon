@@ -47,7 +47,7 @@
                                     {% csrf_token %}
                                     <tr>
                                         <input type="hidden" id="form_id{{ forloop.counter }}"
-                                               name="form_id" value={{ form.form_id }}>
+                                               name="form_id{{ forloop.counter }}" value={{ form.form_id }}>
                                         <td><input type="number" class="input-number"
                                                    value={{ forloop.counter }} readonly></td>
                                         <td style=""><input class="input-value" type="text"
@@ -82,7 +82,7 @@
                             {% endfor %}
                             </tbody>
                             <tfoot>
-                            <td colspan="7" align="center" onclick="insert_row()">追　加　す　る</td>
+                            <td colspan="7" id="insert_btn" align="center" onclick="insert_row()">追　加　す　る</td>
                             </tfoot>
                         </table>
                     </div>
@@ -95,6 +95,7 @@
 
         function insert_row() {
             var objTBL = document.getElementById("tbl");
+            document.getElementById("insert_btn").onclick = "";
             if (!objTBL)
                 return;
 
@@ -132,6 +133,9 @@
          * delete_form: 削除ボタン該当行を削除
          */
         function delete_form(obj, form_id) {
+            document.getElementById("insert_btn").onclick = function () {
+                insert_row()
+            };
             // 確認
             if (!confirm("この行を削除しますか？"))
                 return;
@@ -224,6 +228,9 @@
                 issuance_days.readOnly = true;
                 let request = new XMLHttpRequest();
                 let url = location.href + "/save?form_id=" + form_id.value + "&form_name=" + form_name.value + "&fee=" + fee.value + "&issuance_days=" + issuance_days.value;
+                document.getElementById("insert_btn").onclick = function () {
+                    insert_row()
+                };
                 request.open('GET', url, true);
                 request.send();
                 objBtn.value = "編集";
