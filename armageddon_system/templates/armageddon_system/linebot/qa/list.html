@@ -38,9 +38,8 @@
                                 {% for qa in qa_list %}
                                     <tr>
                                         <td style="text-align:right; width:40px;"><span
-                                                class="seqno">{{ forloop.counter }}</span></td>
-                                        <input type="hidden" id="qa_id{{ forloop.counter }}"
-                                               name="qa_id" value={{ qa.qa_id }}>
+                                                class="seqno">{{ forloop.counter }}<input type="hidden" id="qa_id{{ forloop.counter }}"
+                                               name="qa_id" value={{ qa.qa_id }}></span></td>
                                         <td style="">
                                             <input class="inpval" type="text" id="questions{{ forloop.counter }}"
                                                    name="questions"
@@ -54,12 +53,12 @@
                                                             value="{{ qa.answer }}"
                                                             size="30" readonly
                                                             style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="button"
+                                        <td style="width:40px;"><input class="inpval" type="button"
                                                                        id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"
                                                                        onclick="editRow(this,{{ forloop.counter }})">
                                         </td>
-                                        <td style="width:40px;"><input class="delbtn" type="button"
+                                        <td style="width:40px;"><input class="inpval" type="button"
                                                                        id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
                                                                        onclick="deleteRow(this,{{ qa.qa_id }})"></td>
@@ -80,22 +79,24 @@
         </form>
     </div>
     <script>
+    let max_id = {{ max_id }};
         function appendRow() {
-            var objTBL = document.getElementById("tbl");
+
+            let objTBL = document.getElementById("tbl");
             if (!objTBL)
                 return;
 
-            var count = objTBL.rows.length - 1;
+            let count = objTBL.rows.length - 1;
 
             // 最終行に新しい行追加
-            var row = objTBL.insertRow(count);
+            let row = objTBL.insertRow(count);
 
             // 列追加
-            var c1 = row.insertCell(0);
-            var c2 = row.insertCell(1);
-            var c3 = row.insertCell(2);
-            var c4 = row.insertCell(3);
-            var c5 = row.insertCell(4);
+            let c1 = row.insertCell(0);
+            let c2 = row.insertCell(1);
+            let c3 = row.insertCell(2);
+            let c4 = row.insertCell(3);
+            let c5 = row.insertCell(4);
 
             // 各列にスタイル設定
             c1.style.cssText = "text-align:right; width:40px;";
@@ -105,14 +106,14 @@
             c5.style.cssText = "width:40px;";
 
             // 各列に表示内容を設定
-            c1.innerHTML = '<span class="seqno">' + count + '</span>';
+            c1.innerHTML = '<span class="seqno">' + count + '<input type="hidden" id="qa_id' + count + '" name="qa_id" value= ' + max_id + '></span>';
             c2.innerHTML = '<input class="inpval" type="text"   id="questions' + count + '" name="questions" value="" size="30" style="border:1px solid #888;">';
             c3.innerHTML = '<input class="inpval" type="text"   id="answer' + count + '" name="answer" value="" size="30" style="border:1px solid #888;">';
-            c4.innerHTML = '<input class="edtbtn" type="button" id="edtBtn' + count + '" value="確定" onclick="editRow(this)">';
-            c5.innerHTML = '<input class="delbtn" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this)">';
-
+            c4.innerHTML = '<input class="inpval" type="button" id="edtBtn' + count + '" value="確定" onclick="editRow(this,' + count + ')">';
+            c5.innerHTML = '<input class="inpval" type="button" id="delBtn' + count + '" value="削除" onclick="deleteRow(this,' + max_id + ')">';
+            max_id++;
             // 追加した行の入力フィールドにフォーカスを設定
-            var objInp = document.getElementById("question" + count);
+            let objInp = document.getElementById("question" + count);
             if (objInp)
                 objInp.focus();
         }
@@ -128,56 +129,44 @@
             if (!obj)
                 return;
 
-            var objTR = obj.parentNode.parentNode;
-            var objTBL = objTR.parentNode;
+            let objTR = obj.parentNode.parentNode;
+            let objTBL = objTR.parentNode;
 
             if (objTBL)
                 objTBL.deleteRow(objTR.sectionRowIndex);
 
             // <span> 行番号ふり直し
-            var tagElements = document.getElementsByTagName("span");
+            let tagElements = document.getElementsByTagName("span");
             if (!tagElements)
                 return false;
 
-            var seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            let seq = 1;
+            for (let i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("seqno"))
                     tagElements[i].innerHTML = seq++;
             }
 
             // id/name ふり直し
-            var tagElements = document.getElementsByTagName("input");
+            tagElements = document.getElementsByClassName("inpval");
             if (!tagElements)
                 return false;
-            var seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            seq = 1;
+            for (let i = 0; i < tagElements.length; i = i + 4) {
                 if (tagElements[i].className.match("inpval")) {
-                    tagElements[i].setAttribute("id", "txt" + seq);
-                    tagElements[i].setAttribute("name", "txt" + seq);
-                    ++seq;
-                }
-            }
-            seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("edtbtn")) {
-                    tagElements[i].setAttribute("id", "edtBtn" + seq);
-                    ++seq;
-                }
-            }
-
-            // <input type="button" id="delBtnN">
-            seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("delbtn")) {
-                    tagElements[i].setAttribute("id", "delBtn" + seq);
+                    tagElements[i].setAttribute("id", "questions" + seq);
+                    tagElements[i].setAttribute("name", "questions");
+                    tagElements[i+1].setAttribute("id", "answer" + seq);
+                    tagElements[i+1].setAttribute("name", "answer");
+                    tagElements[i+2].setAttribute("id", "edtBtn" + seq);
+                    tagElements[i+3].setAttribute("id", "delBtn" + seq);
                     ++seq;
                 }
             }
             //qa削除処理
-            let request = new XMLHttpRequest();
-            let url = location.href + "/delete?qa_id=" + qa_id;
-            request.open('GET', url, true);
-            request.send();
+            {#let request = new XMLHttpRequest();#}
+            {#let url = location.href + "/delete?qa_id=" + qa_id;#}
+            {#request.open('GET', url, true);#}
+            {#request.send();#}
         }
 
         /*
@@ -196,13 +185,15 @@
 
             // モード切り替えはボタンの値で判定
             if (objBtn.value == "編集") {
-                questions.style.cssText = "border:1px solid #888;"
+                questions.style.cssText = "border:1px solid #888;";
+                answer.style.cssText = "border:1px solid #888;"
                 questions.readOnly = false;
                 answer.readOnly = false;
                 questions.focus();
                 objBtn.value = "確定";
             } else {
                 questions.style.cssText = "border:none;";
+                answer.style.cssText = "border:none;";
                 questions.readOnly = true;
                 answer.readOnly = true;
                 let request = new XMLHttpRequest();

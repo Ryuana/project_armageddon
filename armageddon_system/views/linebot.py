@@ -91,9 +91,9 @@ def display_qa_list(request):
         return render(request, 'armageddon_system/user/login.html', context)
     dbm = db()
     context['qa_list'] = dbm.get_qa_all()
+    context['max_id'] = dbm.get_next_qa_id()
 
     return render(request, 'armageddon_system/linebot/qa/list.html', context)
-
 
 def save_qa(request):
     context = {}

@@ -153,21 +153,21 @@
                 objTBL.deleteRow(objTR.sectionRowIndex);
 
             // <span> 行番号ふり直し
-            var tagElements = document.getElementsByTagName("span");
+            let tagElements = document.getElementsByTagName("span");
             if (!tagElements)
                 return false;
 
-            var seq = 1;
+            let seq = 1;
             for (var i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("seqno"))
                     tagElements[i].innerHTML = seq++;
             }
 
             // id/name ふり直し
-            var tagElements = document.getElementsByTagName("input");
+            tagElements = document.getElementsByTagName("input");
             if (!tagElements)
                 return false;
-            var seq = 1;
+            seq = 1;
             for (let i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("input-value") || tagElements[i].className.match("input-number")) {
                     tagElements[i].setAttribute("id", "txt" + seq);
