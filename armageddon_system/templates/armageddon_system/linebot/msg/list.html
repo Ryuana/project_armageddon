@@ -40,8 +40,8 @@
                                     {% csrf_token %}
                                     <tr>
                                         <input type="hidden" name="message_id" value={{ message_item.message_id }}>
-                                        <td style="text-align:right; width:40px;">{{ forloop.counter }}<span
-                                                class="seqno"></span>
+                                        <td style="text-align:right; width:40px;"><span
+                                                class="seqno">{{ forloop.counter }}</span>
                                         </td>
                                         <td style=""><input class="inpval" type="text" id="time_stamp{{ forloop.counter }}" name="time_stamp"
                                                             value="{{ message_item.timestamp }}" size="30"
@@ -53,9 +53,9 @@
                                         <td style=""><input class="inpval" type="text" id="image{{ forloop.counter }}" name="image"
                                                             value="{{ message_item.image_path }}" size="30"
                                                             style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="submit" id="edtBtn{{ forloop.counter }}"
+                                        <td style="width:40px;"><input class="inpval" type="submit" id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn{{ forloop.counter }}"
+                                        <td style="width:40px;"><input class="inpval" type="button" id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
                                                                        onclick="delete_form(this,{{ message_item.message_id }})"></td>
                                     </tr>
@@ -75,7 +75,6 @@
                 </div>
             </div>
         </div>
-        </form>
     </div>
     <script>
 
@@ -90,48 +89,38 @@
             if (!obj)
                 return;
 
-            var objTR = obj.parentNode.parentNode;
-            var objTBL = objTR.parentNode;
+            let objTR = obj.parentNode.parentNode;
+            let objTBL = objTR.parentNode;
 
-            {#if (objTBL)#}
-            {#    objTBL.delete_form(objTR.sectionRowIndex);#}
+            if (objTBL)
+                objTBL.deleteRow(objTR.sectionRowIndex);
 
             // <span> 行番号ふり直し
-            var tagElements = document.getElementsByTagName("span");
+            let tagElements = document.getElementsByTagName("span");
             if (!tagElements)
                 return false;
 
-            var seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            let seq = 1;
+            for (let i = 0; i < tagElements.length; i++) {
                 if (tagElements[i].className.match("seqno"))
                     tagElements[i].innerHTML = seq++;
             }
 
             // id/name ふり直し
-            var tagElements = document.getElementsByTagName("input");
+            tagElements = document.getElementsByTagName("input");
             if (!tagElements)
                 return false;
-            var seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
+            seq = 1;
+            for (let i = 0; i < tagElements.length; i = i + 8) {
                 if (tagElements[i].className.match("inpval")) {
-                    tagElements[i].setAttribute("id", "txt" + seq);
-                    tagElements[i].setAttribute("name", "txt" + seq);
-                    ++seq;
-                }
-            }
-            seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("edtbtn")) {
-                    tagElements[i].setAttribute("id", "edtBtn" + seq);
-                    ++seq;
-                }
-            }
-
-            // <input type="button" id="delBtnN">
-            seq = 1;
-            for (var i = 0; i < tagElements.length; i++) {
-                if (tagElements[i].className.match("delbtn")) {
-                    tagElements[i].setAttribute("id", "delBtn" + seq);
+                    tagElements[i+1].setAttribute("id", "time_stamp" + seq);
+                    tagElements[i+1].setAttribute("name", "time_stamp");
+                    tagElements[i+2].setAttribute("id", "message" + seq);
+                    tagElements[i+2].setAttribute("name", "message");
+                    tagElements[i+3].setAttribute("id", "image" + seq);
+                    tagElements[i+3].setAttribute("name", "image");
+                    tagElements[i+4].setAttribute("id", "edtBtn" + seq);
+                    tagElements[i+5].setAttribute("id", "delBtn" + seq);
                     ++seq;
                 }
             }
