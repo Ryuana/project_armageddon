@@ -4,6 +4,7 @@ import armageddon_system.env as env
 from armageddon_system.line_pay import LinePay
 from armageddon_system.models.dynamo_manager import DynamoManager as db
 from armageddon_system.models import DynamoClass as dc
+import json
 
 LINE_PAY_URL = env.LINE_PAY_URL
 LINE_PAY_CHANNEL_ID = env.LINE_PAY_CHANNEL_ID
@@ -18,6 +19,11 @@ def register_form(request):
     context = {}
     form_list = db().get_form_all()
     context['forms'] = form_list
+    form_dict = {}
+    for i in form_list:
+        form_dict[f"{i.qr}"] = i.form_name
+    context['formDict'] = form_dict
+    print(form_dict)
     return render(request, 'armageddon_system/register/form.html', context)
 
 

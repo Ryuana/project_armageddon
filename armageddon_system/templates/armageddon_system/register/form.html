@@ -40,15 +40,19 @@
             <video id="camera" width="300" height="200" muted></video>
 
             <!-- 処理用 -->
-            <canvas id="picture" width="300" height="200"></canvas>
+            <canvas id="picture" width="300" height="200" hidden></canvas>
         </section>
 
     </form>
     <script>
-
+        {# 申請書の種類の数#}
+        let request_count = 0;
+        {# カメラの準備#}
         const video = $("#camera")[0];
         const canvas = $("#picture")[0];
         const ctx = canvas.getContext("2d");
+        {#const formDict = JSON.parse({{formDict|safe }});#}
+        let formDict = {{formDict|safe }};
 
         window.onload = () => {
             //カメラ設定
@@ -89,13 +93,13 @@
             // 存在する場合
             if (code) {
                 // 結果を表示
-                setQRResult("#form", code.data);  // 文字列
+                read_qrcode(code.data);
+                setQRResult(`#form${request_count}`, code.data);  // 文字列
                 drawLine(ctx, code.location);       // 見つかった箇所に線を引く
 
                 // video と canvas を入れ替え
-                canvas.style.display = 'block';
-                video.style.display = 'none';
-                video.pause();
+                {#canvas.style.display = 'block';#}
+                {#video.style.display = 'none';#}
             }
             // 存在しない場合
 
