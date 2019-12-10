@@ -43,33 +43,38 @@
                                         <td style="text-align:right; width:40px;">{{ forloop.counter }}<span
                                                 class="seqno"></span>
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="time_stamp{{ forloop.counter }}" name="time_stamp"
+                                        <td style=""><input class="inpval" type="text"
+                                                            id="time_stamp{{ forloop.counter }}" name="time_stamp"
                                                             value="{{ message_item.timestamp }}" size="30"
                                                             style="border:none"></td>
-                                        <td style=""><input class="inpval" type="text" id="message{{ forloop.counter }}" name="message"
+                                        <td style=""><input class="inpval" type="text" id="message{{ forloop.counter }}"
+                                                            name="message"
                                                             value="{{ message_item.message_content }}" size="30"
                                                             style="border:none">
                                         </td>
-                                        <td style=""><input class="inpval" type="text" id="image{{ forloop.counter }}" name="image"
+                                        <td style=""><input class="inpval" type="text" id="image{{ forloop.counter }}"
+                                                            name="image"
                                                             value="{{ message_item.image_path }}" size="30"
                                                             style="border:none"></td>
-                                        <td style="width:40px;"><input class="edtbtn" type="submit" id="edtBtn{{ forloop.counter }}"
+                                        <td style="width:40px;"><input class="edtbtn" type="submit"
+                                                                       id="edtBtn{{ forloop.counter }}"
                                                                        value="編集"></td>
-                                        <td style="width:40px;"><input class="delbtn" type="button" id="delBtn{{ forloop.counter }}"
+                                        <td style="width:40px;"><input class="delbtn" type="button"
+                                                                       id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
-                                                                       onclick="delete_form(this,{{ message_item.message_id }})"></td>
+                                                                       onclick="delete_form(this,{{ message_item.message_id }})">
+                                        </td>
                                     </tr>
                                 </form>
                             {% endfor %}
+                            <tfoot>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="button" id="add" name="add" onclick="location.href='/linebot/msg/edit'" value="追加">
+                                <td colspan="7" id="insert_btn" align="center"
+                                    onclick="location.href='/linebot/msg/edit'">
+                                    追　加　す　る
                                 </td>
                             </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -82,7 +87,7 @@
         /*
          * delete_form: 削除ボタン該当行を削除
          */
-        function delete_form(obj,message_id) {
+        function delete_form(obj, message_id) {
             // 確認
             if (!confirm("この行を削除しますか？"))
                 return;
