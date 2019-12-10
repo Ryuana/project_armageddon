@@ -141,7 +141,8 @@ class DynamoManager():
                 qr=item.QR
             )
             return_items.append(rt_form)
-        if is_ascending:
+        return_items.sort(key=lambda x: x.form_id)
+        if not is_ascending:
             return_items = list(reversed(return_items))
         return return_items
 

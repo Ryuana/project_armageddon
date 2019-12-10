@@ -46,6 +46,8 @@
         </section>
 
     </form>
+    {#    デバッグ用#}
+    <button onclick="read_qrcode('d2ad5ee855fdf802eba0b8c60a652180')">テスト用</button>
     <script>
         {# 申請書の種類の数#}
         let request_count = 0;
@@ -164,20 +166,34 @@
             let hasStudentId = !document.getElementById('has-not-student-id').checked;
             let studentId = document.getElementById('student-id').value;
             let userName = document.getElementById('user-name').value;
-            let countFormTypes = document.getElementById('countFormTypes');
-
+            {#let countFormTypes = document.getElementById('countFormTypes');#}
+            let form_list = [];
             console.log(hasStudentId);
+            let is_input_ok = true;
             if (hasStudentId) {
                 if (studentId === "") {
-                    alert("学籍番号を入力してください。")
+                    alert("学籍番号を入力してください。");
+                    is_input_ok = false
                 }
-            } else {
-                //画面遷移&入力フォーム情報を移す&チェックボックス=trueの場合、学籍番号の値を"無し"にする
+            }
+            if (is_input_ok) {
+                for (i = 1; i <= request_count; i++) {
+                    let formId = document.getElementById(`form_id${i}`).value;
+                    let count = document.getElementById(`count${i}`).value;
+                    let fee = document.getElementById(`form_id${i}`).value;
+                    let form_map = {
+                        'formId': formId,
+                        'count': count,
+                        'fee': fee
+                    };
+                    form_list.push(form_map);
+                }
             }
         }
 
         {#カメラを再度動かす#}
         $('#qr_add').click(function () {
+            $('#qr_add').attr('disabled', true);
             checkPicture();
         });
         {#証明書の追加#}
@@ -189,8 +205,9 @@
             }
             request_count++;
             let text = `証明書${request_count}` +
-                `<input type="text" id="form${request_count}" value=${formDict[code]} readonly placeholder="QRコード読み取り">` +
-                '<select id="count" value="1">' +
+                `<input type="text" id="form${request_count}" value=${formDict[code].form_name} readonly placeholder="QRコード読み取り">` +
+                `<input type="text" id="form_id${request_count}" value=${formDict[code].form_id} hidden> ` +
+                `<select id="count${request_count}" value="1">` +
                 options +
                 '</select><br>';
             $('#form_list').append(text);

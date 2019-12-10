@@ -21,9 +21,13 @@ def register_form(request):
     context['forms'] = form_list
     form_dict = {}
     for i in form_list:
-        form_dict[f"{i.qr}"] = i.form_name
+        form_map = {
+            "form_id": i.form_id,
+            "form_name": i.form_name,
+            "fee": i.fee
+        }
+        form_dict[f"{i.qr}"] = form_map
     context['formDict'] = form_dict
-    print(form_dict)
     return render(request, 'armageddon_system/register/form.html', context)
 
 
