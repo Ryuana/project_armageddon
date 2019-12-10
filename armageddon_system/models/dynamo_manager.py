@@ -211,10 +211,23 @@ class DynamoManager():
 
     def get_next_qa_id(self):
         all_qa = db.QuestionAndAnswersModel.scan()
-        count = 1
+        max_id = 0
         for i in all_qa:
-            count += 1
-        return count
+            max_id = max(max_id, i.QuestionAndAnswerId)
+        return max_id + 1
+    def get_next_message_id(self):
+        all_message = db.MessagesModel.scan()
+        max_id = 0
+        for i in all_message:
+            max_id = max(max_id, i.MessageId)
+        return max_id + 1
+
+    def get_next_form_id(self):
+        all_form = db.FormsModel.scan()
+        max_id = 0
+        for i in all_form:
+            max_id = max(max_id, i.FormId)
+        return max_id
 
     def get_qa(self, qa_id):
         """
@@ -251,6 +264,7 @@ class DynamoManager():
         :rtype: list of map
         """
         message = db.MessagesModel.get(int(message_id))
+        print(dict(message))
         # messageを埋め込む処理
         return message
 

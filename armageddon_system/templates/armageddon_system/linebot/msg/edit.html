@@ -27,6 +27,8 @@
                 画像
                 <div class="upload">
                     <input type="file" name="file" id="file" value="{{ message.Message.ImagePath }}"></div>
+                    {% load static %}
+                    <img src="{% static 'armageddon_system/' %}{{message.Message.ImagePath}}">
                 <canvas id="canvas"></canvas>
 
                 <input type="submit" value="保存" id="save_btn">
@@ -37,13 +39,14 @@
     <script>
         var file = document.getElementById('file');
         var canvas = document.getElementById('canvas');
-        var canvasWidth = 400;
-        var canvasHeight = 300;
+        {#var canvasWidth = 400;#}
+        {#var canvasHeight = 300;#}
         var uploadImgSrc;
 
-
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+        {#canvas.width = canvasWidth;#}
+        {#canvas.height = canvasHeight;#}
+        canvas.width = 480;
+        canvas.height = 480;
         var ctx = canvas.getContext('2d');
 
         function loadLocalImage(e) {
@@ -59,18 +62,18 @@
             reader.onload = function () {
                 uploadImgSrc = reader.result;
                 canvasDraw();
-            }
+            };
             reader.readAsDataURL(fileData);
         }
 
         file.addEventListener('change', loadLocalImage, false);
 
         function canvasDraw() {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            {#ctx.clearRect(0, 0, 300, 300);#}
             var img = new Image();
             img.src = uploadImgSrc;
             img.onload = function () {
-                ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+                ctx.drawImage(img,0,0);
             }
         }
         {#function save() {#}
@@ -93,6 +96,5 @@
         {#    let url = location.href + "/save?message_id=" + message_id.value + "&message=" + message.value + "&image=" + file.value + "&time_stamp=" + time_stamp;#}
         {#    request.open('GET', url, true);#}
         {#    request.send();#}
-        {#}#}
     </script>
 {% endblock %}

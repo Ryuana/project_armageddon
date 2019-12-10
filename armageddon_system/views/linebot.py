@@ -41,11 +41,13 @@ def edit_message(request):
     if 'user_id' not in request.session:
         context['error'] = "ログインしてください"
         return render(request, 'armageddon_system/user/login.html', context)
-    context['message_id'] = request.POST['message_id']
-    # message_idを元にmessage取り出す
     dbm = db()
-    context['message'] = dbm.get_message(int(context['message_id']))
-    # context渡す
+    if 'message_id' in request.POST:
+        context['message_id'] = request.POST['message_id']
+        context['message'] = dbm.get_message(int(context['message_id']))
+    else:
+        context['message_id'] = dbm.get_next_message_id()
+        context['message'] = {}
     return render(request, 'armageddon_system/linebot/msg/edit.html', context)
 
 

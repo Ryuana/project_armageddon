@@ -248,3 +248,6 @@ table .input-number {
     padding-top: 140px;
     font-size: 14px;
 }
+img{
+    object-fit:cover;
+}
