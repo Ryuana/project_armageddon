@@ -34,7 +34,6 @@ def register_form(request):
 def register_confirm(request):
     dbm = db()
     context = {}
-    context['all'] = request.POST
     if request.POST.get('hasNotStudentId', False):
         context['student_id'] = request.POST['userName']
     else:
@@ -69,7 +68,8 @@ def payments(request):
     else:
         form_name = request.POST['form_name0']
     fee = int(request.POST['total'])
-    (order_id, response) = pay.request_payments(product_name=form_name, amount=fee, currency="JPY")
+    (order_id, response) = pay.request_payments(product_name=form_name, amount=fee, currency="JPY",
+                                                product_image_url="https://3.bp.blogspot.com/-5o2cwzzEJWI/Vz_w2t2PtXI/AAAAAAAA6uU/IOsMq7K2zjgOcldRuPmf09xXeQ2CnZTVACLcB/s800/document_syorui_pen.png")
     print(response["returnCode"])
     print(response["returnMessage"])
 
