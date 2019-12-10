@@ -189,7 +189,7 @@
             }
             request_count++;
             let text = `証明書${request_count}` +
-                `<input type="text" id="form${request_count}" value=${formDict.code} readonly placeholder="QRコード読み取り">` +
+                `<input type="text" id="form${request_count}" value=${formDict[code]} readonly placeholder="QRコード読み取り">` +
                 '<select id="count" value="1">' +
                 options +
                 '</select><br>';
