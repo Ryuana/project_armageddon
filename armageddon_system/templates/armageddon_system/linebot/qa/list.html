@@ -64,13 +64,11 @@
                                                                        onclick="deleteRow(this,{{ qa.qa_id }})"></td>
                                     </tr>
                                 {% endfor %}
+                                <tfoot>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><input type="button" id="add" name="add" value="追加" onclick="appendRow()"></td>
+                                    <td colspan="7" id="add_btn" align="center" onclick="appendRow()">追　加　す　る</td>
                                 </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -122,6 +120,10 @@
          * deleteRow: 削除ボタン該当行を削除
          */
         function deleteRow(obj, qa_id) {
+            document.getElementById("add_btn").onclick = function () {
+                appendRow()
+            };
+
             // 確認
             if (!confirm("この行を削除しますか？"))
                 return;
@@ -201,6 +203,10 @@
                 request.open('GET', url, true);
                 request.send();
                 objBtn.value = "編集";
+                document.getElementById("add_btn").onclick = function () {
+                    appendRow()
+                };
+
             }
         }
     </script>

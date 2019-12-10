@@ -79,10 +79,11 @@
                                 </form>
                             {% endfor %}
                             </tbody>
-                        <tfoot>
-{#                        <td colspan="7" align="center"><input type="button" id="add" name="add" value="追加" onclick="insert_row()"></td>#}
-                        <td colspan="7" align="center" onclick="insert_row()">追　加　す　る</td>
-                        </tfoot>
+                            <tfoot>
+                            <tr>
+                                <td colspan="7" id="insert_btn" align="center" onclick="insert_row()">追　加　す　る</td>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -93,10 +94,11 @@
     let max_id = {{ max_id }};
         function insert_row() {
             let objTBL = document.getElementById("tbl");
+            document.getElementById("insert_btn").onclick = "";
             if (!objTBL)
                 return;
 
-            let count = objTBL.rows.length-1;
+            var count = objTBL.rows.length - 1;
 
             // 最終行に新しい行追加
             let row = objTBL.insertRow(count);
@@ -119,8 +121,6 @@
             c6.style.cssText = "width:40px;";
             c7.style.cssText = "width:40px;";
 
-
-            // 各列に表示内容を設定
             c1.innerHTML = '<span class="seqno">' + count + '<input type="hidden" id="form_id' + count + '" name="form_id" value=' + max_id + '></span>';
             c2.innerHTML = '<input class="inpval" type="text"   id="form_name' + count + '" name="form_name" value="" size="30" ">';
             c3.innerHTML = '<input class="inpval" type="text"   id="fee' + count + '" name="fee" value="" size="30" ">';
@@ -129,9 +129,8 @@
             c6.innerHTML = '<input class="inpval" type="button" id="delBtn' + count + '" value="削除" onclick="delete_form(this,' + max_id + ')">';
             c7.innerHTML = '<input class="inpval" type="button" id="qrBtn' + count + '" value="QR表示" onclick="submit()">';
             max_id++;
-
             // 追加した行の入力フィールドにフォーカスを設定
-            let objInp = document.getElementById("form_name" + count);
+            let objInp = document.getElementById("form_name" + parseInt(count));
             if (objInp)
                 objInp.focus();
         }
@@ -140,6 +139,9 @@
          * delete_form: 削除ボタン該当行を削除
          */
         function delete_form(obj, form_id) {
+            document.getElementById("insert_btn").onclick = function () {
+                insert_row()
+            };
             // 確認
             if (!confirm("この行を削除しますか？"))
                 return;
@@ -225,6 +227,9 @@
                 issuance_days.readOnly = true;
                 let request = new XMLHttpRequest();
                 let url = location.href + "/save?form_id=" + form_id.value + "&form_name=" + form_name.value + "&fee=" + fee.value + "&issuance_days=" + issuance_days.value;
+                document.getElementById("insert_btn").onclick = function () {
+                    insert_row()
+                };
                 request.open('GET', url, true);
                 request.send();
                 objBtn.value = "編集";

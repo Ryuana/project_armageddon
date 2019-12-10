@@ -56,17 +56,22 @@
         <input name="year" type="text" class="js-changeYear"> 年
 
         {# TODO： ファイル名#}
-        <button><a id="downloadCsvBtn" href="" download="test.csv" onclick="handleDownload()"
-                   style="color: black">CSV出力</a></button>
+        <button>
+            {#            <a id="downloadCsvBtn" href="" download="test.csv" onclick="handleDownload()"#}
+            {#               style="color: black">CSV出力</a>#}
+            <a id="downloadCsvBtn" href="" download="test.csv" onclick="handleDownload()"
+               style="color: black">CSV出力</a>
+        </button>
     </div>
 
     <div class="row">
         <div class="col-xs-12" style="width: 100%;">
             <div class="table-responsive">
-                <table border="1" id="pay_log_table" class="table table-bordered table-hover" style="table-layout: auto">
+                <table border="1" id="pay_log_table" class="table table-bordered table-hover"
+                       style="table-layout: auto">
                     <thead align="center">
                     <tr id="object">
-                        <th>日時</th>
+                        <th>日付</th>
                         <th>学校名</th>
                         <th>学科</th>
                         <th>学籍番号</th>
@@ -155,23 +160,25 @@
 
         function handleDownload() {
             let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
-            let table = document.getElementById('table1');//id=table1という要素を取得
+            let table = document.getElementById('pay_log_table');//id=table1という要素を取得
             let data_csv = "";//ここに文字データとして値を格納していく
 
             for (let i = 0; i < table.rows.length; i++) {
                 for (let j = 0; j < table.rows[i].cells.length; j++) {
                     data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
-                    if (j == table.rows[i].cells.length - 1) data_csv += "\n";//行終わりに改行コードを追加
-                    else data_csv += ",";//セル値の区切り文字として,を追加
+                    if (j == table.rows[i].cells.length - 1) {
+                        data_csv += "\n";
+                    }//行終わりに改行コードを追加
+                    else {
+                        data_csv += ",";//セル値の区切り文字として,を追加
+                    }
                 }
             }
             let blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
             if (window.navigator.msSaveBlob) { //IEの場合の処理
-                console.log("ぴ");
                 window.navigator.msSaveBlob(blob, "test.csv");
                 //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
             } else {
-                console.log("よ");
                 document.getElementById("downloadCsvBtn").href = window.URL.createObjectURL(blob);
             }
             delete data_csv;//data_csvオブジェクトいらないから消去してメモリ開放
