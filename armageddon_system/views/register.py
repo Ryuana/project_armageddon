@@ -64,6 +64,8 @@ def register_confirm(request):
 
 
 def payments(request):
+    # TODO:GETでtransactIDしか取得できない
+    print(request)
     if request.POST['is_multiple'] == "True":
         form_name = "証明書(複数)"
     else:
@@ -93,6 +95,7 @@ def payments(request):
     school_name = "麻生情報ビジネス"
     course_name = "情報工学科"
     form_list = []
+
     for i in range(int(request.POST['countFormTypes'])):
         form_item = {
             'form_id': request.POST[f'form_id{i}'],
@@ -103,8 +106,12 @@ def payments(request):
         form_list.append(form_item)
     paylog = am().PayLog(
         time_stamp=date,
-        form_list=form_list
+        form_list=form_list,
+        student_id=int(student_id)
     )
+    print("---")
+    print(paylog)
+    print("---")
     db().save_pay_log(paylog)
 
     redirect_url = response["info"]["paymentUrl"]["web"]

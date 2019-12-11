@@ -35,7 +35,7 @@ class DynamoManager():
                         qr=None
                     ),
                     "quantity": form_item.Quantity,
-                    "subtotal": form_item.Subtotal
+                    "subtotal": int(form_item.Fee) * int(form_item.Quantity)
                 }
                 total += form_item.Fee * form_item.Quantity
 
@@ -83,7 +83,6 @@ class DynamoManager():
         total = 0
         for form_item in pay_log.form_list:
             count += 1
-            print(form_item)
             fm = form_item['form']
             form_map = {
                 'PayItemNo': count,
