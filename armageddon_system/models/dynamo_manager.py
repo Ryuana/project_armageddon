@@ -61,6 +61,8 @@ class DynamoManager():
 
             )
             return_items.append(pay_log_item)
+        return_items.sort(key=lambda x: x.time_stamp)
+        return_items = list(reversed(return_items))
         return return_items, total
 
     def save_pay_log(self, pay_log: pay_log, id=False, IsPaid=False):
