@@ -166,7 +166,12 @@
             }
             //qa削除処理
             let request = new XMLHttpRequest();
-            let url = location.href + "/delete?qa_id=" + qa_id;
+            let urls = location.href.split("/");
+            let url = "";
+            for(let i = 0;i < urls.length - 1 ; i++){
+                url += urls[i] + "/";
+            }
+            url += "delete?qa_id=" + qa_id;
             request.open('GET', url, true);
             request.send();
         }
@@ -199,7 +204,12 @@
                 questions.readOnly = true;
                 answer.readOnly = true;
                 let request = new XMLHttpRequest();
-                let url = location.href + "/save?qa_id=" + qa_id.value + "&questions=" + questions.value + "&answer=" + answer.value;
+                let urls = location.href.split("/");
+                let url = "";
+                for(let i = 0;i < urls.length - 1 ; i++){
+                    url += urls[i] + "/";
+                }
+                url = "save?qa_id=" + qa_id.value + "&questions=" + questions.value + "&answer=" + answer.value;
                 request.open('GET', url, true);
                 request.send();
                 objBtn.value = "編集";
