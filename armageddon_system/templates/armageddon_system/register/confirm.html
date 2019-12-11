@@ -14,8 +14,9 @@
         申請情報を確認してください
         <hr>
         <div id="items">
-            <p>学籍番号:<input hidden type="text" name="school_num" value="{{ student_id }}">{{ student_id }}</p>
+            <p>学籍番号:<input hidden type="text" name="student_id" value="{{ student_id }}">{{ student_id }}</p>
             <input hidden name='is_multiple' value="{{ is_multiple }}">
+            <input hidden name="countFormTypes" value="{{ countFormTypes }}">
             <p>
             <table>
                 {% for i in form_list %}

@@ -163,6 +163,10 @@
             let userName = document.getElementById('user-name');
             let csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0];
             let countFormTypes = document.getElementById('countFormTypes');
+            let is_multiple = false;
+            if (countFormTypes > 1) {
+                is_multiple = true
+            }
             let form_list = [];
             let is_input_ok = true;
             if (hasNoStudentId.checked) {
@@ -226,9 +230,7 @@
                     form_item_count.name = `count${i}`;
                     form_item_count.value = form_list[i].count;
                     form.appendChild(form_item_count);
-
                 }
-
                 form.appendChild(csrfToken);
                 document.body.appendChild(form);
                 form.submit();

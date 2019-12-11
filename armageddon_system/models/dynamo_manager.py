@@ -35,9 +35,9 @@ class DynamoManager():
                         qr=None
                     ),
                     "quantity": form_item.Quantity,
-                    "subtotal": form_item.Subtotal
+                    "subtotal": int(form_item.Fee) * int(form_item.Quantity)
                 }
-                total += form_item.Subtotal
+                total += form_item.Fee * form_item.Quantity
 
                 pay_log_form_list.append(pay_log_form_item)
 
@@ -80,9 +80,9 @@ class DynamoManager():
         buyer_info = {}
         pay_items = []
         count = 0
+        total = 0
         for form_item in pay_log.form_list:
             count += 1
-            print(form_item)
             fm = form_item['form']
             form_map = {
                 'PayItemNo': count,
@@ -90,8 +90,8 @@ class DynamoManager():
                 'FormName': fm.form_name,
                 'Fee': fm.fee,
                 'Quantity': form_item['quantity']
-
             }
+            total += fm.fee * form_item['quantity']
             pay_items.append(form_map)
         if pay_log.isStudent:
             buyer_info = {
@@ -108,7 +108,7 @@ class DynamoManager():
             }
         log.PayOffLog = {
             'Timestamp': pay_log.time_stamp,
-            'Total': pay_log.total,
+            'Total': total,
             'Buyer': buyer_info,
             'PayItems': pay_items,
         }
@@ -216,6 +216,7 @@ class DynamoManager():
         for i in all_qa:
             max_id = max(max_id, i.QuestionAndAnswerId)
         return max_id + 1
+
     def get_next_message_id(self):
         all_message = db.MessagesModel.scan()
         max_id = 0
@@ -280,7 +281,7 @@ class DynamoManager():
         new_message.Message = {
             'MessageContent': message['message'],
             'ImagePath': message['image'],
-            'Timestamp': datetime.datetime.strptime(message['time_stamp'],'%Y-%m-%d')
+            'Timestamp': datetime.datetime.strptime(message['time_stamp'], '%Y-%m-%d')
         }
         new_message.save()
 
