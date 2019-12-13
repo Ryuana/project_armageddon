@@ -24,7 +24,7 @@
 
         <p>
             学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="hasNotStudentId"
-                            onchange=changeHasStudentId()><br>
+                            onchange=changeHasStudentId() ><br>
             申請者名
             <input type="text" id="user-name" name="userName" disabled placeholder="学籍番号がない場合入力">
             <span id="userNameErr"></span>
@@ -46,7 +46,10 @@
 
     </form>
     {#    デバッグ用#}
-    <button onclick="read_qrcode('d2ad5ee855fdf802eba0b8c60a652180')">テスト用</button>
+    <div class="test_position">
+        <button id="test_btn" onclick="read_qrcode('d2ad5ee855fdf802eba0b8c60a652180')">テスト用</button>
+    </div>
+
     <script>
         {# 申請書の種類の数#}
         let request_count = 0;

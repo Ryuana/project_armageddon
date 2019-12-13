@@ -6,6 +6,7 @@ h1 {
     font-weight: 500;
     line-height: 1.2;
     color: inherit;
+    text-align: center;
 }
 
 body {
@@ -220,18 +221,22 @@ table input {
     border: none;
     background-color: transparent;
 }
+
 table .button {
     text-align: center;
 }
+
 table .input-button {
     border: 1px solid lightskyblue;
     align-content: center;
     background-color: #fdfffb;
 }
+
 table .input-value {
     width: 100%;
     text-align: left;
 }
+
 table .input-number {
     width: 100%;
     text-align: right;
@@ -247,4 +252,87 @@ table .input-number {
     text-align: center;
     padding-top: 140px;
     font-size: 14px;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+
+#message {
+    float: left;
+    width: 300px;
+    height: 110px;
+    position: relative;
+    left: 160px;
+    top: 70px;
+}
+
+.upload #file {
+    float: right;
+    position: relative;
+    right: 160px;
+    top: 40px;
+}
+
+#save_btn {
+    float: left;
+    position: relative;
+    top: 500px;
+    left: 10px;
+}
+
+.button-wrapper {
+    display: inline-block;
+    margin: 20px 5px;
+    padding: 40px;
+}
+
+#send_btn {
+    float: right;
+    position: relative;
+    top: 500px;
+    left: 140px;
+}
+
+#canvas {
+    float: right;
+    position: relative;
+    top: 140px;
+    left: 170px;
+}
+
+/*申請者情報入力画面*/
+[name=requestForm] {
+    text-align: center;
+    position: relative;
+    top: 50px;
+    font-size: 17px;
+}
+
+[name=requestForm] #student-id, #has-not-student-id, #user-name {
+    margin-bottom: 40px;
+}
+
+.test_position {
+    text-align: center;
+}
+
+#test_btn {
+    position: relative;
+    top: 80px;
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 10px 30px;
+    color: #fff;
+    border-style: none;
+    box-shadow: 2px 2px 3px 1px #666;
+    -moz-box-shadow: 2px 2px 3px 1px #666;
+    -webkit-box-shadow: 2px 2px 3px 1px #666;
+    text-shadow: 1px 1px 2px #000;
+    background-color: #3cb371;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 10px;
+}
+
+#test_btn:hover {
+    opacity: 0.8;
 }
