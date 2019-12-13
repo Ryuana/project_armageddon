@@ -252,7 +252,7 @@ class DynamoManager():
         """
         message_list = db.MessagesModel.scan()
         messages = []
-        print(message_list)
+        # print(message_list)
         # messageを埋め込む処理
         for item in message_list:
             # item.Message['Timestamp'] = datetime.datetime.strftime(ite.Message['Timestamp'], '%Y-%m-%d')
@@ -268,7 +268,7 @@ class DynamoManager():
         :rtype: list of map
         """
         message = db.MessagesModel.get(int(message_id))
-        print(dict(message))
+        # print(dict(message))
         # messageを埋め込む処理
         return message
 

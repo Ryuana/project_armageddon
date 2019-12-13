@@ -187,7 +187,12 @@
             }
             //form削除処理
             let request = new XMLHttpRequest();
-            let url = location.href + "/delete?form_id=" + form_id;
+            let urls = location.href.split("/");
+            let url = "";
+            for(let i = 0;i < urls.length - 1 ; i++){
+                url += urls[i] + "/";
+            }
+            url += "delete?form_id=" + form_id;
             request.open('GET', url, true);
             request.send();
         }
@@ -226,7 +231,12 @@
                 fee.readOnly = true;
                 issuance_days.readOnly = true;
                 let request = new XMLHttpRequest();
-                let url = location.href + "/save?form_id=" + form_id.value + "&form_name=" + form_name.value + "&fee=" + fee.value + "&issuance_days=" + issuance_days.value;
+                let urls = location.href.split("/");
+                let url = "";
+                for(let i = 0;i < urls.length - 1 ; i++){
+                    url += urls[i] + "/";
+                }
+                url += "save?form_id=" + form_id.value + "&form_name=" + form_name.value + "&fee=" + fee.value + "&issuance_days=" + issuance_days.value;
                 document.getElementById("insert_btn").onclick = function () {
                     insert_row()
                 };

@@ -39,7 +39,7 @@
         let canvas = document.getElementById('canvas');
         {#var canvasWidth = 400;#}
         {#var canvasHeight = 300;#}
-        let uploadImgSrc;
+        {#let uploadImgSrc;#}
 
         {#canvas.width = canvasWidth;#}
         {#canvas.height = canvasHeight;#}
@@ -59,14 +59,19 @@
             var reader = new FileReader();
             reader.onload = function () {
                 uploadImgSrc = reader.result;
-                canvasDraw();
+                canvasDraw(uploadImgSrc);
             };
             reader.readAsDataURL(fileData);
         }
 
         file.addEventListener('change', loadLocalImage, false);
+        $(document).ready(function () {
+            {% load static %}
+            path = "{% static 'armageddon_system/' %}" + "{{message.Message.ImagePath}}";
+            canvasDraw(path)
+        });
 
-        function canvasDraw() {
+        function canvasDraw(uploadImgSrc) {
             {#ctx.clearRect(0, 0, 300, 300);#}
             let img = new Image();
             img.src = uploadImgSrc;
