@@ -19,22 +19,32 @@
 {% block main-content %}
     <div id="systems">
         <div id="systems">
-            <form action="./save" method="post" enctype="multipart/form-data">
+            <form action="./save" method="post" enctype="multipart/form-data" name="form1">
                 {% csrf_token %}
-                <p>メッセージ</p>
                 <input type="hidden" id="message_id" name="message_id" value={{ message_id }}>
                 <textarea id="message" name="message" rows="4" cols="40">{{ message.Message.MessageContent }}</textarea><br>
-                画像
                 <div class="upload">
                     <input type="file" name="file" id="file" value="{{ message.Message.ImagePath }}"></div>
                 <canvas id="canvas"></canvas>
 
-                <input type="submit" value="保存" id="save_btn">
-                <input type="submit" value="送信" id="send_btn" onclick="send();">
+                <input type="button" value="保存" id="save_btn" onclick="onButtonClick();">
+                <input type="button" value="送信" id="send_btn" onclick="send();">
             </form>
+
+
+
+
         </div>
     </div>
     <script>
+        {# 自作のダイアログを表示させる処理 #}
+        $(function () {
+            $('#save_btn').click(function () {
+                $('#original_dialog').modal();
+            });
+        });
+
+
         let file = document.getElementById('file');
         let canvas = document.getElementById('canvas');
         {#var canvasWidth = 400;#}
