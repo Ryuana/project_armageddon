@@ -29,7 +29,7 @@ ALLOWED_HOSTS = [
     "ec2-13-113-87-53.ap-northeast-1.compute.amazonaws.com",
     "koguchi.armageddon.work",
     'localhost',
-    '192.168.43.204', #テザリング用
+    '192.168.43.204',  # テザリング用
     '13.113.87.53'
 ]
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'armageddon_system.apps.ArmageddonSystemConfig',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
