@@ -48,8 +48,11 @@
                                     <tr>
                                         <td text-align="right">
                                             <span
-                                                class="seqno">{{ forloop.counter }}<input type="hidden" id="form_id{{ forloop.counter }}"
-                                                                     name="form_id" value={{ form.form_id }}></span></td>
+                                                    class="seqno">{{ forloop.counter }}<input type="hidden"
+                                                                                              id="form_id{{ forloop.counter }}"
+                                                                                              name="form_id"
+                                                                                              value={{ form.form_id }}></span>
+                                        </td>
                                         <td style=""><input class="inpval" type="text"
                                                             id="form_name{{ forloop.counter }}"
                                                             name="form_name" value={{ form.form_name }} size="25"
@@ -70,10 +73,10 @@
                                         </td>
                                         <td style="width:40px;"><input class="inpval" type="button"
                                                                        id="delBtn{{ forloop.counter }}"
-                                                                       value="削除"
-                                                                       onclick="delete_form(this,{{ form.form_id }})">
+                                                                       value="削除">
                                         </td>
-                                        <td style="width:40px;"><input class="inpval" type="button" id="qrBtn1" onclick="submit()"
+                                        <td style="width:40px;"><input class="inpval" type="button" id="qrBtn1"
+                                                                       onclick="submit()"
                                                                        value="QR表示"></td>
                                     </tr>
                                 </form>
@@ -89,9 +92,38 @@
                 </div>
             </div>
         </div>
+
+    <!--　自作ダイアログの内容 -->
+            <div class="modal fade" id="original_dialog" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="font-size: 20px;">このメッセージ・画像を保存しますか?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!--ダイアログの本文-->
+                            <p>・メッセージ内容</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" style="background-color: #3cb371" onclick="delete_form(this,{{ form.form_id }})">保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </div>
     <script>
-    let max_id = {{ max_id }};
+
+        {# 自作のダイアログを表示させる処理 #}
+        $(function () {
+            $('#delBtn').click(function () {
+                $('#original_dialog').modal();
+            });
+        });
+
+        let max_id = {{ max_id }};
+
         function insert_row() {
             let objTBL = document.getElementById("tbl");
             document.getElementById("insert_btn").onclick = "";
@@ -156,7 +188,7 @@
                 objTBL.deleteRow(objTR.sectionRowIndex);
 
             // <span> 行番号ふり直し
-            let tagElements = document.getElementsByTagName("span");
+            var tagElements = document.getElementsByTagName("span");
             if (!tagElements)
                 return false;
 
@@ -175,13 +207,13 @@
                 if (tagElements[i].className.match("inpval")) {
                     tagElements[i].setAttribute("id", "form_name" + seq);
                     tagElements[i].setAttribute("name", "form_name");
-                    tagElements[i+1].setAttribute("id", "fee" + seq);
-                    tagElements[i+1].setAttribute("name", "fee");
-                    tagElements[i+2].setAttribute("id", "issuance_days" + seq);
-                    tagElements[i+2].setAttribute("name", "issuance_days");
-                    tagElements[i+3].setAttribute("id", "edtBtn" + seq);
-                    tagElements[i+4].setAttribute("id", "delBtn" + seq);
-                    tagElements[i+5].setAttribute("id", "qrBtn" + seq);
+                    tagElements[i + 1].setAttribute("id", "fee" + seq);
+                    tagElements[i + 1].setAttribute("name", "fee");
+                    tagElements[i + 2].setAttribute("id", "issuance_days" + seq);
+                    tagElements[i + 2].setAttribute("name", "issuance_days");
+                    tagElements[i + 3].setAttribute("id", "edtBtn" + seq);
+                    tagElements[i + 4].setAttribute("id", "delBtn" + seq);
+                    tagElements[i + 5].setAttribute("id", "qrBtn" + seq);
                     ++seq;
                 }
             }
@@ -189,7 +221,7 @@
             let request = new XMLHttpRequest();
             let urls = location.href.split("/");
             let url = "";
-            for(let i = 0;i < urls.length - 1 ; i++){
+            for (let i = 0; i < urls.length - 1; i++) {
                 url += urls[i] + "/";
             }
             url += "delete?form_id=" + form_id;
@@ -233,7 +265,7 @@
                 let request = new XMLHttpRequest();
                 let urls = location.href.split("/");
                 let url = "";
-                for(let i = 0;i < urls.length - 1 ; i++){
+                for (let i = 0; i < urls.length - 1; i++) {
                     url += urls[i] + "/";
                 }
                 url += "save?form_id=" + form_id.value + "&form_name=" + form_name.value + "&fee=" + fee.value + "&issuance_days=" + issuance_days.value;

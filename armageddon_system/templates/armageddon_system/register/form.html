@@ -32,13 +32,12 @@
 
         QRコードを読み取ってください
         <input id="countFormTypes" type='number' name="countFormTypes" value=0 hidden>
-        <input id="send_btn" type="button" value="決定" onclick="send_data();" disabled>
         <br>
         <div id="form_list">
         </div>
         <section id="contents">
             <!-- カメラ -->
-            <video id="camera" width="300" height="200" muted></video>
+            <video id="camera" width="300" height="200" muted style="position: relative; top: 90px;"></video>
 
             <!-- 処理用 -->
             <canvas id="picture" width="300" height="200" hidden></canvas>
@@ -47,7 +46,7 @@
     </form>
     {#    デバッグ用#}
     <div class="test_position">
-        <button id="test_btn" onclick="read_qrcode('d2ad5ee855fdf802eba0b8c60a652180')">テスト用</button>
+       <input id="send_btn" type="button" value="決定" onclick="send_data();" disable>
     </div>
 
     <script>

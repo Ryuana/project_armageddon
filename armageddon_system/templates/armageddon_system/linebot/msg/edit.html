@@ -27,12 +27,52 @@
                     <input type="file" name="file" id="file" value="{{ message.Message.ImagePath }}"></div>
                 <canvas id="canvas"></canvas>
 
-                <input type="button" value="保存" id="save_btn" onclick="onButtonClick();">
-                <input type="button" value="送信" id="send_btn" onclick="send();">
+                <button type="button" id="save_btn" onclick="onButtonClick();">保存</button>
+{#                <input type="button" value="送信" id="send_btn">#}
+
+                <div class="modal fade" id="original_dialog" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="font-size: 20px;">このメッセージを保存しますか?</h4>
+                            </div>
+                            <div class="modal-body">
+
+
+                                <!--ダイアログの本文-->
+                                <p>メッセージ内容</p>
+                                <p id="message_value"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" style="background-color: #3cb371"
+                                       value="保存">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </form>
 
-
-
+            <!--　自作ダイアログの内容 -->
+            {#            <div class="modal fade" id="original_dialog" tabindex="-1">#}
+            {#                <div class="modal-dialog">#}
+            {#                    <div class="modal-content">#}
+            {#                        <div class="modal-header">#}
+            {#                            <h4 class="modal-title" style="font-size: 20px;">このメッセージを保存しますか?</h4>#}
+            {#                        </div>#}
+            {#                        <div class="modal-body">#}
+            {#                            <!--ダイアログの本文-->#}
+            {#                            <p>メッセージ内容</p>#}
+            {#                            <p id="message_value"></p>#}
+            {#                        </div>#}
+            {#                        <div class="modal-footer">#}
+            {#                            <input type="submit" class="btn btn-primary" style="background-color: #3cb371" value="保存">#}
+            {#                            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
 
         </div>
     </div>
@@ -43,6 +83,13 @@
                 $('#original_dialog').modal();
             });
         });
+
+        {# メッセージ内容を表示させる処理 #}
+
+        function onButtonClick() {
+            var msg_value = document.getElementById("message").value;
+            message_value.innerHTML = msg_value;
+        }
 
 
         let file = document.getElementById('file');

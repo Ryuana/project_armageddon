@@ -38,8 +38,11 @@
                                 {% for qa in qa_list %}
                                     <tr>
                                         <td style="text-align:right; width:40px;"><span
-                                                class="seqno">{{ forloop.counter }}<input type="hidden" id="qa_id{{ forloop.counter }}"
-                                               name="qa_id" value={{ qa.qa_id }}></span></td>
+                                                class="seqno">{{ forloop.counter }}<input type="hidden"
+                                                                                          id="qa_id{{ forloop.counter }}"
+                                                                                          name="qa_id"
+                                                                                          value={{ qa.qa_id }}></span>
+                                        </td>
                                         <td style="">
                                             <input class="inpval" type="text" id="questions{{ forloop.counter }}"
                                                    name="questions"
@@ -59,9 +62,8 @@
                                                                        onclick="editRow(this,{{ forloop.counter }})">
                                         </td>
                                         <td style="width:40px;"><input class="inpval" type="button"
-                                                                       id="delBtn{{ forloop.counter }}"
                                                                        value="削除"
-                                                                       onclick="deleteRow(this,{{ qa.qa_id }})"></td>
+                                                                       onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});"></td>
                                     </tr>
                                 {% endfor %}
                                 <tfoot>
@@ -75,9 +77,37 @@
                 </div>
             </div>
         </form>
+
+        <!--　自作ダイアログの内容 -->
+        <div class="modal fade" id="original_dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" style="font-size: 20px;">このメッセージを削除しますか?</h4>
+                    </div>
+                    {#                    <div class="modal-body">#}
+                    {#                        <!--ダイアログの本文-->#}
+                    {#                    </div>#}
+                    <div class="modal-footer">
+                        <input type="button" id="delBtn"  class="btn btn-primary" style="background-color: #3cb371" value="削除" onclick="deleteRow(this)">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script>
-    let max_id = {{ max_id }};
+
+        {# 自作のダイアログを表示させる処理 #}
+        function onButtonClick(rowNo,qaId){
+            alert(`${rowNo},${qaId}`)
+                var i = document.getElementById('#delBtn');
+                $('#original_dialog').modal();
+        }
+
+        let max_id = {{ max_id }};
+
         function appendRow() {
 
             let objTBL = document.getElementById("tbl");
@@ -125,8 +155,8 @@
             };
 
             // 確認
-            if (!confirm("この行を削除しますか？"))
-                return;
+            {#if (!confirm("この行を削除しますか？"))#}
+            {#    return;#}
 
             if (!obj)
                 return;
@@ -157,10 +187,10 @@
                 if (tagElements[i].className.match("inpval")) {
                     tagElements[i].setAttribute("id", "questions" + seq);
                     tagElements[i].setAttribute("name", "questions");
-                    tagElements[i+1].setAttribute("id", "answer" + seq);
-                    tagElements[i+1].setAttribute("name", "answer");
-                    tagElements[i+2].setAttribute("id", "edtBtn" + seq);
-                    tagElements[i+3].setAttribute("id", "delBtn" + seq);
+                    tagElements[i + 1].setAttribute("id", "answer" + seq);
+                    tagElements[i + 1].setAttribute("name", "answer");
+                    tagElements[i + 2].setAttribute("id", "edtBtn" + seq);
+                    tagElements[i + 3].setAttribute("id", "delBtn" + seq);
                     ++seq;
                 }
             }
@@ -168,7 +198,7 @@
             let request = new XMLHttpRequest();
             let urls = location.href.split("/");
             let url = "";
-            for(let i = 0;i < urls.length - 1 ; i++){
+            for (let i = 0; i < urls.length - 1; i++) {
                 url += urls[i] + "/";
             }
             url += "delete?qa_id=" + qa_id;
@@ -206,7 +236,7 @@
                 let request = new XMLHttpRequest();
                 let urls = location.href.split("/");
                 let url = "";
-                for(let i = 0;i < urls.length - 1 ; i++){
+                for (let i = 0; i < urls.length - 1; i++) {
                     url += urls[i] + "/";
                 }
                 url = "save?qa_id=" + qa_id.value + "&questions=" + questions.value + "&answer=" + answer.value;
@@ -216,7 +246,6 @@
                 document.getElementById("add_btn").onclick = function () {
                     appendRow()
                 };
-
             }
         }
     </script>
