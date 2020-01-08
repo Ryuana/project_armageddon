@@ -121,3 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
 # LOGIN_REDIRECT_URL = '/'
+
+# SSLの設定
+CERT_ROOT = os.path.join(BASE_DIR, '.well-known')
+CERT_URL = '/.well-known/'
