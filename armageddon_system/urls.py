@@ -1,4 +1,7 @@
+from django.conf.urls import static
 from django.urls import path
+
+from project_armageddon import settings
 from . import views
 
 urlpatterns = [
@@ -33,3 +36,5 @@ urlpatterns = [
     path('debug/dynamo/form', views.debug.form, name='debug_dynamo_form'),
 
 ]
+
+urlpatterns += static.static(settings.CERT_URL, document_root=settings.CERT_ROOT)

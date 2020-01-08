@@ -123,5 +123,10 @@ STATIC_URL = '/static/'
 # LOGIN_REDIRECT_URL = '/'
 
 # SSLの設定
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 CERT_ROOT = os.path.join(BASE_DIR, '.well-known')
 CERT_URL = '/.well-known/'
