@@ -63,7 +63,8 @@
                                         </td>
                                         <td style="width:40px;"><input class="inpval" type="button"
                                                                        value="削除"
-                                                                       onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});"></td>
+                                                                       onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});">
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 <tfoot>
@@ -89,7 +90,8 @@
                     {#                        <!--ダイアログの本文-->#}
                     {#                    </div>#}
                     <div class="modal-footer">
-                        <input type="button" id="delBtn"  class="btn btn-primary" style="background-color: #3cb371" value="削除" onclick="deleteRow(this)">
+                        <input type="button" id="delBtn" class="btn btn-primary" style="background-color: #3cb371"
+                               value="削除" onclick="deleteRow(this)">
                         <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
                     </div>
                 </div>
@@ -100,16 +102,18 @@
     <script>
 
         {# 自作のダイアログを表示させる処理 #}
-        function onButtonClick(rowNo,qaId){
+
+        function onButtonClick(rowNo, qaId) {
             alert(`${rowNo},${qaId}`)
-                var i = document.getElementById('#delBtn');
-                $('#original_dialog').modal();
+            var i = document.getElementById('#delBtn');
+            $('#original_dialog').modal();
         }
 
         let max_id = {{ max_id }};
 
-        function appendRow() {
 
+        function appendRow() {
+            console.log(a);
             let objTBL = document.getElementById("tbl");
             if (!objTBL)
                 return;
@@ -217,6 +221,20 @@
             let answer = document.getElementById("answer" + rowId);
             let objBtn = document.getElementById("edtBtn" + rowId);
 
+            let array = [];
+            {% for qa in qa_list %}
+                {% for question in qa.question %}
+                    console.log("{{ question }}");
+                    array.push("{{ question }}");
+                {% endfor %}
+            {% endfor %}
+
+            var b = array.filter(function (x, i, self) {
+                return self.indexOf(x) === i && i !== self.lastIndexOf(x);
+            });
+            console.log(b);
+
+
             if (!questions || !objBtn)
                 return;
 
@@ -229,6 +247,18 @@
                 questions.focus();
                 objBtn.value = "確定";
             } else {
+                //配列に同じ質問が存在する場合
+            if (b.indexOf(questions.value) >=0) {
+                console.log("存在する");
+                alert("既に存在する質問です");
+                return;
+             }
+
+            //配列に同じ質問が存在しない場合
+            if (b.indexOf(questions.value) == -1) {
+                console.log("存在しない");
+             }
+
                 questions.style.cssText = "border:none;";
                 answer.style.cssText = "border:none;";
                 questions.readOnly = true;
