@@ -25,41 +25,10 @@
     精算記録
 {% endblock %}
 {% block main-content %}
-    <p class="school">学校名
-        <select name="school" id="school">
-            <option value="num1">麻生情報ビジネス</option>
-            <option value="num2">麻生公務員</option>
-            <option value="num3">麻生製菓</option>
-            <option value="num4">麻生外国語</option>
-        </select></p>
-
     <div class="system">
-        絞り込み：<input name="year" type="text" class="js-changeYear" value="2019"> 年
-
-        <select name="month" class="js-changeMonth">
-            {% with ''|center:12 as range %}
-                {% for _ in range %}
-                    <option value={{ forloop.counter }}>{{ forloop.counter }}</option>
-                {% endfor %}
-            {% endwith %}
-
-        </select> 月
-
-        <select name="date" class="js-changeDay">
-            {% with ''|center:31 as range %}
-                {% for _ in range %}
-                    <option value={{ forloop.counter }}>{{ forloop.counter }}</option>
-                {% endfor %}
-            {% endwith %}
-        </select> 日
-        ~
-        <input name="year" type="text" class="js-changeYear"> 年
-
         {# TODO： ファイル名#}
         <button>
-            {#            <a id="downloadCsvBtn" href="" download="test.csv" onclick="handleDownload()"#}
-            {#               style="color: black">CSV出力</a>#}
-            <a id="downloadCsvBtn" href="" download="test.csv" onclick="handleDownload()"
+            <a id="downloadCsvBtn" href="" download="{% now "Ymd"%}.csv" onclick="handleDownload()"
                style="color: black">CSV出力</a>
         </button>
     </div>
@@ -72,8 +41,7 @@
                     <thead align="center">
                     <tr id="object">
                         <th>日付</th>
-                        <th>学校名</th>
-                        <th>学科</th>
+{#                        <th>学校名</th>#}
                         <th>学籍番号</th>
                         <th>申請書名</th>
                         <th>枚数</th>
@@ -85,8 +53,7 @@
                         {% for forms in pay_log.form_list %}
                             <tr>
                                 <td align="right">{{ pay_log.time_stamp|date:"Y/m/d" }}</td>
-                                <td>{{ pay_log.school_name }}</td>
-                                <td>{{ pay_log.course_name }}</td>
+{#                                <td>{{ pay_log.school_name }}</td>#}
                                 <td align="right">{{ pay_log.student_id }}</td>
                                 <td>{{ forms.form.form_name }}</td>
                                 <td align="right">{{ forms.quantity }}</td>
@@ -98,8 +65,7 @@
                     <tfoot>
                     <tr>
                         <td></td>
-                        <td></td>
-                        <td></td>
+{#                        <td></td>#}
                         <td></td>
                         <td></td>
                         <td id="total" colspan="1" align="center">合計</td>
@@ -163,7 +129,7 @@
             let table = document.getElementById('pay_log_table');//id=table1という要素を取得
             let data_csv = "";//ここに文字データとして値を格納していく
 
-            for (let i = 0; i < table.rows.length; i++) {
+            for (let i = 0; i < table.rows.length - 1; i++) {
                 for (let j = 0; j < table.rows[i].cells.length; j++) {
                     data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
                     if (j == table.rows[i].cells.length - 1) {
@@ -177,7 +143,6 @@
             let blob = new Blob([bom, data_csv], {"type": "text/csv"});//data_csvのデータをcsvとしてダウンロードする関数
             if (window.navigator.msSaveBlob) { //IEの場合の処理
                 window.navigator.msSaveBlob(blob, "test.csv");
-                //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
             } else {
                 document.getElementById("downloadCsvBtn").href = window.URL.createObjectURL(blob);
             }
