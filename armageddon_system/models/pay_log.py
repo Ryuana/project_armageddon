@@ -40,6 +40,7 @@ class PayLog:
         self.form_list = []
         dbm = db()
         all_form = dbm.get_form_all()
+
         for l in form_list:
             if 'form' in l:
                 f = l['form']
@@ -66,7 +67,7 @@ class PayLog:
                     qr=None
                 )
                 self.form_list.append(
-                    {'form': all_form[int(l['form_id'])], 'quantity': int(l['quantity']),
+                    {'form': all_form[int(l['form_id'])-1], 'quantity': int(l['quantity']),
                      'subtotal': (int(l['fee']) * int(l['quantity']))}
                 )
 
