@@ -61,7 +61,7 @@ def save_message(request):
     context['message_id'] = request.POST['message_id']
     context['message'] = request.POST['message']
     print(request.POST)
-    if 'message' in request.POST:
+    if request.POST['message'] ==  ' ':
         context['message'] = " "
     if 'file' in request.FILES:
         context['image'] = str(request.FILES['file'])

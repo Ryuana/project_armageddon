@@ -64,7 +64,6 @@ def register_confirm(request):
 
 
 def payments(request):
-    # TODO:GETでtransactIDしか取得できない
     print(request)
     if request.POST['is_multiple'] == "True":
         form_name = "証明書(複数)"
@@ -80,7 +79,7 @@ def payments(request):
     print(order_id, transaction_id, form_name, fee, "JPY")
     # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
     #                    product_name=product_name, amount=amount, currency=currency)
-    obj = dc().Transactions(str(transaction_id))
+    obj = dc.Transactions(str(transaction_id))
     obj.order_id = order_id
     obj.product_name = form_name
     obj.amount = fee
@@ -91,8 +90,7 @@ def payments(request):
     date = datetime.datetime.now()
     student_id = request.POST['student_id']
 
-    # TODO:学籍番号から取得するように
-    school_name = "麻生情報ビジネス"
+    school_name = "-"
     course_name = "情報工学科"
     form_list = []
 
