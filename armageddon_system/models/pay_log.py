@@ -51,7 +51,7 @@ class PayLog:
                     qr=None
                 )
                 self.form_list.append(
-                    {'form': all_form[int(f.form_id)],
+                    {'form': all_form[int(f.form_id)-1],
                      'quantity': l['quantity'],
                      'subtotal': l['subtotal']
                      }
