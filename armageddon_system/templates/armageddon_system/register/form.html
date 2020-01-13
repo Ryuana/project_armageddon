@@ -45,6 +45,7 @@
         </div>
         <div id="form_list">
             <input id="send_btn" type="button" value="決定" onclick="send_data();" disabled><br>
+            {#            <input id="send_btn" type="button" value="決定" onclick="send_data();" ><br>#}
 
         </div>
     </form>
@@ -169,16 +170,23 @@
             let countFormTypes = document.getElementById('countFormTypes');
             let is_multiple = false;
             if (countFormTypes > 1) {
-                is_multiple = true
+                is_multiple = true;
             }
             let form_list = [];
             let is_input_ok = true;
-            if (hasNoStudentId.checked) {
-                if (studentId.value === "") {
+            if (!hasNoStudentId.checked) {
+                if (studentId.value.length !== 7) {
                     alert("学籍番号を入力してください。");
-                    is_input_ok = false
+                    is_input_ok = false;
+                }
+            } else {
+                if (userName.value === "") {
+                    alert("名前を入力してください。");
+                    is_input_ok = false;
+
                 }
             }
+
             if (!is_input_ok) {
                 return false;
             } else {
