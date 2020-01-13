@@ -24,30 +24,32 @@
 
         <p>
             学籍番号がない場合<input type="checkbox" id="has-not-student-id" name="hasNotStudentId"
-                            onchange=changeHasStudentId() ><br>
+                            onchange=changeHasStudentId()><br>
             申請者名
             <input type="text" id="user-name" name="userName" disabled placeholder="学籍番号がない場合入力">
             <span id="userNameErr"></span>
         </p>
 
+
         QRコードを読み取ってください
         <input id="countFormTypes" type='number' name="countFormTypes" value=0 hidden>
-        <br>
-        <div id="form_list">
+        <div>
+
+            <section id="contents" style="position: relative">
+                <!-- カメラ -->
+                <video id="camera" width="300" height="200" muted style="position: relative;"></video>
+
+                <!-- 処理用 -->
+                <canvas id="picture" width="300" height="200" hidden></canvas>
+            </section>
         </div>
-        <section id="contents">
-            <!-- カメラ -->
-            <video id="camera" width="300" height="200" muted style="position: relative; top: 90px;"></video>
+        <div id="form_list">
+            <input id="send_btn" type="button" value="決定" onclick="send_data();" disabled><br>
 
-            <!-- 処理用 -->
-            <canvas id="picture" width="300" height="200" hidden></canvas>
-        </section>
-
+        </div>
     </form>
-    {#    デバッグ用#}
-    <div class="test_position">
-       <input id="send_btn" type="button" value="決定" onclick="send_data();" disable>
-    </div>
+
+
 
     <script>
         {# 申請書の種類の数#}
