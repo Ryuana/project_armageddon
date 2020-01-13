@@ -3,3 +3,5 @@ armageddon_system/migrations/__pycache__/
 project_armageddon/__pycache__/
 armageddon_system/env.py
 db.sqlite3
+./privkey.pem
+./cert.pem

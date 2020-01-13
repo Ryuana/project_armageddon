@@ -27,8 +27,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     "ec2-13-113-87-53.ap-northeast-1.compute.amazonaws.com",
+    "koguchi.armageddon.work",
     'localhost',
-    '192.168.43.204', #テザリング用
+    '192.168.43.204',  # テザリング用
     '13.113.87.53'
 ]
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'armageddon_system.apps.ArmageddonSystemConfig',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +122,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
 # LOGIN_REDIRECT_URL = '/'
+
+# SSLの設定
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+CERT_ROOT = os.path.join(BASE_DIR, '.well-known')
+CERT_URL = '/.well-known/'
