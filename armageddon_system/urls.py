@@ -12,6 +12,7 @@ urlpatterns = [
     path('pay/item/save', views.pay.save_form, name='item_save'),
     path('pay/item/delete', views.pay.delete_form, name='item_delete'),
     path('pay/log', views.pay.display_pay_logs, name='log'),
+    path('', views.pay.display_pay_logs, name='log'),
     path('linebot/qa/list', views.linebot.display_qa_list, name='display_qa_list'),
     path('linebot/qa/save', views.linebot.save_qa, name='save_qa'),
     path('linebot/qa/delete', views.linebot.delete_qa, name='delete_qa'),
@@ -28,12 +29,12 @@ urlpatterns = [
     path('register/linepay', views.register.payments, name='linepay.confirm'),
     path('register/linepay/finish', views.register.linepay_confirm, name='linepay.finish'),
 
-    # デバッグ用 #
-    path('debug', views.debug.debug, name='debug'),
-    path('', views.debug.debug, name='debug'),
-    path('debug/dynamo', views.debug.dynamo, name='debug_dynamo'),
-    path('debug/dynamo/paylog', views.debug.paylog, name='debug_dynamo_paylog'),
-    path('debug/dynamo/form', views.debug.form, name='debug_dynamo_form'),
+    # # デバッグ用 #
+    # path('debug', views.debug.debug, name='debug'),
+    # path('', views.debug.debug, name='debug'),
+    # path('debug/dynamo', views.debug.dynamo, name='debug_dynamo'),
+    # path('debug/dynamo/paylog', views.debug.paylog, name='debug_dynamo_paylog'),
+    # path('debug/dynamo/form', views.debug.form, name='debug_dynamo_form'),
 
 ]
 
