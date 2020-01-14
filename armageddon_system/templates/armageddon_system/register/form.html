@@ -8,7 +8,7 @@
 {% block menubar %}{% endblock %}
 {% block main-title %}証明書発行申請{% endblock %}
 {% block main-content %}
-    <form name="requestForm" id="fd">
+    <form name="requestForm">
         {% csrf_token %}
         <p>学籍番号
             <input type="number" id="student-id" name="studentId" placeholder="1234567">
@@ -321,10 +321,6 @@
 
             $('#form_list').change(function () {
                 qrCheck = true;
-            });
-
-            $('#fd').click(function () {
-                $('#fd').fadeOut()
             });
 
         });
