@@ -64,7 +64,6 @@ def register_confirm(request):
 
 
 def payments(request):
-    print(request)
     if request.POST['is_multiple'] == "True":
         form_name = "証明書(複数)"
     else:
@@ -72,11 +71,9 @@ def payments(request):
     fee = int(request.POST['total'])
     (order_id, response) = pay.request_payments(product_name=form_name, amount=fee, currency="JPY",
                                                 product_image_url="https://3.bp.blogspot.com/-5o2cwzzEJWI/Vz_w2t2PtXI/AAAAAAAA6uU/IOsMq7K2zjgOcldRuPmf09xXeQ2CnZTVACLcB/s800/document_syorui_pen.png")
-    print(response["returnCode"])
-    print(response["returnMessage"])
+
 
     transaction_id = response["info"]["transactionId"]
-    print(order_id, transaction_id, form_name, fee, "JPY")
     # obj = Transactions(transaction_id=transaction_id, order_id=order_id,
     #                    product_name=product_name, amount=amount, currency=currency)
     obj = dc.Transactions(str(transaction_id))
@@ -107,9 +104,7 @@ def payments(request):
         form_list=form_list,
         student_id=int(student_id)
     )
-    print("---")
-    print(paylog)
-    print("---")
+
     db().save_pay_log(paylog)
 
     redirect_url = response["info"]["paymentUrl"]["web"]
@@ -124,7 +119,5 @@ def linepay_confirm(request):
         raise Exception("Error: transaction_id not found.")
 
     response = pay.confirm_payments(transaction_id=transaction_id, amount=obj.amount, currency=obj.currency)
-    print(response["returnCode"])
-    print(response["returnMessage"])
 
     return HttpResponse("Payment successfully finished.")

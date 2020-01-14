@@ -4,18 +4,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"
             integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG"
             crossorigin="anonymous"></script>
-    {#    jQueryの読み込み#}
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.slim.js"
-            integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
-            crossorigin="anonymous"></script>
-
-
 {% endblock %}
 {% block menubar %}{% endblock %}
 {% block main-title %}証明書発行申請{% endblock %}
 {% block main-content %}
-    <form name="requestForm">
+    <form name="requestForm" id="fd">
         {% csrf_token %}
         <p>学籍番号
             <input type="number" id="student-id" name="studentId" placeholder="1234567">
@@ -162,6 +155,7 @@
 
         }
 
+
         function send_data() {
             let hasNoStudentId = document.getElementById('has-not-student-id');
             let studentId = document.getElementById('student-id');
@@ -209,6 +203,7 @@
                 let form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '/register/confirm';
+                form.hidden = true;
 
                 {#各属性の関連付け#}
                 form.appendChild(hasNoStudentId);
@@ -328,6 +323,11 @@
                 qrCheck = true;
             });
 
+            $('#fd').click(function () {
+                $('#fd').fadeOut()
+            });
+
         });
     </script>
+
 {% endblock %}

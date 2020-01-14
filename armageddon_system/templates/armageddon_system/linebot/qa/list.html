@@ -22,60 +22,60 @@
 {% endblock %}
 {% block main-content %}
     <div id="systems">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12" style="width: 100%;">
-                        <div class="table-responsive">
-                            <table border="1" id="tbl" class="table table-bordered table-hover">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12" style="width: 100%;">
+                    <div class="table-responsive">
+                        <table border="1" id="tbl" class="table table-bordered table-hover">
+                            <tr>
+                                <th style="text-align:right; width:40px;">No.</th>
+                                <th style="">質問ワード</th>
+                                <th style="">応答</th>
+                                <th style="width:40px;"></th>
+                                <th style="width:40px;"></th>
+                            </tr>
+                            {% for qa in qa_list %}
                                 <tr>
-                                    <th style="text-align:right; width:40px;">No.</th>
-                                    <th style="">質問ワード</th>
-                                    <th style="">応答</th>
-                                    <th style="width:40px;"></th>
-                                    <th style="width:40px;"></th>
-                                </tr>
-                                {% for qa in qa_list %}
-                                    <tr>
-                                        <td style="text-align:right; width:40px;"><span
-                                                class="seqno">{{ forloop.counter }}<input type="hidden"
-                                                                                          id="qa_id{{ forloop.counter }}"
-                                                                                          name="qa_id"
-                                                                                          value={{ qa.qa_id }}></span>
-                                        </td>
-                                        <td style="">
-                                            <input class="inpval" type="text" id="questions{{ forloop.counter }}"
-                                                   name="questions"
-                                                   value="
+                                    <td style="text-align:right; width:40px;"><span
+                                            class="seqno">{{ forloop.counter }}<input type="hidden"
+                                                                                      id="qa_id{{ forloop.counter }}"
+                                                                                      name="qa_id"
+                                                                                      value={{ qa.qa_id }}></span>
+                                    </td>
+                                    <td style="">
+                                        <input class="inpval" type="text" id="questions{{ forloop.counter }}"
+                                               name="questions"
+                                               value="
 {% for question_item in qa.question %}{{ question_item }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}"
-                                                   size="30" readonly
-                                                   style="border:none">
-                                        </td>
-                                        <td style=""><input class="inpval" type="text" id="answer{{ forloop.counter }}"
-                                                            name="answer"
-                                                            value="{{ qa.answer }}"
-                                                            size="30" readonly
-                                                            style="border:none"></td>
-                                        <td style="width:40px;"><input class="inpval" type="button"
-                                                                       id="edtBtn{{ forloop.counter }}"
-                                                                       value="編集"
-                                                                       onclick="editRow(this,{{ forloop.counter }})">
-                                        </td>
-                                        <td style="width:40px;"><input class="inpval" type="button"
-                                                                       value="削除"
-                                                                       onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});">
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                <tfoot>
-                                <tr>
-                                    <td colspan="7" id="add_btn" align="center" onclick="appendRow()">追　加　す　る</td>
+                                               size="30" readonly
+                                               style="border:none">
+                                    </td>
+                                    <td style=""><input class="inpval" type="text" id="answer{{ forloop.counter }}"
+                                                        name="answer"
+                                                        value="{{ qa.answer }}"
+                                                        size="30" readonly
+                                                        style="border:none"></td>
+                                    <td style="width:40px;"><input class="inpval" type="button"
+                                                                   id="edtBtn{{ forloop.counter }}"
+                                                                   value="編集"
+                                                                   onclick="editRow(this,{{ forloop.counter }})">
+                                    </td>
+                                    <td style="width:40px;"><input class="inpval" type="button"
+                                                                   value="削除"
+                                                                   onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});">
+                                    </td>
                                 </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                            {% endfor %}
+                            <tfoot>
+                            <tr>
+                                <td colspan="7" id="add_btn" align="center" onclick="appendRow()">追　加　す　る</td>
+                            </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
 
         <!--　自作ダイアログの内容 -->
         <div class="modal fade" id="original_dialog" tabindex="-1">
@@ -111,7 +111,6 @@
 
 
         function appendRow() {
-            console.log(a);
             let objTBL = document.getElementById("tbl");
             if (!objTBL)
                 return;
@@ -222,7 +221,6 @@
             let array = [];
             {% for qa in qa_list %}
                 {% for question in qa.question %}
-                    console.log("{{ question }}");
                     array.push("{{ question }}");
                 {% endfor %}
             {% endfor %}
@@ -230,7 +228,6 @@
             var b = array.filter(function (x, i, self) {
                 return self.indexOf(x) === i && i !== self.lastIndexOf(x);
             });
-            console.log(b);
 
 
             if (!questions || !objBtn)
@@ -246,16 +243,10 @@
                 objBtn.value = "確定";
             } else {
                 //配列に同じ質問が存在する場合
-            if (b.indexOf(questions.value) >=0) {
-                console.log("存在する");
-                alert("既に存在する質問です");
-                return;
-             }
-
-            //配列に同じ質問が存在しない場合
-            if (b.indexOf(questions.value) == -1) {
-                console.log("存在しない");
-             }
+                if (b.indexOf(questions.value) >= 0) {
+                    alert("既に存在する質問です");
+                    return;
+                }
 
                 questions.style.cssText = "border:none;";
                 answer.style.cssText = "border:none;";

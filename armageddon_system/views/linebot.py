@@ -60,7 +60,6 @@ def save_message(request):
     dbm = db()
     context['message_id'] = request.POST['message_id']
     context['message'] = request.POST['message']
-    print(request.POST)
     if request.POST['message'] ==  ' ':
         context['message'] = " "
     if 'file' in request.FILES:
