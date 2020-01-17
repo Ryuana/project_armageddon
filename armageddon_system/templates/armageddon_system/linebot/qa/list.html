@@ -60,10 +60,17 @@
                                                                    value="編集"
                                                                    onclick="editRow(this,{{ forloop.counter }})">
                                     </td>
+                                    {#                                    <td style="width:40px;"><input class="inpval" type="button"#}
+                                    {#                                                                   value="削除"#}
+                                    {#                                                                   onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});">#}
+                                    {#                                    </td>#}
+
                                     <td style="width:40px;"><input class="inpval" type="button"
                                                                    value="削除"
-                                                                   onclick="onButtonClick({{ forloop.counter }},{{ qa.qa_id }});">
+                                                                   onclick="deleteRow(this,{{ qa.qa_id }});">
                                     </td>
+
+
                                 </tr>
                             {% endfor %}
                             <tfoot>
@@ -156,8 +163,8 @@
             };
 
             // 確認
-            {#if (!confirm("この行を削除しますか？"))#}
-            {#    return;#}
+            if (!confirm("この行を削除しますか？"))
+                return;
 
             if (!obj)
                 return;
